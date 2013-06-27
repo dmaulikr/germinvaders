@@ -7,6 +7,7 @@
 //
 
 #import "MCHMyScene.h"
+#import "MCHGameplayScene.h"
 
 @implementation MCHMyScene
 
@@ -18,7 +19,7 @@
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
-        myLabel.text = @"Hello, World!";
+        myLabel.text = @"Tap to Play";
         myLabel.fontSize = 30;
         myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                        CGRectGetMidY(self.frame));
@@ -30,20 +31,9 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
-    
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-        
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
-    }
+    SKScene *gameScene = [[MCHGameplayScene alloc] initWithSize:self.size];
+    SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
+    [self.view presentScene:gameScene transition:doors];
 }
 
 -(void)update:(CFTimeInterval)currentTime {

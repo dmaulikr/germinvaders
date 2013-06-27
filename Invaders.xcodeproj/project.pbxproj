@@ -25,6 +25,7 @@
 		28F74693177BDA4E00015916 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F7466B177BDA4E00015916 /* UIKit.framework */; };
 		28F7469B177BDA4E00015916 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F74699177BDA4E00015916 /* InfoPlist.strings */; };
 		28F7469D177BDA4E00015916 /* InvadersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F7469C177BDA4E00015916 /* InvadersTests.m */; };
+		28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F746A7177BE65F00015916 /* MCHGameplayScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		28F74698177BDA4E00015916 /* InvadersTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InvadersTests-Info.plist"; sourceTree = "<group>"; };
 		28F7469A177BDA4E00015916 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28F7469C177BDA4E00015916 /* InvadersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvadersTests.m; sourceTree = "<group>"; };
+		28F746A6177BE65F00015916 /* MCHGameplayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameplayScene.h; sourceTree = "<group>"; };
+		28F746A7177BE65F00015916 /* MCHGameplayScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHGameplayScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 				28F74682177BDA4E00015916 /* MCHViewController.m */,
 				28F74684177BDA4E00015916 /* MCHMyScene.h */,
 				28F74685177BDA4E00015916 /* MCHMyScene.m */,
+				28F746A6177BE65F00015916 /* MCHGameplayScene.h */,
+				28F746A7177BE65F00015916 /* MCHGameplayScene.m */,
 				28F74687177BDA4E00015916 /* Spaceship.png */,
 				28F74689177BDA4E00015916 /* Images.xcassets */,
 				28F74670177BDA4E00015916 /* Supporting Files */,
@@ -268,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28F74676177BDA4E00015916 /* main.m in Sources */,
+				28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */,
 				28F7467A177BDA4E00015916 /* MCHAppDelegate.m in Sources */,
 				28F74683177BDA4E00015916 /* MCHViewController.m in Sources */,
 				28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */,
