@@ -30,21 +30,22 @@ int direction = 5;
         self.invader.physicsBody.collisionBitMask = shipCategory;
         self.invader.physicsBody.contactTestBitMask = wallCategory;
         
-        SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(25, self.size.height)];
-        leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
-        leftWall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
-        leftWall.physicsBody.categoryBitMask = wallCategory;
-        
-        SKSpriteNode *rightWAll = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(25, self.size.height)];
-        rightWAll.position = CGPointMake(self.size.width-leftWall.size.width/2, self.size.height/2);
-        rightWAll.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
-        rightWAll.physicsBody.categoryBitMask = wallCategory;
+//        SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(25, self.size.height)];
+//        leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
+//        leftWall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
+//        leftWall.physicsBody.categoryBitMask = wallCategory;
+//        
+//        SKSpriteNode *rightWAll = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(25, self.size.height)];
+//        rightWAll.position = CGPointMake(self.size.width-leftWall.size.width/2, self.size.height/2);
+//        rightWAll.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
+//        rightWAll.physicsBody.categoryBitMask = wallCategory;
         
         
         [self addChild:self.invader];
-        [self addChild:leftWall];
-        [self addChild:rightWAll];
+//        [self addChild:leftWall];
+//        [self addChild:rightWAll];
         
+        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
         self.physicsWorld.gravity = CGPointMake(0,0);
         self.physicsWorld.contactDelegate = self;
     }
