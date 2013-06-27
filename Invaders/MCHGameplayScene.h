@@ -8,6 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface MCHGameplayScene : SKScene
+@interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
 @property (strong,atomic) SKSpriteNode *invader;
 @end
