@@ -10,6 +10,7 @@
 
 @implementation MCHGameplayScene
 
+int direction = 5;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
@@ -26,7 +27,19 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    self.invader.position = CGPointMake(self.invader.position.x+1, self.invader.position.y);
+    self.invader.position = CGPointMake(self.invader.position.x+direction, self.invader.position.y);
+    if(direction > 0){
+        if (self.invader.position.x > self.size.width-50) {
+            direction = -5;
+            self.invader.position = CGPointMake(self.invader.position.x, self.invader.position.y - self.invader.size.height);
+        }
+    }else{
+        if (self.invader.position.x < 50) {
+            direction = 5;
+            self.invader.position = CGPointMake(self.invader.position.x, self.invader.position.y - self.invader.size.height);
+        }
+    }
+    
 //    NSLog(@"invader.x=%f",self.invader.position.x);
 }
 
