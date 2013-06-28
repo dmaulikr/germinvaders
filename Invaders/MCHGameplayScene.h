@@ -7,7 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "MCHPlayer.h"
 
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
-    @property (strong,atomic) NSArray *invaderRows;
+@property (strong,atomic) NSArray *invaderRows;
+@property (strong,atomic) MCHPlayer *player;
 @end

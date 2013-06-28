@@ -8,12 +8,12 @@
 
 #import "MCHGameplayScene.h"
 #import "MCHInvader.h"
+#import "MCHPlayer.h"
 #import "math.h"
 
 static const uint32_t invadeCategory =  0x1 << 0;
-static const uint32_t shipCategory =  0x1 << 1;
+static const uint32_t playerCategory =  0x1 << 1;
 static const uint32_t wallCategory =  0x1 << 2;
-//static const uint32_t planetCategory =  0x1 << 3;
 
 @implementation MCHGameplayScene
 
@@ -36,7 +36,7 @@ int direction = 5;
                 invader.position = CGPointMake(startX, startY);
                 invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
                 invader.physicsBody.categoryBitMask = invadeCategory;
-                invader.physicsBody.collisionBitMask = shipCategory;
+                invader.physicsBody.collisionBitMask = playerCategory;
                 invader.physicsBody.contactTestBitMask = wallCategory;
                 invader.rowNum = i;
                 startX = startX + 17;
@@ -47,6 +47,15 @@ int direction = 5;
             [invaderRows addObject:row];
         }
         self.invaderRows = [NSArray arrayWithArray:invaderRows];
+        
+        self.player = [MCHPlayer spriteNodeWithColor:[UIColor grayColor] size:CGSizeMake(24, 24)];
+        self.player.direction = CGPointMake(0, 0);
+        self.player.speed = 20;
+        self.player.position = CGPointMake(self.size.width/2, 0+self.player.size.height);
+        self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
+        self.player.physicsBody.categoryBitMask = playerCategory;
+        self.player.physicsBody.collisionBitMask = invadeCategory;
+        self.player.physicsBody.contactTestBitMask = wallCategory;
         
         SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(5, self.size.height)];
         leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
@@ -60,7 +69,7 @@ int direction = 5;
         rightWAll.physicsBody.categoryBitMask = wallCategory;
         rightWAll.physicsBody.dynamic = NO;
         
-        
+        [self addChild:self.player];
         [self addChild:leftWall];
         [self addChild:rightWAll];
         
@@ -70,7 +79,33 @@ int direction = 5;
     return self;
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = (UITouch *)[[event.allTouches objectEnumerator] nextObject];
+    NSLog(@"touch.x:%f, touch.y:%f",[touch locationInView:self.view].x,[touch locationInView:self.view].y);
+    NSLog(@"player.x:%f, player.y:%f",self.player.position.x,self.player.position.y);
+    float playerX = [self convertPointToView:self.player.position].x;
+    float touchX = [touch locationInView:self.view].x;
+    float distance;
+    if(playerX > touchX){
+        distance = playerX - touchX;
+        float moveDuration = distance / self.player.speed;
+        NSLog(@"moveDuration is:%f and distance is:%f",moveDuration,distance);
+        SKAction *moveToTouch = [SKAction moveByX: -(distance) y: 0.0 duration: moveDuration];
+        [self.player runAction:moveToTouch withKey:@"movePlayerToTouch"];
+    }else{
+        distance = touchX - playerX;
+        float moveDuration = distance / self.player.speed;
+        NSLog(@"moveDuration is:%f and distance is:%f",moveDuration,distance);
+        SKAction *moveToTouch = [SKAction moveByX: distance y: 0.0 duration: moveDuration];
+        [self.player runAction:moveToTouch withKey:@"movePlayerToTouch"];
+    }
+    
+//    float distance = ([self convertPointToView:self.player.position] + [touch locationInView:self.view].x)/2;
+}
 
+CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
+    return hypotf(second.x - first.x, second.y - first.y);
+}
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */

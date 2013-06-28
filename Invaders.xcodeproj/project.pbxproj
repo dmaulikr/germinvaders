@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF1177D29B300BB44FF /* MCHInvader.m */; };
+		2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF4177D4C5000BB44FF /* MCHPlayer.m */; };
 		28F74668177BDA4E00015916 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74667177BDA4E00015916 /* Foundation.framework */; };
 		28F7466A177BDA4E00015916 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74669177BDA4E00015916 /* CoreGraphics.framework */; };
 		28F7466C177BDA4E00015916 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F7466B177BDA4E00015916 /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* Begin PBXFileReference section */
 		2868FFF0177D29B300BB44FF /* MCHInvader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvader.h; sourceTree = "<group>"; };
 		2868FFF1177D29B300BB44FF /* MCHInvader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHInvader.m; sourceTree = "<group>"; };
+		2868FFF3177D4C5000BB44FF /* MCHPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHPlayer.h; sourceTree = "<group>"; };
+		2868FFF4177D4C5000BB44FF /* MCHPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHPlayer.m; sourceTree = "<group>"; };
 		28F74664177BDA4E00015916 /* Invaders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invaders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F74667177BDA4E00015916 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		28F74669177BDA4E00015916 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 				28F746A7177BE65F00015916 /* MCHGameplayScene.m */,
 				2868FFF0177D29B300BB44FF /* MCHInvader.h */,
 				2868FFF1177D29B300BB44FF /* MCHInvader.m */,
+				2868FFF3177D4C5000BB44FF /* MCHPlayer.h */,
+				2868FFF4177D4C5000BB44FF /* MCHPlayer.m */,
 				28F74687177BDA4E00015916 /* Spaceship.png */,
 				28F74689177BDA4E00015916 /* Images.xcassets */,
 				28F74670177BDA4E00015916 /* Supporting Files */,
@@ -280,6 +285,7 @@
 				28F74676177BDA4E00015916 /* main.m in Sources */,
 				28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */,
 				2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */,
+				2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */,
 				28F7467A177BDA4E00015916 /* MCHAppDelegate.m in Sources */,
 				28F74683177BDA4E00015916 /* MCHViewController.m in Sources */,
 				28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */,
