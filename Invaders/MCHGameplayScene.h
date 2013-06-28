@@ -9,5 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
-@property (strong,atomic) SKSpriteNode *invader;
+    @property (strong,atomic) NSArray *invaderRows;
 @end
