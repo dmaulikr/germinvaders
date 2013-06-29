@@ -11,5 +11,6 @@
 
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
 @property (strong,atomic) NSArray *invaderRows;
+@property (strong,atomic) NSMutableDictionary *activeMissles;
 @property (strong,atomic) MCHPlayer *player;
 @end
