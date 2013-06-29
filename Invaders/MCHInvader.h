@@ -11,7 +11,8 @@
 @interface MCHInvader : SKSpriteNode
 
 @property float speed;
-@property CGPoint direction;
+@property int direction;
 @property int rowNum;
+@property BOOL doneFirstMove;
 
 @end

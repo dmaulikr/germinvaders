@@ -21,32 +21,74 @@ static const uint32_t missleCategory =  0x1 << 3;
 
 int direction = 5;
 
+-(void)moveInvaderDown:(MCHInvader *)invader{
+    SKAction *moveAlien = [SKAction moveByX:0.0 y:-invader.size.height duration:0.75];
+    [invader runAction:moveAlien completion:^{
+        if (invader.direction == 1) {
+            [self moveInvaderLeft:invader];
+        }else{
+            [self moveInvaderRight:invader];
+        }
+        invader.direction = -invader.direction;
+    }];
+}
+
+-(void)moveInvaderLeft:(MCHInvader *)invader{
+    int dur = 2.5;
+    int startX = ((self.size.width-((13*12)+(12*5)))/2)+5;
+    int finishX = startX + ((13*12)+(12*5));
+    int xMoveValue = -(self.size.width-4-finishX);
+    if (invader.doneFirstMove) {
+        dur = 5;
+        xMoveValue = xMoveValue*2;
+    }
+    SKAction *moveAlien = [SKAction moveByX:xMoveValue y:0.0 duration:dur];
+    [invader runAction:moveAlien completion:^{
+        [self moveInvaderDown:invader];
+    }];
+    invader.doneFirstMove = YES;
+}
+
+-(void)moveInvaderRight:(MCHInvader *)invader{
+    int dur = 2.5;
+    int startX = ((self.size.width-((13*12)+(12*5)))/2)+5;
+    int finishX = startX + ((13*12)+(12*5));
+    int xMoveValue = self.size.width-4-finishX;
+    if (invader.doneFirstMove) {
+        dur = 5;
+        xMoveValue = xMoveValue*2;
+    }
+    SKAction *moveAlien = [SKAction moveByX:xMoveValue y:0.0 duration:dur];
+    [invader runAction:moveAlien completion:^{
+        [self moveInvaderDown:invader];
+    }];
+    invader.doneFirstMove = YES;
+}
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
-        self.activeMissles = [[NSMutableDictionary alloc] init];
-        
         NSMutableArray *invaderRows = [NSMutableArray arrayWithCapacity:6];
         int startY = self.size.height-25;
         for (int i=0; i<6; i++) {
-            int startX = 24+36;
+            int startX = ((size.width-((13*12)+(12*5)))/2)+5;
             NSMutableArray *row = [NSMutableArray arrayWithCapacity:13];
             for (int j=0; j<13; j++) {
                 MCHInvader *invader = [MCHInvader spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(12, 12)];
-                invader.direction = CGPointMake(1, 0);
+                invader.direction = 1;
                 invader.speed = 2;
                 invader.position = CGPointMake(startX, startY);
                 invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
                 invader.physicsBody.categoryBitMask = invadeCategory;
                 invader.physicsBody.collisionBitMask = playerCategory;
-                invader.physicsBody.contactTestBitMask = wallCategory;
                 invader.rowNum = i;
                 startX = startX + 17;
                 [self addChild:invader];
                 [row addObject:invader];
+                [self moveInvaderRight:invader];
             }
             startY = startY - 17;
             [invaderRows addObject:row];
@@ -91,16 +133,14 @@ int direction = 5;
     NSLog(@"firing missle...");
     MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,1);
-    missle.speed = 12;
     missle.position = attackingSprite.position; //missleCategory
-    missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
+    missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];
     missle.physicsBody.categoryBitMask = missleCategory;
     missle.physicsBody.collisionBitMask = invadeCategory;
     missle.physicsBody.contactTestBitMask = invadeCategory;
     [self addChild:missle];
-    SKAction *moveMissle = [SKAction moveByX:0.0 y:self.size.height*missle.direction.y duration: missle.speed];
+    SKAction *moveMissle = [SKAction moveByX:0.0 y:self.size.height*missle.direction.y duration:2.5];
     [missle runAction:moveMissle withKey:@"firePlayerMissle"];
-//    [self.activeMissles setObject:@"missle" forKey:missle];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -139,38 +179,14 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    for (int i=0; i<6; i++) {
-        NSArray *row = (NSArray *)[self.invaderRows objectAtIndex:i];
-        for (int j=0; j<13; j++) {
-            MCHInvader *invader = (MCHInvader *)[row objectAtIndex:j];
-            int movement = (int)roundf(invader.speed*invader.direction.x);
-            invader.position = CGPointMake(invader.position.x+movement,invader.position.y);
-        }
-    }
-    
-//    for(MCHMissle *missle in self.activeMissles){
-//        float moveDuration = distance / missle.speed;
-//        SKAction *moveMissle = [SKAction moveByX:0.0 y: self.size.height*missle.direction.y duration: 2.5];
-//    }
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact{
-    NSLog(@"we hit the wall");
+    NSLog(@"contact detected!");
     SKNode *node = contact.bodyA.node;
     SKNode *nodeb = contact.bodyB.node;
-    if ([node isKindOfClass:[MCHInvader class]] && ![nodeb isKindOfClass:[MCHMissle class]]) {
-        MCHInvader *invaderCollider = (MCHInvader *)node;
-        NSArray *row = (NSArray *)[self.invaderRows objectAtIndex:invaderCollider.rowNum];
-        for (int j=0; j<13; j++) {
-            MCHInvader *invader = (MCHInvader *)[row objectAtIndex:j];
-            int movement = (int)roundf(invader.speed*invader.direction.x);
-            invader.position = CGPointMake(invader.position.x+movement,invader.position.y);
-            invader.position = CGPointMake(invader.position.x, invader.position.y - invader.size.height);
-            invader.direction = CGPointMake(-(invader.direction.x),invader.direction.y);
-        }
-    } else if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
-//        [self.activeMissles removeObjectForKey:node];
-//        [self.activeMissles removeObjectForKey:nodeb];
+    if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
+        NSLog(@"missle hit!");
         [node removeFromParent];
         [nodeb removeFromParent];
     }
