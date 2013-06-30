@@ -181,12 +181,28 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     /* Called before each frame is rendered */
 }
 
+- (SKEmitterNode*) newExplosionEmitter{
+    NSString *invaderExplosionPath = [[NSBundle mainBundle] pathForResource:@"InvaderExplosion" ofType:@"sks"];
+    SKEmitterNode *invaderExplosion = [NSKeyedUnarchiver unarchiveObjectWithFile:invaderExplosionPath];
+    return invaderExplosion;
+}
 - (void)didBeginContact:(SKPhysicsContact *)contact{
     NSLog(@"contact detected!");
     SKNode *node = contact.bodyA.node;
     SKNode *nodeb = contact.bodyB.node;
     if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
         NSLog(@"missle hit!");
+        SKEmitterNode *explosion = [self newExplosionEmitter];
+        explosion.position = node.position;
+        [self addChild:explosion];
+        [explosion runAction:[SKAction sequence:@[
+                                                  [SKAction waitForDuration:0.25],
+                                                  [SKAction runBlock:^{
+            explosion.particleBirthRate = 0;
+        }],
+                                                  [SKAction waitForDuration:explosion.particleLifetime + explosion.particleLifetimeRange],
+                                                  [SKAction removeFromParent],
+                                                  ]]];
         [node removeFromParent];
         [nodeb removeFromParent];
     }
