@@ -11,14 +11,16 @@
 @implementation MCHInvader
 
 -(void)moveDown{
-    SKAction *moveAlien = [SKAction moveByX:0.0 y:-self.size.height duration:0.75];
+    int moveValue = -self.size.height;
+    
+    SKAction *moveAlien = [SKAction moveByX:0.0 y:moveValue duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
+        self.speed = self.speed + 0.2;
         [self moveLeftRight];
     }];
 }
 
 -(void)moveLeftRight{
-    int dur = 2.5;
     float moveValue;
     if (self.direction == 0) {
         moveValue = self.range;
@@ -26,9 +28,9 @@
     }else{
         moveValue = self.range * (self.direction*2);
         self.direction = -self.direction;
-        dur = dur*2;
     }
-    SKAction *moveAlien = [SKAction moveByX:moveValue y:0.0 duration:dur];
+//    NSLog(@"invader moveValue:%f",moveValue);
+    SKAction *moveAlien = [SKAction moveByX:moveValue y:0.0 duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
         [self moveDown];
     }];
