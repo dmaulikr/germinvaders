@@ -131,6 +131,10 @@ int direction = 5;
 
 -(void)fireMissle:(MCHPlayer *)attackingSprite{
     NSLog(@"firing missle...");
+    if(self.activePlayerMissle != nil){
+        NSLog(@"not firing because there's already an active missle");
+        return;
+    }
     MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,1);
     missle.position = attackingSprite.position; //missleCategory
@@ -138,9 +142,14 @@ int direction = 5;
     missle.physicsBody.categoryBitMask = missleCategory;
     missle.physicsBody.collisionBitMask = invadeCategory;
     missle.physicsBody.contactTestBitMask = invadeCategory;
+    self.activePlayerMissle = missle;
     [self addChild:missle];
     SKAction *moveMissle = [SKAction moveByX:0.0 y:self.size.height*missle.direction.y duration:2.5];
-    [missle runAction:moveMissle withKey:@"firePlayerMissle"];
+    SKAction *resetActivePlayerMissle = [SKAction runBlock:^{
+        self.activePlayerMissle = nil;
+    }];
+    SKAction *fireMissleSequence = [SKAction sequence:@[moveMissle,resetActivePlayerMissle,[SKAction removeFromParent]]];
+    [missle runAction:fireMissleSequence withKey:@"firePlayerMissle"];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -205,6 +214,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
                                                   ]]];
         [node removeFromParent];
         [nodeb removeFromParent];
+        self.activePlayerMissle = nil;
     }
 }
 @end

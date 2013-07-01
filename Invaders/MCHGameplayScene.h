@@ -8,8 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "MCHPlayer.h"
+#import "MCHMissle.h"
 
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
 @property (strong,atomic) NSArray *invaderRows;
 @property (strong,atomic) MCHPlayer *player;
+@property (strong,atomic) MCHMissle *activePlayerMissle;
 @end
