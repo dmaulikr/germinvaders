@@ -10,4 +10,8 @@
 
 @implementation MCHPlayer
 
+-(void)gameOver{
+    [self removeAllActions];
+}
+
 @end

@@ -17,5 +17,6 @@
 
 -(void)moveDown;
 -(void)moveLeftRight;
+-(void)gameOver;
 
 @end

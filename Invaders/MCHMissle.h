@@ -14,4 +14,6 @@
 @property CGPoint direction;
 @property BOOL explodedInvader;
 
+-(void)gameOver;
+
 @end

@@ -16,4 +16,6 @@
 @property float fireRate;
 @property BOOL readyToFire;
 
+-(void)gameOver;
+
 @end

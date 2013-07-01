@@ -10,4 +10,8 @@
 
 @implementation MCHMissle
 
+-(void)gameOver{
+    [self removeAllActions];
+}
+
 @end

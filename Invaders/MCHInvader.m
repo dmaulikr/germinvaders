@@ -36,4 +36,8 @@
     }];
 }
 
+-(void)gameOver{
+    [self removeAllActions];
+}
+
 @end
