@@ -12,7 +12,9 @@
 
 @property float speed;
 @property int direction;
-@property int rowNum;
-@property BOOL doneFirstMove;
+@property int range;
+
+-(void)moveDown;
+-(void)moveLeftRight;
 
 @end
