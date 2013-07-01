@@ -27,22 +27,24 @@ static const uint32_t missleCategory =  0x1 << 3;
         
         NSMutableArray *invaders = [NSMutableArray arrayWithCapacity:6*13];
         CGSize invaderSize = CGSizeMake(12, 12);
-        int startY = self.size.height-25;
+        int startY = self.size.height-50;
         int invaderGroupStartX = ((self.size.width-((13*12)+(12*5)))/2)+6;
         int invaderGroupFinishX = invaderGroupStartX + ((13*12)+(12*5));
         int invaderRange = self.size.width-4-invaderGroupFinishX;
-        for (int i=0; i<6; i++) {
+        int numInvaderRows = 7;
+        for (int i=0; i<numInvaderRows-1; i++) {
             int startX = invaderGroupStartX;
             NSLog(@"startX:%d",startX);
             for (int j=0; j<13; j++) {
                 MCHInvader *invader = [MCHInvader spriteNodeWithColor:[UIColor whiteColor] size:invaderSize];
                 invader.direction = 0;
-                invader.speed = 5;
+                invader.speed = 6;
                 invader.position = CGPointMake(startX, startY);
                 invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
                 invader.physicsBody.categoryBitMask = invadeCategory;
                 invader.physicsBody.collisionBitMask = playerCategory;
                 invader.range = invaderRange;
+                invader.value = 10 * (numInvaderRows-(i+1));
                 [invaders addObject:invader];
                 [self addChild:invader];
                 startX = startX + 17;
@@ -59,6 +61,11 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.player.physicsBody.collisionBitMask = invadeCategory;
         self.player.physicsBody.contactTestBitMask = wallCategory;
         
+        self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
+        self.scoreDisplay.fontSize = 18;
+        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-25);
+        
         SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(5, self.size.height)];
         leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
         leftWall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
@@ -72,6 +79,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         rightWAll.physicsBody.dynamic = NO;
         
         [self addChild:self.player];
+        [self addChild:self.scoreDisplay];
         [self addChild:leftWall];
         [self addChild:rightWAll];
         
@@ -151,11 +159,15 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     return invaderExplosion;
 }
 - (void)didBeginContact:(SKPhysicsContact *)contact{
-    NSLog(@"contact detected!");
     SKNode *node = contact.bodyA.node;
     SKNode *nodeb = contact.bodyB.node;
     if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
-        NSLog(@"missle hit!");
+        MCHInvader *invader;
+        if([nodeb isKindOfClass:[MCHInvader class]]){
+            invader = (MCHInvader *)nodeb;
+        }else if([node isKindOfClass:[MCHInvader class]]){
+            invader = (MCHInvader *)node;            
+        }
         if(self.activePlayerMissle == nil){
             //we don't want a single missle to take out 2 invaders
             return;
@@ -174,6 +186,8 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         [node removeFromParent];
         [nodeb removeFromParent];
         self.activePlayerMissle = nil;
+        self.player.score = self.player.score + invader.value;
+        self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
     }
 }
 @end

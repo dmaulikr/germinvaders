@@ -13,6 +13,7 @@
 @property float speed;
 @property int direction;
 @property int range;
+@property int value;
 
 -(void)moveDown;
 -(void)moveLeftRight;
