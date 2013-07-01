@@ -64,7 +64,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
         self.scoreDisplay.fontSize = 18;
-        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-25);
+        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-35);
         
         SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(5, self.size.height)];
         leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
