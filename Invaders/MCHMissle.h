@@ -12,5 +12,6 @@
 
 @property float speed;
 @property CGPoint direction;
+@property BOOL explodedInvader;
 
 @end

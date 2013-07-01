@@ -25,7 +25,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
-        NSMutableArray *invaders = [NSMutableArray arrayWithCapacity:6*13];
+        self.invaders = [NSMutableArray arrayWithCapacity:6*13];
         CGSize invaderSize = CGSizeMake(12, 12);
         int startY = self.size.height-50;
         int invaderGroupStartX = ((self.size.width-((13*12)+(12*5)))/2)+6;
@@ -45,7 +45,7 @@ static const uint32_t missleCategory =  0x1 << 3;
                 invader.physicsBody.collisionBitMask = playerCategory;
                 invader.range = invaderRange;
                 invader.value = 10 * (numInvaderRows-(i+1));
-                [invaders addObject:invader];
+                [self.invaders addObject:invader];
                 [self addChild:invader];
                 startX = startX + 17;
                 [invader moveLeftRight];
@@ -60,6 +60,8 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.player.physicsBody.categoryBitMask = playerCategory;
         self.player.physicsBody.collisionBitMask = invadeCategory;
         self.player.physicsBody.contactTestBitMask = wallCategory;
+        self.player.fireRate = 0.5;
+        self.player.readyToFire = YES;
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
@@ -94,8 +96,8 @@ static const uint32_t missleCategory =  0x1 << 3;
 
 -(void)fireMissle:(MCHPlayer *)attackingSprite{
     NSLog(@"firing missle...");
-    if(self.activePlayerMissle != nil){
-        NSLog(@"not firing because there's already an active missle");
+    if(!self.player.readyToFire){
+        NSLog(@"not firing because we have a fire rate.");
         return;
     }
     MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
@@ -105,14 +107,18 @@ static const uint32_t missleCategory =  0x1 << 3;
     missle.physicsBody.categoryBitMask = missleCategory;
     missle.physicsBody.collisionBitMask = invadeCategory;
     missle.physicsBody.contactTestBitMask = invadeCategory;
-    self.activePlayerMissle = missle;
+    self.player.readyToFire = NO;
     [self addChild:missle];
+    
     SKAction *moveMissle = [SKAction moveByX:0.0 y:self.size.height*missle.direction.y duration:2.5];
-    SKAction *resetActivePlayerMissle = [SKAction runBlock:^{
-        self.activePlayerMissle = nil;
-    }];
-    SKAction *fireMissleSequence = [SKAction sequence:@[moveMissle,resetActivePlayerMissle,[SKAction removeFromParent]]];
+    SKAction *fireMissleSequence = [SKAction sequence:@[moveMissle,[SKAction removeFromParent]]];
     [missle runAction:fireMissleSequence withKey:@"firePlayerMissle"];
+    SKAction *wait = [SKAction waitForDuration:self.player.fireRate];
+    SKAction *resetActivePlayerMissle = [SKAction runBlock:^{
+        self.player.readyToFire = YES;
+    }];
+    SKAction *fireRateControlSequence = [SKAction sequence:@[wait,resetActivePlayerMissle]];
+    [self runAction:(SKAction *)fireRateControlSequence];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -163,12 +169,16 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     SKNode *nodeb = contact.bodyB.node;
     if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
         MCHInvader *invader;
+        MCHMissle *missle;
         if([nodeb isKindOfClass:[MCHInvader class]]){
             invader = (MCHInvader *)nodeb;
+            missle = (MCHMissle *)node;
         }else if([node isKindOfClass:[MCHInvader class]]){
             invader = (MCHInvader *)node;            
+            missle = (MCHMissle *)nodeb;
         }
-        if(self.activePlayerMissle == nil){
+        if(missle.explodedInvader){
+            NSLog(@">>>>>>>>>>>>>>>>double hit detected!");
             //we don't want a single missle to take out 2 invaders
             return;
         }
@@ -185,9 +195,9 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
                                                   ]]];
         [node removeFromParent];
         [nodeb removeFromParent];
-        self.activePlayerMissle = nil;
+        missle.explodedInvader = YES;
         self.player.score = self.player.score + invader.value;
-        self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
+        self.scoreDisplay.text = [NSString stringWithFormat:@"Score: %d",self.player.score];;
     }
 }
 @end
