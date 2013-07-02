@@ -68,7 +68,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.player.physicsBody.categoryBitMask = playerCategory;
         self.player.physicsBody.collisionBitMask = invadeCategory;
         self.player.physicsBody.contactTestBitMask = invadeCategory;
-        self.player.fireRate = 0.5;
+        self.player.fireRate = 0.25;
         self.player.readyToFire = YES;
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -258,6 +258,14 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     
     [self addChild:myLabel];
     
+}
+
+-(void)stopAllInvadersExcept:(MCHInvader *)invader{
+    for(MCHInvader *nextInvader in self.invaders){
+        if (nextInvader != invader) {
+            [nextInvader gameOver];
+        }
+    }    
 }
 
 -(CGPoint)getPlayerPosition{

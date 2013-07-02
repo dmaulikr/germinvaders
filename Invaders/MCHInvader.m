@@ -18,12 +18,17 @@
     [self runAction:moveAlien completion:^{
         self.speed = self.speed + 0.2;
         if(self.position.y < 48){
-            int downValue = -self.size.height;
-            SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
-            [self runAction:moveDown completion:^{
-                //the player may have moved away so keep chasing.
-                [self moveToPlayer];
-            }];
+            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+            if(!gameScene.anInvaderChasingPlayer){
+                gameScene.anInvaderChasingPlayer = YES;
+                [gameScene stopAllInvadersExcept:self];
+                int downValue = -self.size.height;
+                SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
+                [self runAction:moveDown completion:^{
+                    //the player may have moved away so keep chasing.
+                    [self moveToPlayer];
+                }];
+            }
         }else{
             [self moveLeftRight];
         }
@@ -49,7 +54,12 @@
 -(void)moveToPlayer{
     MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
     CGPoint playerPos = [gameScene getPlayerPosition];
-    int distance = playerPos.x - self.position.x;
+    int distance;
+    if (playerPos.x > self.position.x) {
+        distance = playerPos.x - self.position.x;
+    }else{
+        distance = self.position.x - playerPos.x;
+    }
     float moveDuration = distance / self.speed;
     
     SKAction *moveToPlayer = [SKAction moveToX:playerPos.x duration:moveDuration];

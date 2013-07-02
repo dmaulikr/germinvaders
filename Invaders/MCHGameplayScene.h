@@ -10,13 +10,16 @@
 #import "MCHPlayer.h"
 #import "MCHMissle.h"
 
+@class MCHInvader;
+
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
 @property (strong,atomic) NSMutableArray *invaders;
 @property (strong,atomic) NSMutableArray *activeMissles;
 @property (strong,atomic) MCHPlayer *player;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
 @property int gameState;
+@property BOOL anInvaderChasingPlayer;
 
 -(CGPoint)getPlayerPosition;
-
+-(void)stopAllInvadersExcept:(MCHInvader *)invader;
 @end
