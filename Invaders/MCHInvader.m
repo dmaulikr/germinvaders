@@ -7,6 +7,7 @@
 //
 
 #import "MCHInvader.h"
+#import "MCHGameplayScene.h"
 
 @implementation MCHInvader
 
@@ -16,7 +17,16 @@
     SKAction *moveAlien = [SKAction moveByX:0.0 y:moveValue duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
         self.speed = self.speed + 0.2;
-        [self moveLeftRight];
+        if(self.position.y < 48){
+            int downValue = -self.size.height;
+            SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
+            [self runAction:moveDown completion:^{
+                //the player may have moved away so keep chasing.
+                [self moveToPlayer];
+            }];
+        }else{
+            [self moveLeftRight];
+        }
     }];
 }
 
@@ -34,6 +44,20 @@
     [self runAction:moveAlien completion:^{
         [self moveDown];
     }];
+}
+
+-(void)moveToPlayer{
+    MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+    CGPoint playerPos = [gameScene getPlayerPosition];
+    int distance = playerPos.x - self.position.x;
+    float moveDuration = distance / self.speed;
+    
+    SKAction *moveToPlayer = [SKAction moveToX:playerPos.x duration:moveDuration];
+    [self runAction:moveToPlayer completion:^{
+        //the player may have moved away so keep chasing.
+        [self moveToPlayer];
+    }];
+    
 }
 
 -(void)gameOver{

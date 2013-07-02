@@ -260,6 +260,10 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     
 }
 
+-(CGPoint)getPlayerPosition{
+    return self.player.position;
+}
+
 -(void)goMenu{
     SKScene *introScene = [[MCHMyScene alloc] initWithSize:self.size];
     SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];

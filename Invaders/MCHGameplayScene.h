@@ -16,4 +16,7 @@
 @property (strong,atomic) MCHPlayer *player;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
 @property int gameState;
+
+-(CGPoint)getPlayerPosition;
+
 @end
