@@ -12,6 +12,7 @@
 		2868FFF8177E7BA300BB44FF /* MCHMissle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF7177E7BA300BB44FF /* MCHMissle.m */; };
 		2868FFFC177FBC2600BB44FF /* InvaderExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */; };
 		2868FFFD177FBC2600BB44FF /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2868FFFB177FBC2600BB44FF /* spark.png */; };
+		28EA66AB1783A9650017E129 /* invader.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 28EA66AA1783A9650017E129 /* invader.atlas */; };
 		28F74668177BDA4E00015916 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74667177BDA4E00015916 /* Foundation.framework */; };
 		28F7466A177BDA4E00015916 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74669177BDA4E00015916 /* CoreGraphics.framework */; };
 		28F7466C177BDA4E00015916 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F7466B177BDA4E00015916 /* UIKit.framework */; };
@@ -52,6 +53,7 @@
 		2868FFF7177E7BA300BB44FF /* MCHMissle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHMissle.m; sourceTree = "<group>"; };
 		2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = InvaderExplosion.sks; path = Invaders/InvaderExplosion.sks; sourceTree = "<group>"; };
 		2868FFFB177FBC2600BB44FF /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Invaders/spark.png; sourceTree = "<group>"; };
+		28EA66AA1783A9650017E129 /* invader.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = invader.atlas; sourceTree = "<group>"; };
 		28F74664177BDA4E00015916 /* Invaders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invaders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F74667177BDA4E00015916 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		28F74669177BDA4E00015916 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -108,6 +110,7 @@
 		28F7465B177BDA4E00015916 = {
 			isa = PBXGroup;
 			children = (
+				28EA66AA1783A9650017E129 /* invader.atlas */,
 				2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */,
 				2868FFFB177FBC2600BB44FF /* spark.png */,
 				28F7466F177BDA4E00015916 /* Invaders */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28F74688177BDA4E00015916 /* Spaceship.png in Resources */,
+				28EA66AB1783A9650017E129 /* invader.atlas in Resources */,
 				28F7468A177BDA4E00015916 /* Images.xcassets in Resources */,
 				28F74680177BDA4E00015916 /* Main_iPad.storyboard in Resources */,
 				2868FFFD177FBC2600BB44FF /* spark.png in Resources */,

@@ -11,6 +11,14 @@
 
 @implementation MCHInvader
 
+- (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size{
+    self = [super initWithTexture:texture color:color size:size];
+    if(self){
+        //Update this method so that maybe we pass in values to fully initialize the invader - or if not using delete.
+    }
+    return self;
+}
+
 -(void)moveDown{
     int moveValue = -self.size.height;
     
@@ -44,12 +52,18 @@
         moveValue = self.range * (self.direction*2);
         self.direction = -self.direction;
     }
-//    NSLog(@"invader moveValue:%f",moveValue);
-    SKAction *moveAlien = [SKAction moveByX:moveValue y:0.0 duration:fabs(moveValue)/self.speed];
-    [self runAction:moveAlien completion:^{
+    SKAction *moveInvader = [SKAction moveByX:moveValue y:0.0 duration:fabs(moveValue)/self.speed];
+    [self runAction:moveInvader completion:^{
         [self moveDown];
     }];
 }
+
+-(void)startRepeatingMoveAnimation{
+    SKAction *walkAnimation = [SKAction animateWithTextures:self.textureArray timePerFrame:2];
+    SKAction *repeatAnimation = [SKAction repeatActionForever:walkAnimation];
+    [self runAction:repeatAnimation];
+}
+
 
 -(void)moveToPlayer{
     MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;

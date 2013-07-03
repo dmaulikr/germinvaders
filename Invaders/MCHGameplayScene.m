@@ -33,19 +33,30 @@ static const uint32_t missleCategory =  0x1 << 3;
         
         self.invaders = [NSMutableArray arrayWithCapacity:6*13];
         self.activeMissles = [[NSMutableArray alloc] init];
-        CGSize invaderSize = CGSizeMake(12, 12);
+        
+        CGSize invaderSize = CGSizeMake(24, 24);
+        int invaderSpacing = 5;
+        int numInvadersAcross = 8;
+        
         int startY = self.size.height-50;
-        int invaderGroupStartX = ((self.size.width-((13*12)+(12*5)))/2)+6;
-        int invaderGroupFinishX = invaderGroupStartX + ((13*12)+(12*5));
+        int invaderGroupStartX = ((self.size.width-((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
+        int invaderGroupFinishX = invaderGroupStartX + ((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing));
         int invaderRange = self.size.width-4-invaderGroupFinishX;
         int numInvaderRows = 7;
+        
+        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+        SKTexture *f1 = [atlas textureNamed:@"invader1.png"];
+        SKTexture *f2 = [atlas textureNamed:@"invader2.png"];
+        NSArray *invaderWalkArray = @[f1,f2];
+        
         for (int i=0; i<numInvaderRows-1; i++) {
             int startX = invaderGroupStartX;
             NSLog(@"startX:%d",startX);
-            for (int j=0; j<13; j++) {
-                MCHInvader *invader = [MCHInvader spriteNodeWithColor:[UIColor whiteColor] size:invaderSize];
+            for (int j=0; j<numInvadersAcross; j++) {
+                MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[invaderWalkArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
                 invader.direction = 0;
                 invader.speed = 6;
+                invader.textureArray = invaderWalkArray;
                 invader.position = CGPointMake(startX, startY);
                 invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
                 invader.physicsBody.categoryBitMask = invadeCategory;
@@ -55,10 +66,11 @@ static const uint32_t missleCategory =  0x1 << 3;
                 invader.value = 10 * (numInvaderRows-(i+1));
                 [self.invaders addObject:invader];
                 [self addChild:invader];
-                startX = startX + 17;
+                startX = startX + invaderSize.width + invaderSpacing;
+                [invader startRepeatingMoveAnimation];
                 [invader moveLeftRight];
             }
-            startY = startY - 17;
+            startY = startY - invaderSize.height + invaderSpacing;
         }
         self.player = [MCHPlayer spriteNodeWithColor:[UIColor grayColor] size:CGSizeMake(24, 24)];
         self.player.direction = CGPointMake(0, 0);

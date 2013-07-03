@@ -14,9 +14,13 @@
 @property int direction;
 @property int range;
 @property int value;
+@property (strong,atomic) NSArray *textureArray;
+
+- (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;
 
 -(void)moveDown;
 -(void)moveLeftRight;
 -(void)gameOver;
+-(void)startRepeatingMoveAnimation;
 
 @end
