@@ -25,7 +25,7 @@
     SKAction *moveAlien = [SKAction moveByX:0.0 y:moveValue duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
         self.speed = self.speed + 0.2;
-        if(self.position.y < self.size.height*2+7){//we use height *2 because we move the alien down one for the attack, 7 is player space from bottom
+        if(self.position.y < self.size.height*2 +7){//we use height *2 because we move the alien down one for the attack, 7 is player space from bottom
             MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
             if(!gameScene.anInvaderChasingPlayer){
                 gameScene.anInvaderChasingPlayer = YES;
@@ -58,12 +58,14 @@
     }];
 }
 
--(void)startRepeatingMoveAnimation{
-    SKAction *walkAnimation = [SKAction animateWithTextures:self.textureArray timePerFrame:2];
-    SKAction *repeatAnimation = [SKAction repeatActionForever:walkAnimation];
-    [self runAction:repeatAnimation];
-}
+-(void)runMoveAnimation{
+    [self runAction:[SKAction sequence:@[
+                                         [SKAction animateWithTextures:self.textureArray timePerFrame:self.speed/[self.textureArray count]],
+                                         [SKAction runBlock:^{
+        [self runMoveAnimation];
+    }]]]];
 
+}
 
 -(void)moveToPlayer{
     MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;

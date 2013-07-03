@@ -21,6 +21,6 @@
 -(void)moveDown;
 -(void)moveLeftRight;
 -(void)gameOver;
--(void)startRepeatingMoveAnimation;
+-(void)runMoveAnimation;
 
 @end

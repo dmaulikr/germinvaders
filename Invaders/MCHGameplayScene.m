@@ -67,7 +67,7 @@ static const uint32_t missleCategory =  0x1 << 3;
                 [self.invaders addObject:invader];
                 [self addChild:invader];
                 startX = startX + invaderSize.width + invaderSpacing;
-                [invader startRepeatingMoveAnimation];
+                [invader runMoveAnimation];
                 [invader moveLeftRight];
             }
             startY = startY - invaderSize.height + invaderSpacing;
