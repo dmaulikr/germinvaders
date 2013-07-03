@@ -35,7 +35,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.activeMissles = [[NSMutableArray alloc] init];
         
         CGSize invaderSize = CGSizeMake(24, 24);
-        int invaderSpacing = 5;
+        int invaderSpacing = 7;
         int numInvadersAcross = 8;
         
         int startY = self.size.height-50;
