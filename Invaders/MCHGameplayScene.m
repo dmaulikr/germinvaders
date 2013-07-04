@@ -77,7 +77,8 @@ static const uint32_t missleCategory =  0x1 << 3;
             }
             startY = startY - invaderSize.height + invaderSpacing;
         }
-        self.player = [MCHPlayer spriteNodeWithColor:[UIColor grayColor] size:CGSizeMake(24, 24)];
+        SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
+        self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
         self.player.direction = CGPointMake(0, 0);
         self.player.speed = 20;
         self.player.position = CGPointMake(self.size.width/2, 0+self.player.size.height);

@@ -10,6 +10,14 @@
 
 @implementation MCHPlayer
 
+- (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size{
+    self = [super initWithTexture:texture color:color size:size];
+    if(self){
+        //Update this method so that maybe we pass in values to fully initialize the player - or if not using delete.
+    }
+    return self;
+}
+
 -(void)gameOver{
     [self removeAllActions];
 }
