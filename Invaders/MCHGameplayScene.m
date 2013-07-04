@@ -42,21 +42,26 @@ static const uint32_t missleCategory =  0x1 << 3;
         int invaderGroupStartX = ((self.size.width-((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
         int invaderGroupFinishX = invaderGroupStartX + ((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing));
         int invaderRange = self.size.width-4-invaderGroupFinishX;
-        int numInvaderRows = 7;
+        int numInvaderRows = 5;
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        SKTexture *f1 = [atlas textureNamed:@"invader1.png"];
-        SKTexture *f2 = [atlas textureNamed:@"invader2.png"];
-        NSArray *invaderWalkArray = @[f1,f2];
+        NSArray *invaderRowIndexMap = @[@(0),@(1),@(1),@(3),@(3)];
         
-        for (int i=0; i<numInvaderRows-1; i++) {
+        for (int i=0; i<numInvaderRows; i++) {
             int startX = invaderGroupStartX;
             NSLog(@"startX:%d",startX);
+            
+            int imageIndexValue = [(NSNumber *)[invaderRowIndexMap objectAtIndex:i] intValue];
+            NSLog(@"imageIndexValue:%d",imageIndexValue);
+            SKTexture *rowInvader0 = [atlas textureNamed:[NSString stringWithFormat:@"invader0-row%d.png",imageIndexValue]];
+            SKTexture *rowInvader1 = [atlas textureNamed:[NSString stringWithFormat:@"invader1-row%d.png",imageIndexValue]];
+            NSArray *nextInvaderRowArray = @[rowInvader0,rowInvader1];
+
             for (int j=0; j<numInvadersAcross; j++) {
-                MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[invaderWalkArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
+                MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
                 invader.direction = 0;
                 invader.speed = 6;
-                invader.textureArray = invaderWalkArray;
+                invader.textureArray = nextInvaderRowArray;
                 invader.position = CGPointMake(startX, startY);
                 invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
                 invader.physicsBody.categoryBitMask = invadeCategory;
