@@ -11,11 +11,12 @@
 #import "MCHInvader.h"
 #import "MCHPlayer.h"
 #import "MCHMissle.h"
+#import "MCHShield.h"
 #import "math.h"
 
 static const uint32_t invadeCategory =  0x1 << 0;
 static const uint32_t playerCategory =  0x1 << 1;
-//static const uint32_t wallCategory =  0x1 << 2;
+static const uint32_t shieldCategory =  0x1 << 2;
 static const uint32_t missleCategory =  0x1 << 3;
 
 #define GAMEON 0
@@ -94,22 +95,10 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.scoreDisplay.fontSize = 18;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-35);
         
-//        SKSpriteNode *leftWall = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(5, self.size.height)];
-//        leftWall.position = CGPointMake(leftWall.size.width/2, self.size.height/2);
-//        leftWall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftWall.size];
-//        leftWall.physicsBody.categoryBitMask = wallCategory;
-//        leftWall.physicsBody.dynamic = NO;
-//        
-//        SKSpriteNode *rightWAll = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(5, self.size.height)];
-//        rightWAll.position = CGPointMake(self.size.width-rightWAll.size.width/2, self.size.height/2);
-//        rightWAll.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rightWAll.size];
-//        rightWAll.physicsBody.categoryBitMask = wallCategory;
-//        rightWAll.physicsBody.dynamic = NO;
-        
         [self addChild:self.player];
         [self addChild:self.scoreDisplay];
-//        [self addChild:leftWall];
-//        [self addChild:rightWAll];
+        
+        [self buildShields:3];
         
         self.physicsWorld.gravity = CGPointMake(0,0);
         self.physicsWorld.contactDelegate = self;
@@ -118,6 +107,29 @@ static const uint32_t missleCategory =  0x1 << 3;
         self.player.physicsBody.collisionBitMask = invadeCategory;
     }
     return self;
+}
+
+-(void)buildShields:(int)numShields{
+    int shieldOrigX = 40;
+    for (int i=0; i<numShields; i++){
+        int shieldStartX = shieldOrigX;
+        //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
+        for(int x=0;x<8;x++){
+            int shieldStartY = 70;
+            for(int y=0;y<8;y++){
+                MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
+                shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
+                shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
+                shieldPiece.physicsBody.categoryBitMask = shieldCategory;
+                shieldPiece.physicsBody.collisionBitMask = missleCategory;
+                shieldPiece.physicsBody.contactTestBitMask = missleCategory;
+                [self addChild:shieldPiece];
+                shieldStartY += (4+1);
+            }
+            shieldStartX += (4+2);
+        }
+        shieldOrigX += 100;
+    }
 }
 
 -(void)fireMissle:(MCHPlayer *)attackingSprite{
@@ -200,6 +212,12 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     SKNode *node = contact.bodyA.node;
     SKNode *nodeb = contact.bodyB.node;
     if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
+        //test if one of these is a shield
+        if([node isKindOfClass:[MCHShield class]] || [nodeb isKindOfClass:[MCHShield class]]){
+            NSLog(@"shield found in a missle collision");
+            [self handleShieldMissleHitWithNode:node andNodeB:nodeb];
+            return;
+        }
         MCHInvader *invader;
         MCHMissle *missle;
         if([nodeb isKindOfClass:[MCHInvader class]]){
@@ -256,7 +274,28 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         }else if(player && missle){
             //do a ship kill and reset for player or game over if player ship count is 0
         }
+    }else if([node isKindOfClass:[MCHShield class]] || [nodeb isKindOfClass:[MCHShield class]]){
+        NSLog(@"shield in collision...");
+        [self handleShieldMissleHitWithNode:node andNodeB:nodeb];
     }
+}
+
+-(void)handleShieldMissleHitWithNode:(SKNode *)node andNodeB:(SKNode *)nodeb{
+    MCHMissle *missle;
+    if([nodeb isKindOfClass:[MCHShield class]]){
+        missle = (MCHMissle *)node;
+    }else if([node isKindOfClass:[MCHShield class]]){
+        missle = (MCHMissle *)nodeb;
+    }
+    if(missle.explodedInvader){
+        NSLog(@">>>>>>>>>>>>>>>>missle double hit detected!");
+        //we don't want a single missle to take out 2 invaders
+        return;
+    }
+    [node removeFromParent];
+    [nodeb removeFromParent];
+    missle.explodedInvader = YES;
+    [self.activeMissles removeObject:missle];
 }
 
 -(void)gameOver{
