@@ -12,5 +12,12 @@
 
 @property float speed;
 @property CGPoint direction;
+@property int score;
+@property float fireRate;
+@property BOOL readyToFire;
+
+- (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;
+
+-(void)gameOver;
 
 @end
