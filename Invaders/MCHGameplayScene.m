@@ -78,7 +78,7 @@ int direction = 5;
         [self addChild:leftWall];
         [self addChild:rightWAll];
         
-        self.physicsWorld.gravity = CGPointMake(0,0);
+        self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
         self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
         self.player.physicsBody.categoryBitMask = playerCategory;
