@@ -100,7 +100,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         
         [self buildShields:3];
         
-        self.physicsWorld.gravity = CGPointMake(0,0);
+        self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
         self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
         self.player.physicsBody.categoryBitMask = playerCategory;
