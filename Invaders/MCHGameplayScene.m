@@ -98,7 +98,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         [self addChild:self.player];
         [self addChild:self.scoreDisplay];
         
-        [self buildShields:3];
+//        [self buildShields:3];
         
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
