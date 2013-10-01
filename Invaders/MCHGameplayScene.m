@@ -24,6 +24,11 @@ static const uint32_t missleCategory =  0x1 << 3;
 
 @implementation MCHGameplayScene
 
+int numInvaderAcross;
+int numInvaderRows;
+int numInvadersPerBoard;
+int numInvadersHit;
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
@@ -37,13 +42,16 @@ static const uint32_t missleCategory =  0x1 << 3;
         
         CGSize invaderSize = CGSizeMake(24, 24);
         int invaderSpacing = 7;
-        int numInvadersAcross = 8;
+        numInvaderAcross = 6;
         
         int startY = self.size.height-50;
-        int invaderGroupStartX = ((self.size.width-((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
-        int invaderGroupFinishX = invaderGroupStartX + ((numInvadersAcross*invaderSize.width)+((numInvadersAcross-1)*invaderSpacing));
+        int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
+        int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
         int invaderRange = self.size.width-4-invaderGroupFinishX;
-        int numInvaderRows = 5;
+        numInvaderRows = 5;
+        numInvadersHit = 0;
+        
+        numInvadersPerBoard = numInvaderAcross * numInvaderRows;
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         NSArray *invaderRowIndexMap = @[@(0),@(1),@(1),@(3),@(3)];
@@ -58,7 +66,7 @@ static const uint32_t missleCategory =  0x1 << 3;
             SKTexture *rowInvader1 = [atlas textureNamed:[NSString stringWithFormat:@"invader1-row%d.png",imageIndexValue]];
             NSArray *nextInvaderRowArray = @[rowInvader0,rowInvader1];
 
-            for (int j=0; j<numInvadersAcross; j++) {
+            for (int j=0; j<numInvaderAcross; j++) {
                 MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
                 invader.direction = 0;
                 invader.speed = 6;
@@ -98,7 +106,7 @@ static const uint32_t missleCategory =  0x1 << 3;
         [self addChild:self.player];
         [self addChild:self.scoreDisplay];
         
-//        [self buildShields:3];
+        [self buildShields:3];
         
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
@@ -114,9 +122,9 @@ static const uint32_t missleCategory =  0x1 << 3;
     for (int i=0; i<numShields; i++){
         int shieldStartX = shieldOrigX;
         //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
-        for(int x=0;x<8;x++){
+        for(int x=0;x<6;x++){
             int shieldStartY = 70;
-            for(int y=0;y<8;y++){
+            for(int y=0;y<6;y++){
                 MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
                 shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
@@ -248,7 +256,12 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         missle.explodedInvader = YES;
         [self.activeMissles removeObject:missle];
         self.player.score = self.player.score + invader.value;
-        self.scoreDisplay.text = [NSString stringWithFormat:@"Score: %d",self.player.score];;
+        self.scoreDisplay.text = [NSString stringWithFormat:@"Score: %d",self.player.score];
+        //MCH - for now this is cheesy but it gets the job done - it's a game over condition detector
+        numInvadersHit++;
+        if (numInvadersHit == numInvadersPerBoard) {
+            [self gameOver];
+        }
     }else if([node isKindOfClass:[MCHPlayer class]] || [nodeb isKindOfClass:[MCHPlayer class]]){
         NSLog(@"player in collision...");
         MCHPlayer *player;
