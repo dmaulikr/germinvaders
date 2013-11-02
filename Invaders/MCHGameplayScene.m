@@ -28,7 +28,7 @@ int fireFrequencyCounter;
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        self.invaderFireFrequency = 60;
+        self.invaderFireFrequency = 90;
         fireFrequencyCounter = 0;
         level = 1;
         numInvadersFiring = level * 1;
@@ -185,7 +185,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     }
     fireFrequencyCounter++;
     if(fireFrequencyCounter == self.invaderFireFrequency){
-        for(int x=0;x<=numInvadersFiring;x++){
+        for(int x=0;x<numInvadersFiring;x++){
             int firingInvader = rand() % (self.invaders.count - 0) + 0;
             MCHInvader *invader = (MCHInvader *)[self.invaders objectAtIndex:firingInvader];
             [invader fireMissle];
