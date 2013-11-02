@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+@class MCHGameplayScene;
 
 @interface MCHPlayer : SKSpriteNode
 
@@ -15,9 +16,11 @@
 @property int score;
 @property float fireRate;
 @property BOOL readyToFire;
+@property (strong,atomic) MCHGameplayScene *parentScene;
 
 - (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;
 
 -(void)gameOver;
+-(void)fireMissle;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+@class MCHGameplayScene;
 
 @interface MCHInvader : SKSpriteNode
 
@@ -15,6 +16,9 @@
 @property int range;
 @property int value;
 @property (strong,atomic) NSArray *textureArray;
+@property float fireRate;
+@property BOOL readyToFire;
+@property (strong,atomic) MCHGameplayScene *parentScene;
 
 - (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;
 
@@ -22,5 +26,6 @@
 -(void)moveLeftRight;
 -(void)gameOver;
 -(void)runMoveAnimation;
+-(void)fireMissle;
 
 @end

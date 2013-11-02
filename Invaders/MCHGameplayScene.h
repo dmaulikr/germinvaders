@@ -19,6 +19,7 @@
 @property (strong,atomic) SKLabelNode *scoreDisplay;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
+@property int invaderFireFrequency;
 
 -(CGPoint)getPlayerPosition;
 -(void)stopAllInvadersExcept:(MCHInvader *)invader;

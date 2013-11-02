@@ -14,6 +14,8 @@
 - (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size{
     self = [super initWithTexture:texture color:color size:size];
     if(self){
+        self.readyToFire = YES;
+        self.fireRate = 2.5;
         //Update this method so that maybe we pass in values to fully initialize the invader - or if not using delete.
     }
     return self;
@@ -84,6 +86,34 @@
         [self moveToPlayer];
     }];
     
+}
+
+-(void)fireMissle{
+    NSLog(@"firing missle...");
+    if(!self.readyToFire){
+        NSLog(@"not firing because we have a fire rate.");
+        return;
+    }
+    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
+    missle.direction = CGPointMake(0,-1);
+    missle.position = self.position; //missleCategory
+    missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];
+    missle.physicsBody.categoryBitMask = missleCategory;
+    missle.physicsBody.collisionBitMask = playerCategory;
+    missle.physicsBody.contactTestBitMask = playerCategory;
+    self.readyToFire = NO;
+    [self.parentScene.activeMissles addObject:missle];
+    [self.parent addChild:missle];
+    
+    SKAction *moveMissle = [SKAction moveByX:0.0 y:self.parentScene.size.height*missle.direction.y duration:8];
+    SKAction *fireMissleSequence = [SKAction sequence:@[moveMissle,[SKAction removeFromParent]]];
+    [missle runAction:fireMissleSequence withKey:@"firePlayerMissle"];
+    SKAction *wait = [SKAction waitForDuration:self.fireRate];
+    SKAction *resetActiveInvaderMissle = [SKAction runBlock:^{
+        self.readyToFire = YES;
+    }];
+    SKAction *fireRateControlSequence = [SKAction sequence:@[wait,resetActiveInvaderMissle]];
+    [self.parent runAction:(SKAction *)fireRateControlSequence];
 }
 
 -(void)gameOver{

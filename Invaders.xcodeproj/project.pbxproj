@@ -56,6 +56,7 @@
 		2868FFF7177E7BA300BB44FF /* MCHMissle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHMissle.m; sourceTree = "<group>"; };
 		2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = InvaderExplosion.sks; path = Invaders/InvaderExplosion.sks; sourceTree = "<group>"; };
 		2868FFFB177FBC2600BB44FF /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Invaders/spark.png; sourceTree = "<group>"; };
+		28E7E9011825691600D148E8 /* MCHInvadersConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvadersConstants.h; sourceTree = "<group>"; };
 		28EA66AA1783A9650017E129 /* invader.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = invader.atlas; sourceTree = "<group>"; };
 		28F74664177BDA4E00015916 /* Invaders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invaders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F74667177BDA4E00015916 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -149,6 +150,7 @@
 			children = (
 				28F74678177BDA4E00015916 /* MCHAppDelegate.h */,
 				28F74679177BDA4E00015916 /* MCHAppDelegate.m */,
+				28E7E9011825691600D148E8 /* MCHInvadersConstants.h */,
 				28F7467B177BDA4E00015916 /* Main_iPhone.storyboard */,
 				28F7467E177BDA4E00015916 /* Main_iPad.storyboard */,
 				28F74681177BDA4E00015916 /* MCHViewController.h */,

@@ -14,25 +14,24 @@
 #import "MCHShield.h"
 #import "math.h"
 
-static const uint32_t invadeCategory =  0x1 << 0;
-static const uint32_t playerCategory =  0x1 << 1;
-static const uint32_t shieldCategory =  0x1 << 2;
-static const uint32_t missleCategory =  0x1 << 3;
-
-#define GAMEON 0
-#define GAMEOVER 1
-
 @implementation MCHGameplayScene
 
 int numInvaderAcross;
 int numInvaderRows;
 int numInvadersPerBoard;
 int numInvadersHit;
+int numInvadersFiring;
+int level;
+int fireFrequencyCounter;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
+        self.invaderFireFrequency = 60;
+        fireFrequencyCounter = 0;
+        level = 1;
+        numInvadersFiring = level * 1;
         self.gameState = GAMEON;
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
@@ -68,6 +67,7 @@ int numInvadersHit;
 
             for (int j=0; j<numInvaderAcross; j++) {
                 MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
+                invader.parentScene = self;
                 invader.direction = 0;
                 invader.speed = 6;
                 invader.textureArray = nextInvaderRowArray;
@@ -88,6 +88,7 @@ int numInvadersHit;
         }
         SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
         self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
+        self.player.parentScene = self;
         self.player.direction = CGPointMake(0, 0);
         self.player.speed = 20;
         self.player.position = CGPointMake(self.size.width/2, 0+self.player.size.height);
@@ -95,8 +96,6 @@ int numInvadersHit;
         self.player.physicsBody.categoryBitMask = playerCategory;
         self.player.physicsBody.collisionBitMask = invadeCategory;
         self.player.physicsBody.contactTestBitMask = invadeCategory;
-        self.player.fireRate = 0.25;
-        self.player.readyToFire = YES;
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
@@ -140,34 +139,6 @@ int numInvadersHit;
     }
 }
 
--(void)fireMissle:(MCHPlayer *)attackingSprite{
-    NSLog(@"firing missle...");
-    if(!self.player.readyToFire){
-        NSLog(@"not firing because we have a fire rate.");
-        return;
-    }
-    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
-    missle.direction = CGPointMake(0,1);
-    missle.position = attackingSprite.position; //missleCategory
-    missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];
-    missle.physicsBody.categoryBitMask = missleCategory;
-    missle.physicsBody.collisionBitMask = invadeCategory;
-    missle.physicsBody.contactTestBitMask = invadeCategory;
-    self.player.readyToFire = NO;
-    [self.activeMissles addObject:missle];
-    [self addChild:missle];
-    
-    SKAction *moveMissle = [SKAction moveByX:0.0 y:self.size.height*missle.direction.y duration:2.5];
-    SKAction *fireMissleSequence = [SKAction sequence:@[moveMissle,[SKAction removeFromParent]]];
-    [missle runAction:fireMissleSequence withKey:@"firePlayerMissle"];
-    SKAction *wait = [SKAction waitForDuration:self.player.fireRate];
-    SKAction *resetActivePlayerMissle = [SKAction runBlock:^{
-        self.player.readyToFire = YES;
-    }];
-    SKAction *fireRateControlSequence = [SKAction sequence:@[wait,resetActivePlayerMissle]];
-    [self runAction:(SKAction *)fireRateControlSequence];
-}
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if(self.gameState == GAMEOVER){
         [self goMenu];
@@ -185,7 +156,7 @@ int numInvadersHit;
     if (CGRectContainsPoint(playerFrame, [touch locationInView:self.view])) {
         //fire missle
         NSLog(@"we touched the player.");
-        [self fireMissle:self.player];
+        [self.player fireMissle];
     }else if(playerX > touchX){
         distance = playerX - touchX;
         float moveDuration = distance / self.player.speed;
@@ -209,6 +180,15 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+    fireFrequencyCounter++;
+    if(fireFrequencyCounter == self.invaderFireFrequency){
+        for(int x=0;x<=numInvadersFiring;x++){
+            int firingInvader = rand() % (self.invaders.count - 0) + 0;
+            MCHInvader *invader = (MCHInvader *)[self.invaders objectAtIndex:firingInvader];
+            [invader fireMissle];
+        }
+        fireFrequencyCounter = 0;
+    }
 }
 
 - (SKEmitterNode*) newExplosionEmitter{
