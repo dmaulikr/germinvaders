@@ -180,6 +180,9 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+    if(self.gameState == GAMEOVER){
+        return;
+    }
     fireFrequencyCounter++;
     if(fireFrequencyCounter == self.invaderFireFrequency){
         for(int x=0;x<=numInvadersFiring;x++){
@@ -200,6 +203,19 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     SKNode *node = contact.bodyA.node;
     SKNode *nodeb = contact.bodyB.node;
     if([node isKindOfClass:[MCHMissle class]] || [nodeb isKindOfClass:[MCHMissle class]]){
+        
+        if([node isKindOfClass:[MCHMissle class]] && [nodeb isKindOfClass:[MCHMissle class]]){
+            NSLog(@"------------->>>>>>MISSLE to MISSLE hit!!!!!");
+            [node removeFromParent];
+            [nodeb removeFromParent];
+            MCHMissle *missle1 = (MCHMissle *)node;
+            MCHMissle *missle2 = (MCHMissle *)nodeb;
+            [self.activeMissles removeObject:missle1];
+            [self.activeMissles removeObject:missle2];
+            return;
+        }
+        
+        BOOL playerHit = NO;
         //test if one of these is a shield
         if([node isKindOfClass:[MCHShield class]] || [nodeb isKindOfClass:[MCHShield class]]){
             NSLog(@"shield found in a missle collision");
@@ -214,6 +230,8 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         }else if([node isKindOfClass:[MCHInvader class]]){
             invader = (MCHInvader *)node;            
             missle = (MCHMissle *)nodeb;
+        }else if([node isKindOfClass:[MCHPlayer class]] || [nodeb isKindOfClass:[MCHPlayer class]]){
+            playerHit = YES;
         }
         if(missle.explodedInvader){
             NSLog(@">>>>>>>>>>>>>>>>double hit detected!");
@@ -239,7 +257,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         self.scoreDisplay.text = [NSString stringWithFormat:@"Score: %d",self.player.score];
         //MCH - for now this is cheesy but it gets the job done - it's a game over condition detector
         numInvadersHit++;
-        if (numInvadersHit == numInvadersPerBoard) {
+        if (numInvadersHit == numInvadersPerBoard || playerHit) {
             [self gameOver];
         }
     }else if([node isKindOfClass:[MCHPlayer class]] || [nodeb isKindOfClass:[MCHPlayer class]]){

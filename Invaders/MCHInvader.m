@@ -94,13 +94,13 @@
         NSLog(@"not firing because we have a fire rate.");
         return;
     }
-    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(2,6)];
+    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,-1);
     missle.position = self.position; //missleCategory
     missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];
     missle.physicsBody.categoryBitMask = missleCategory;
-    missle.physicsBody.collisionBitMask = playerCategory;
-    missle.physicsBody.contactTestBitMask = playerCategory;
+    missle.physicsBody.collisionBitMask = playerCategory | missleCategory;
+    missle.physicsBody.contactTestBitMask = playerCategory | missleCategory;
     self.readyToFire = NO;
     [self.parentScene.activeMissles addObject:missle];
     [self.parent addChild:missle];

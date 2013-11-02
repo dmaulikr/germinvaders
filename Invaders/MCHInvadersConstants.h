@@ -10,16 +10,18 @@
 #define Invaders_MCHInvadersConstants_h
 
 #pragma mark - Sprite Categories
-//static const uint32_t invadeCategory =  0x1 << 0;
-//static const uint32_t playerCategory =  0x1 << 1;
-//static const uint32_t shieldCategory =  0x1 << 2;
-//static const uint32_t missleCategory =  0x1 << 3;
-#define invadeCategory 0x1 << 0;
-#define playerCategory 0x1 << 1;
-#define shieldCategory 0x1 << 2;
-#define missleCategory 0x1 << 3;
+
+typedef enum : uint8_t {
+    invadeCategory  = 1,
+    playerCategory  = 2,
+    shieldCategory  = 3,
+    missleCategory  = 4
+} ColliderType;
+
+
 
 #pragma mark - Game States
+
 #define GAMEON 0
 #define GAMEOVER 1
 
