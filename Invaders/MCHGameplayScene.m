@@ -127,7 +127,7 @@ int fireFrequencyCounter;
             int shieldStartY = 70;
             for(int y=0;y<2;y++){
 //                MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
-                MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(8,31)];
+                MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(10,26)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
                 shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
                 shieldPiece.physicsBody.categoryBitMask = shieldCategory;
@@ -136,7 +136,7 @@ int fireFrequencyCounter;
                 [self addChild:shieldPiece];
                 shieldStartY += (shieldPiece.frame.size.height+3);
             }
-            shieldStartX += (8+2);
+            shieldStartX += (10+3);
         }
         shieldOrigX += 100;
     }
