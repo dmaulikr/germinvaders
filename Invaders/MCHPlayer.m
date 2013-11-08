@@ -33,7 +33,7 @@
     }
     MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,1);
-    missle.position = self.position; //missleCategory
+    missle.position = CGPointMake(self.position.x-10, self.position.y);// self.position; //missleCategory
     missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];
     missle.physicsBody.categoryBitMask = missleCategory;
     missle.physicsBody.collisionBitMask = invadeCategory | missleCategory;

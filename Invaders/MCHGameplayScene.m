@@ -39,8 +39,8 @@ int fireFrequencyCounter;
         self.invaders = [NSMutableArray arrayWithCapacity:6*13];
         self.activeMissles = [[NSMutableArray alloc] init];
         
-        CGSize invaderSize = CGSizeMake(24, 24);
-        int invaderSpacing = 7;
+        CGSize invaderSize = CGSizeMake(30, 30);
+        int invaderSpacing = 10;
         numInvaderAcross = 6;
         
         int startY = self.size.height-50;
@@ -84,7 +84,7 @@ int fireFrequencyCounter;
                 [invader runMoveAnimation];
                 [invader moveLeftRight];
             }
-            startY = startY - invaderSize.height + invaderSpacing;
+            startY = startY - invaderSize.height - invaderSpacing;
         }
         SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
         self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
@@ -293,20 +293,22 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)handleShieldMissleHitWithNode:(SKNode *)node andNodeB:(SKNode *)nodeb{
     MCHMissle *missle;
-    if([nodeb isKindOfClass:[MCHShield class]]){
-        missle = (MCHMissle *)node;
-    }else if([node isKindOfClass:[MCHShield class]]){
+    if([nodeb isKindOfClass:[MCHMissle class]]){
         missle = (MCHMissle *)nodeb;
+    }else if([node isKindOfClass:[MCHMissle class]]){
+        missle = (MCHMissle *)node;
     }
-    if(missle.explodedInvader){
-        NSLog(@">>>>>>>>>>>>>>>>missle double hit detected!");
-        //we don't want a single missle to take out 2 invaders
-        return;
+    if (missle) {
+        if(missle.explodedInvader){
+            NSLog(@">>>>>>>>>>>>>>>>missle double hit detected!");
+            //we don't want a single missle to take out 2 invaders
+            return;
+        }
+        [node removeFromParent];
+        [nodeb removeFromParent];
+        missle.explodedInvader = YES;
+        [self.activeMissles removeObject:missle];
     }
-    [node removeFromParent];
-    [nodeb removeFromParent];
-    missle.explodedInvader = YES;
-    [self.activeMissles removeObject:missle];
 }
 
 -(void)gameOver{
