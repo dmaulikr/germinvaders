@@ -118,22 +118,25 @@ int fireFrequencyCounter;
 
 -(void)buildShields:(int)numShields{
     int shieldOrigX = 40;
+    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+    SKTexture *shieldTexture = [atlas textureNamed:@"shield-bottle.png"];
     for (int i=0; i<numShields; i++){
         int shieldStartX = shieldOrigX;
         //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
         for(int x=0;x<6;x++){
             int shieldStartY = 70;
-            for(int y=0;y<6;y++){
-                MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
+            for(int y=0;y<2;y++){
+//                MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
+                MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(8,31)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
                 shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
                 shieldPiece.physicsBody.categoryBitMask = shieldCategory;
                 shieldPiece.physicsBody.collisionBitMask = missleCategory;
                 shieldPiece.physicsBody.contactTestBitMask = missleCategory;
                 [self addChild:shieldPiece];
-                shieldStartY += (4+1);
+                shieldStartY += (shieldPiece.frame.size.height+3);
             }
-            shieldStartX += (4+2);
+            shieldStartX += (8+2);
         }
         shieldOrigX += 100;
     }
