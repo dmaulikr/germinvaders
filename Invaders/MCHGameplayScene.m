@@ -25,6 +25,7 @@ int level;
 int fireFrequencyCounter;
 int numPlayers;
 int score;
+BOOL respawning = NO;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
@@ -153,19 +154,31 @@ int score;
 }
 
 - (void)respawnPlayer{
-    self.respawning = YES;
+    
+    respawning = YES;
+    
+    //remove all active missles when the player is killed
     for(MCHMissle *nextMissle in self.activeMissles){
         [nextMissle removeFromParent];
     }
     [self.activeMissles removeAllObjects];
+    //pause the movement of all the invaders (resume their movements when the player is actually respawned
+    for(MCHInvader *nextInvader in self.invaders){
+        [nextInvader setPaused:YES];
+    }
+    
     numPlayers--;
     [self updateScoreDisplay];
     if(numPlayers > 0){
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            self.respawning = NO;
             [self spawnPlayer:[SKTextureAtlas atlasNamed:@"invader"]];
+            //pause the movement of all the invaders (resume their movements when the player is actually respawned
+            for(MCHInvader *nextInvader in self.invaders){
+                [nextInvader setPaused:NO];
+            }
+            respawning = NO;
         });
     }else{
         [self gameOver];;
@@ -237,7 +250,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    if(self.gameState == GAMEOVER || self.respawning){
+    if(self.gameState == GAMEOVER || respawning){
         return;
     }
     fireFrequencyCounter++;
