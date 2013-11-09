@@ -154,14 +154,18 @@ int score;
 
 - (void)respawnPlayer{
     self.respawning = YES;
+    for(MCHMissle *nextMissle in self.activeMissles){
+        [nextMissle removeFromParent];
+    }
+    [self.activeMissles removeAllObjects];
     numPlayers--;
     [self updateScoreDisplay];
     if(numPlayers > 0){
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self spawnPlayer:[SKTextureAtlas atlasNamed:@"invader"]];
             self.respawning = NO;
+            [self spawnPlayer:[SKTextureAtlas atlasNamed:@"invader"]];
         });
     }else{
         [self gameOver];;
