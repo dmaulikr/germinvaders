@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <stdlib.h>
 #import "MCHPlayer.h"
 #import "MCHMissle.h"
 
@@ -21,6 +22,7 @@
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;
+@property BOOL respawning;
 @property int invaderFireFrequency;
 
 -(CGPoint)getPlayerPosition;

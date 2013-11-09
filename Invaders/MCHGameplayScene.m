@@ -23,12 +23,33 @@ int numInvadersHit;
 int numInvadersFiring;
 int level;
 int fireFrequencyCounter;
+int numPlayers;
+int score;
+
+- (void)spawnPlayer:(SKTextureAtlas *)atlas {
+    SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
+    self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
+    self.player.parentScene = self;
+    self.player.direction = CGPointMake(0, 0);
+    self.player.speed = 20;
+    self.player.position = CGPointMake(self.size.width/2, 40+self.player.size.height);
+    self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
+    self.player.physicsBody.categoryBitMask = playerCategory;
+    self.player.physicsBody.collisionBitMask = invadeCategory;
+    self.player.physicsBody.contactTestBitMask = invadeCategory;
+    [self addChild:self.player];
+}
+
+- (void)updateScoreDisplay {
+    self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d Pipes: %d",score,numPlayers];
+}
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        numPlayers = 3;
         
-        self.invaderFireFrequency = 90;
+        self.invaderFireFrequency = 60;
         fireFrequencyCounter = 0;
         level = 1;
         numInvadersFiring = level * 1;
@@ -86,31 +107,13 @@ int fireFrequencyCounter;
             }
             startY = startY - invaderSize.height - invaderSpacing;
         }
-        SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
-        self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
-        self.player.parentScene = self;
-        self.player.direction = CGPointMake(0, 0);
-        self.player.speed = 20;
-        self.player.position = CGPointMake(self.size.width/2, 40+self.player.size.height);
-        self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
-        self.player.physicsBody.categoryBitMask = playerCategory;
-        self.player.physicsBody.collisionBitMask = invadeCategory;
-        self.player.physicsBody.contactTestBitMask = invadeCategory;
+        [self spawnPlayer:atlas];
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d",self.player.score];;
-        self.scoreDisplay.fontSize = 18;
+        [self updateScoreDisplay];
+        self.scoreDisplay.fontSize = 14;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-35);
-        
-        [self addChild:self.player];
         [self addChild:self.scoreDisplay];
-        
-        /*
-        SKTexture *playerControlTexture = [atlas textureNamed:@"fingerprint.png"];
-        self.playerControl = [[SKSpriteNode alloc] initWithTexture:playerControlTexture color:[UIColor clearColor] size:CGSizeMake(28,40)];
-        self.playerControl.position = CGPointMake(self.player.position.x, self.player.position.y-40);
-        [self addChild:self.playerControl];
-         */
         
         [self buildShields:3];
         
@@ -134,7 +137,6 @@ int fireFrequencyCounter;
         for(int x=0;x<6;x++){
             int shieldStartY = 110;
             for(int y=0;y<2;y++){
-                //                MCHShield *shieldPiece = [MCHShield spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
                 MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(10,26)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
                 shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
@@ -147,6 +149,22 @@ int fireFrequencyCounter;
             shieldStartX += (10+3);
         }
         shieldOrigX += 100;
+    }
+}
+
+- (void)respawnPlayer{
+    self.respawning = YES;
+    numPlayers--;
+    [self updateScoreDisplay];
+    if(numPlayers > 0){
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self spawnPlayer:[SKTextureAtlas atlasNamed:@"invader"]];
+            self.respawning = NO;
+        });
+    }else{
+        [self gameOver];;
     }
 }
 
@@ -173,13 +191,6 @@ int fireFrequencyCounter;
         if (touchLocation.y < self.player.position.y) {
             self.movePlayer = YES;
         }
-        /*
-        SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
-        if (touchedNode == self.playerControl || touchedNode == self.player) {
-            NSLog(@"on player");
-            self.movePlayer = YES;
-        }
-         */
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
         NSLog(@"in pan");
         if(self.movePlayer){
@@ -207,17 +218,6 @@ int fireFrequencyCounter;
         self.movePlayer = NO;
     }
     
-    /*
-    CGPoint touchLocation = [gesture locationInView:gesture.view];
-    touchLocation = [self convertPointFromView:touchLocation];
-    SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
-    if (touchedNode == self.player) {
-        CGPoint trans = [gesture translationInView:self.view];
-        SKAction *moveAction =  [SKAction moveByX:trans.x y:-trans.y  duration:0];
-        [self.player runAction:moveAction];
-        [gesture setTranslation:CGPointMake(0, 0) inView:self.view];
-    }
-     */
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -226,42 +226,6 @@ int fireFrequencyCounter;
         return;
     }
 }
-
-/*
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if(self.gameState == GAMEOVER){
-        [self goMenu];
-        return;
-    }
-    
-    UITouch *touch = (UITouch *)[[event.allTouches objectEnumerator] nextObject];
-    NSLog(@"touch.x:%f, touch.y:%f",[touch locationInView:self.view].x,[touch locationInView:self.view].y);
-    NSLog(@"player.x:%f, player.y:%f",self.player.position.x,self.size.height-self.player.position.y);
-//    float playerX = [self convertPointToView:self.player.position].x;
-//    float touchX = [touch locationInView:self.view].x;
-//    float distance;
-    
-    CGRect playerFrame = CGRectMake(self.player.position.x-self.player.size.width/2, (self.size.height-self.player.position.y)-self.player.size.height/2, self.player.size.width, self.player.size.height);
-    if (CGRectContainsPoint(playerFrame, [touch locationInView:self.view])) {
-        //fire missle
-        NSLog(@"we touched the player.");
-        [self.player fireMissle];
-    }*//*else if(playerX > touchX){
-        distance = playerX - touchX;
-        float moveDuration = distance / self.player.speed;
-        NSLog(@"moveDuration is:%f and distance is:%f",moveDuration,distance);
-        SKAction *moveToTouch = [SKAction moveByX: -(distance) y: 0.0 duration: moveDuration];
-        [self.player runAction:moveToTouch withKey:@"movePlayerToTouch"];
-    }else{
-        distance = touchX - playerX;
-        float moveDuration = distance / self.player.speed;
-        NSLog(@"moveDuration is:%f and distance is:%f",moveDuration,distance);
-        SKAction *moveToTouch = [SKAction moveByX: distance y: 0.0 duration: moveDuration];
-        [self.player runAction:moveToTouch withKey:@"movePlayerToTouch"];
-    }*/
-    
-//    float distance = ([self convertPointToView:self.player.position] + [touch locationInView:self.view].x)/2;
-//}
 
 CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     return hypotf(second.x - first.x, second.y - first.y);
@@ -269,13 +233,14 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    if(self.gameState == GAMEOVER){
+    if(self.gameState == GAMEOVER || self.respawning){
         return;
     }
     fireFrequencyCounter++;
     if(fireFrequencyCounter == self.invaderFireFrequency){
         for(int x=0;x<numInvadersFiring;x++){
-            int firingInvader = rand() % (self.invaders.count - 0) + 0;
+            int firingInvader = arc4random() % (self.invaders.count - 0);
+//            int firingInvader = rand() % (self.invaders.count - 0) + 0;
             MCHInvader *invader = (MCHInvader *)[self.invaders objectAtIndex:firingInvader];
             [invader fireMissle];
         }
@@ -342,12 +307,16 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         [nodeb removeFromParent];
         missle.explodedInvader = YES;
         [self.activeMissles removeObject:missle];
-        self.player.score = self.player.score + invader.value;
-        self.scoreDisplay.text = [NSString stringWithFormat:@"Score: %d",self.player.score];
+        score += invader.value;
+        [self updateScoreDisplay];
         //MCH - for now this is cheesy but it gets the job done - it's a game over condition detector
         numInvadersHit++;
-        if (numInvadersHit == numInvadersPerBoard || playerHit) {
+        if (numInvadersHit == numInvadersPerBoard) {
+            //actually want to level up here
             [self gameOver];
+        }
+        if(playerHit){
+            [self respawnPlayer];
         }
     }else if([node isKindOfClass:[MCHPlayer class]] || [nodeb isKindOfClass:[MCHPlayer class]]){
         NSLog(@"player in collision...");
@@ -373,6 +342,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
             [self gameOver];
         }else if(player && missle){
             //do a ship kill and reset for player or game over if player ship count is 0
+            [self respawnPlayer];
         }
     }else if([node isKindOfClass:[MCHShield class]] || [nodeb isKindOfClass:[MCHShield class]]){
         NSLog(@"shield in collision...");
