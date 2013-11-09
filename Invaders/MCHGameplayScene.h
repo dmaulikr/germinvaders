@@ -12,13 +12,15 @@
 
 @class MCHInvader;
 
-@interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate>
+@interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate, UIGestureRecognizerDelegate>
 @property (strong,atomic) NSMutableArray *invaders;
 @property (strong,atomic) NSMutableArray *activeMissles;
 @property (strong,atomic) MCHPlayer *player;
+@property (strong,atomic) SKSpriteNode *playerControl;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
+@property BOOL movePlayer;
 @property int invaderFireFrequency;
 
 -(CGPoint)getPlayerPosition;
