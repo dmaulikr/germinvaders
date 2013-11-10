@@ -19,6 +19,8 @@
 @property (strong,atomic) MCHPlayer *player;
 @property (strong,atomic) SKSpriteNode *playerControl;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
+@property (strong,atomic) SKLabelNode *pauseButton;
+@property (strong,atomic) SKLabelNode *menuButton;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;

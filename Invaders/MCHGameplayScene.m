@@ -41,14 +41,14 @@ BOOL respawning = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"LEVEL %d  SCORE %d  PIPES %d",level,score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"level %d  score %d  pipes %d",level,score,numPlayers];
 }
 
 - (void)spawnInvaders:(SKTextureAtlas *)atlas {
     
     [self.invaders removeAllObjects];
     
-    int startY = self.size.height-70;
+    int startY = self.size.height-85;
     CGSize invaderSize = CGSizeMake(30, 30);
     int invaderSpacing = 10;
     int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
@@ -117,10 +117,22 @@ BOOL respawning = NO;
         [self spawnInvaders:atlas];
         [self spawnPlayer:atlas];
         
+        self.pauseButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.pauseButton.text = @"pause";
+        self.pauseButton.fontSize = 18;
+        self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10,self.size.height-40);
+        [self addChild:self.pauseButton];
+        
+        self.menuButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.menuButton.text = @"menu";
+        self.menuButton.fontSize = 18;
+        self.menuButton.position = CGPointMake(0+10+(self.menuButton.frame.size.width/2),self.pauseButton.position.y);
+        [self addChild:self.menuButton];
+
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         [self updateScoreDisplay];
         self.scoreDisplay.fontSize = 18;
-        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-40);
+        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButton.frame.origin.y - (self.pauseButton.frame.size.height+5));
         [self addChild:self.scoreDisplay];
         
         [self buildShields:3];
@@ -213,13 +225,26 @@ BOOL respawning = NO;
     playerControlGesture.delegate = self;
     [[self view] addGestureRecognizer:playerControlGesture];
     
-    UITapGestureRecognizer *playerFireGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playerFire:)];
+    UITapGestureRecognizer *playerFireGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePlayerTap:)];
     playerFireGesture.delegate = self;
     [[self view] addGestureRecognizer:playerFireGesture];
 }
 
--(void)playerFire:(UITapGestureRecognizer *)gesture{
-    [self.player fireMissle];
+-(void)pauseGame:(UITapGestureRecognizer *)gesture{
+    self.paused = !self.paused;
+}
+
+-(void)handlePlayerTap:(UITapGestureRecognizer *)gesture{
+    CGPoint touchLocation = [gesture locationInView:gesture.view];
+    touchLocation = [self convertPointFromView:touchLocation];
+    SKNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
+    if(touchedNode == self.pauseButton){
+        [self pauseGame:gesture];
+    }else if(touchedNode == self.menuButton){
+        [self goMenu];
+    }else{
+        [self.player fireMissle];
+    }
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
@@ -259,12 +284,14 @@ BOOL respawning = NO;
     
 }
 
+/*
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if(self.gameState == GAMEOVER){
         [self goMenu];
         return;
     }
 }
+ */
 
 CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     return hypotf(second.x - first.x, second.y - first.y);
@@ -272,7 +299,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    if(self.gameState == GAMEOVER || respawning){
+    if(self.gameState == GAMEOVER || respawning || self.paused){
         return;
     }
     fireFrequencyCounter++;
