@@ -42,7 +42,7 @@ BOOL respawning = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"Score:%d Pipes: %d",score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"SCORE %d  PIPES %d",score,numPlayers];
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -56,7 +56,7 @@ BOOL respawning = NO;
         numInvadersFiring = level * 1;
         self.gameState = GAMEON;
         
-        self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
+        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
         
         self.invaders = [NSMutableArray arrayWithCapacity:6*13];
         self.activeMissles = [[NSMutableArray alloc] init];
@@ -65,7 +65,7 @@ BOOL respawning = NO;
         int invaderSpacing = 10;
         numInvaderAcross = 6;
         
-        int startY = self.size.height-50;
+        int startY = self.size.height-70;
         int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
         int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
         int invaderRange = self.size.width-4-invaderGroupFinishX;
@@ -110,10 +110,10 @@ BOOL respawning = NO;
         }
         [self spawnPlayer:atlas];
         
-        self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         [self updateScoreDisplay];
-        self.scoreDisplay.fontSize = 14;
-        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-35);
+        self.scoreDisplay.fontSize = 18;
+        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.size.height-40);
         [self addChild:self.scoreDisplay];
         
         [self buildShields:3];
@@ -389,9 +389,9 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)gameOver{
     self.gameState = GAMEOVER;
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
     myLabel.text = @"GAME OVER";
-    myLabel.fontSize = 30;
+    myLabel.fontSize = 38;
     myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                    CGRectGetMidY(self.frame));
     for(MCHInvader *invader in self.invaders){
