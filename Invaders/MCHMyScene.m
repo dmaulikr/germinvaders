@@ -21,8 +21,7 @@
         
         myLabel.text = @"Tap to Play";
         myLabel.fontSize = 38;
-        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                       CGRectGetMidY(self.frame));
+        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
         
         [self addChild:myLabel];
     }

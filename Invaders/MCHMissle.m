@@ -12,6 +12,7 @@
 
 -(void)gameOver{
     [self removeAllActions];
+    [self removeFromParent];
 }
 
 @end

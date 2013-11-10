@@ -138,7 +138,7 @@ BOOL respawning = NO;
         self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.pauseButton.position.y);
         [self addChild:self.menuButton];
         
-        self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.player.position.y+self.player.frame.size.height/2)];
+        self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.player.position.y+self.player.frame.size.height)];
         self.playerShootButton.position = CGPointMake(CGRectGetMidX(self.frame),self.playerShootButton.frame.size.height/2);
         [self addChild:self.playerShootButton];
         
@@ -176,6 +176,7 @@ BOOL respawning = NO;
                 shieldPiece.physicsBody.categoryBitMask = shieldCategory;
                 shieldPiece.physicsBody.collisionBitMask = missleCategory;
                 shieldPiece.physicsBody.contactTestBitMask = missleCategory;
+                [self.shields addObject:shieldPiece];
                 [self addChild:shieldPiece];
                 shieldStartY += (shieldPiece.frame.size.height+3);
             }
@@ -248,23 +249,11 @@ BOOL respawning = NO;
     score = 0;
     numPlayers = 3;
     [self updateScoreDisplay];
-    [self.player removeFromParent];
-    for(MCHInvader *invader in self.invaders){
-        [invader removeFromParent];
-    }
-    [self.invaders removeAllObjects];
-    for(MCHMissle *missle in self.activeMissles){
-        [missle removeFromParent];
-    }
-    [self.activeMissles removeAllObjects];
-    for(MCHShield *shield in self.shields){
-        [shield removeFromParent];
-    }
-    [self.shields removeAllObjects];
 
     self.gameOverDisplay.hidden = YES;
     self.restartButtonLabel.hidden = YES;
     self.restartButton.hidden = YES;
+    self.endGameBoss.hidden = YES;
     
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     [self spawnPlayer:atlas];
@@ -314,11 +303,13 @@ BOOL respawning = NO;
 }
 
 -(void)handlePauseButtonTap{
-    self.paused = !self.paused;
-    if(self.paused){
-        self.pauseButtonLabel.text = @"resume";
-    }else{
-        self.pauseButtonLabel.text = @"pause";
+    if(self.gameState == GAMEON){
+        self.paused = !self.paused;
+        if(self.paused){
+            self.pauseButtonLabel.text = @"resume";
+        }else{
+            self.pauseButtonLabel.text = @"pause";
+        }
     }
 }
 
@@ -327,7 +318,22 @@ BOOL respawning = NO;
 }
 
 -(void)handleRestartButtonTap{
-    [self restartGame];
+    if(self.gameState == GAMEOVER){
+        SKEmitterNode *explosion = [self newExplosionEmitter];
+        explosion.position = self.endGameBoss.position;
+        [self addChild:explosion];
+        [explosion runAction:[SKAction sequence:@[
+                                                  [SKAction waitForDuration:0.25],
+                                                  [SKAction runBlock:^{
+            explosion.particleBirthRate = 0;
+        }],
+                                                  [SKAction waitForDuration:explosion.particleLifetime + explosion.particleLifetimeRange],
+                                                  [SKAction removeFromParent],
+                                                  ]] completion:^{
+            [self restartGame];
+        }];
+        self.endGameBoss.hidden = YES;
+    }
 }
 
 -(void)handlePlayerShootButtonTap{
@@ -350,26 +356,6 @@ BOOL respawning = NO;
         [self handlePlayerShootButtonTap];
     }
 }
-
-/*
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if(self.gameState == GAMEOVER){
-        return;
-    }
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInNode:self];
-    SKNode *node = [self nodeAtPoint:location];
-    if([node isEqual:self.pauseButton]){
-        [self handlePauseButtonTap];
-    }else if([node isEqual:self.menuButton]){
-        [self handleMenuButtonTap];
-    }else if([node isEqual:self.restartButton]){
-        [self handleRestartButtonTap];
-    }else if([node isEqual:self.playerShootButton]){
-        [self handlePlayerShootButtonTap];
-    }
-}
- */
 
 CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     return hypotf(second.x - first.x, second.y - first.y);
@@ -516,6 +502,30 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 -(void)gameOver{
     self.gameState = GAMEOVER;
     
+    for(MCHInvader *invader in self.invaders){
+        [invader gameOver];
+    }
+    [self.invaders removeAllObjects];
+    for(MCHMissle *missle in self.activeMissles){
+        [missle gameOver];
+    }
+    [self.activeMissles removeAllObjects];
+    for(MCHShield *shield in self.shields){
+        [shield gameOver];
+    }
+    [self.shields removeAllObjects];
+    [self.player gameOver];
+
+    if(!self.endGameBoss){
+        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+        SKTexture *endBossTexture = [atlas textureNamed:@"robfordendgame-sized.png"];
+        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(257/2,300)];
+        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        [self addChild:self.endGameBoss];
+    }else{
+        self.endGameBoss.hidden = NO;
+    }
+    
     if(!self.gameOverDisplay){
         self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.gameOverDisplay.text = @"GAME OVER";
@@ -525,13 +535,6 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     }else{
         self.gameOverDisplay.hidden = NO;
     }
-    for(MCHInvader *invader in self.invaders){
-        [invader gameOver];
-    }
-    for(MCHMissle *missle in self.activeMissles){
-        [missle gameOver];
-    }
-    [self.player gameOver];
 
     if(!self.restartButtonLabel){
         self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
@@ -540,8 +543,8 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
         [self addChild:self.restartButtonLabel];
         
-        self.restartButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.restartButtonLabel.frame.size.width*1.2, self.restartButtonLabel.frame.size.height*1.2)];
-        self.restartButton.position = CGPointMake(self.restartButtonLabel.position.x, self.restartButtonLabel.position.y+(self.restartButtonLabel.frame.size.height*1.2-self.restartButtonLabel.frame.size.height));
+        self.restartButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.restartButtonLabel.frame.size.width*1.2, self.restartButtonLabel.frame.size.height*1.2 + self.gameOverDisplay.frame.size.height + 60)];
+        self.restartButton.position = CGPointMake(self.restartButtonLabel.position.x, self.gameOverDisplay.position.y);
         [self addChild:self.restartButton];
     }else{
         self.restartButtonLabel.hidden = NO;

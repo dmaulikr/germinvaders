@@ -10,4 +10,9 @@
 
 @implementation MCHShield
 
+-(void)gameOver{
+    [self removeAllActions];
+    [self removeFromParent];
+}
+
 @end

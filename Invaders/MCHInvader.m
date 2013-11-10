@@ -22,16 +22,6 @@
     return self;
 }
 
-/*
-- (void)setSpeed:(float)invaderSpeed {
-    if(invaderSpeed > self.maxSpeed){
-        self.speed = self.maxSpeed;
-    }else{
-        self.speed = invaderSpeed;
-    }
-}
- */
-
 -(void)moveDown{
     int moveValue = -self.size.height;
     
@@ -132,6 +122,7 @@
 
 -(void)gameOver{
     [self removeAllActions];
+    [self removeFromParent];
 }
 
 @end

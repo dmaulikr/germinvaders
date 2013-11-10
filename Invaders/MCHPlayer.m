@@ -23,6 +23,7 @@
 
 -(void)gameOver{
     [self removeAllActions];
+    [self removeFromParent];
 }
 
 -(void)fireMissle{

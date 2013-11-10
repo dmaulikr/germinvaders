@@ -10,4 +10,6 @@
 
 @interface MCHShield : SKSpriteNode
 
+-(void)gameOver;
+
 @end

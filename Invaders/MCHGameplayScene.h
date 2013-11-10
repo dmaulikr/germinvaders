@@ -28,6 +28,7 @@
 @property (strong,atomic) SKSpriteNode *restartButton;
 @property (strong,atomic) SKLabelNode *restartButtonLabel;
 @property (strong,atomic) SKSpriteNode *playerShootButton;
+@property (strong,atomic) SKSpriteNode *endGameBoss;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;
