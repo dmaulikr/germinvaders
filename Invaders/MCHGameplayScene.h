@@ -20,9 +20,14 @@
 @property (strong,atomic) MCHPlayer *player;
 @property (strong,atomic) SKSpriteNode *playerControl;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
-@property (strong,atomic) SKLabelNode *pauseButton;
-@property (strong,atomic) SKLabelNode *menuButton;
+@property (strong,atomic) SKLabelNode *pauseButtonLabel;
+@property (strong,atomic) SKSpriteNode *pauseButton;
+@property (strong,atomic) SKLabelNode *menuButtonLabel;
+@property (strong,atomic) SKSpriteNode *menuButton;
 @property (strong,atomic) SKLabelNode *gameOverDisplay;
+@property (strong,atomic) SKSpriteNode *restartButton;
+@property (strong,atomic) SKLabelNode *restartButtonLabel;
+@property (strong,atomic) SKSpriteNode *playerShootButton;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;

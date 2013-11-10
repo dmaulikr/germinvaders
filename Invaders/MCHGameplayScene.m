@@ -118,22 +118,34 @@ BOOL respawning = NO;
         [self spawnInvaders:atlas];
         [self spawnPlayer:atlas];
         
-        self.pauseButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.pauseButton.text = @"pause";
-        self.pauseButton.fontSize = 18;
-        self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10,self.size.height-40);
-        [self addChild:self.pauseButton];
-        
-        self.menuButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.menuButton.text = @"menu";
-        self.menuButton.fontSize = 18;
-        self.menuButton.position = CGPointMake(0+10+(self.menuButton.frame.size.width/2),self.pauseButton.position.y);
-        [self addChild:self.menuButton];
+        self.pauseButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.pauseButtonLabel.text = @"pause";
+        self.pauseButtonLabel.fontSize = 18;
+        self.pauseButtonLabel.position = CGPointMake(self.frame.size.width - self.pauseButtonLabel.frame.size.width+10,self.size.height-40);
+        [self addChild:self.pauseButtonLabel];
 
+        self.pauseButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.pauseButtonLabel.frame.size.width+20, self.pauseButtonLabel.frame.size.height+50)];
+        self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width/2,self.size.height-self.pauseButton.frame.size.height/2);
+        [self addChild:self.pauseButton];
+
+        self.menuButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.menuButtonLabel.text = @"menu";
+        self.menuButtonLabel.fontSize = 18;
+        self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.pauseButtonLabel.position.y);
+        [self addChild:self.menuButtonLabel];
+
+        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+20, self.menuButtonLabel.frame.size.height+50)];
+        self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.pauseButton.position.y);
+        [self addChild:self.menuButton];
+        
+        self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.player.position.y+self.player.frame.size.height/2)];
+        self.playerShootButton.position = CGPointMake(CGRectGetMidX(self.frame),self.playerShootButton.frame.size.height/2);
+        [self addChild:self.playerShootButton];
+        
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         [self updateScoreDisplay];
         self.scoreDisplay.fontSize = 18;
-        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButton.frame.origin.y - (self.pauseButton.frame.size.height+5));
+        self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButtonLabel.frame.origin.y - (self.pauseButtonLabel.frame.size.height+5));
         [self addChild:self.scoreDisplay];
         
         [self buildShields:3];
@@ -231,27 +243,6 @@ BOOL respawning = NO;
     [[self view] addGestureRecognizer:playerFireGesture];
 }
 
--(void)pauseGame:(UITapGestureRecognizer *)gesture{
-    self.paused = !self.paused;
-}
-
--(void)handlePlayerTap:(UITapGestureRecognizer *)gesture{
-    CGPoint touchLocation = [gesture locationInView:gesture.view];
-    touchLocation = [self convertPointFromView:touchLocation];
-    SKNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
-    if(touchedNode == self.pauseButton){
-        if([self.pauseButton.text isEqualToString:@"restart"]){
-            [self restartGame];
-        }else{
-            [self pauseGame:gesture];
-        }
-    }else if(touchedNode == self.menuButton){
-        [self goMenu];
-    }else{
-        [self.player fireMissle];
-    }
-}
-
 -(void)restartGame{
     level = 1;
     score = 0;
@@ -271,10 +262,9 @@ BOOL respawning = NO;
     }
     [self.shields removeAllObjects];
 
-    [self.gameOverDisplay removeFromParent];
-    
-    self.pauseButton.text = @"pause";
-    self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10, self.pauseButton.position.y);
+    self.gameOverDisplay.hidden = YES;
+    self.restartButtonLabel.hidden = YES;
+    self.restartButton.hidden = YES;
     
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     [self spawnPlayer:atlas];
@@ -284,6 +274,9 @@ BOOL respawning = NO;
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
+    if(self.gameState == GAMEOVER || respawning || self.paused){
+        return;
+    }
     if (gesture.state == UIGestureRecognizerStateBegan) {
         NSLog(@"detecting pan");
         CGPoint touchLocation = [gesture locationInView:gesture.view];
@@ -320,11 +313,60 @@ BOOL respawning = NO;
     
 }
 
+-(void)handlePauseButtonTap{
+    self.paused = !self.paused;
+    if(self.paused){
+        self.pauseButtonLabel.text = @"resume";
+    }else{
+        self.pauseButtonLabel.text = @"pause";
+    }
+}
+
+-(void)handleMenuButtonTap{
+    [self goMenu];
+}
+
+-(void)handleRestartButtonTap{
+    [self restartGame];
+}
+
+-(void)handlePlayerShootButtonTap{
+    if(!self.gameState == GAMEOVER && !respawning && !self.paused){
+        [self.player fireMissle];
+    }
+}
+
+-(void)handlePlayerTap:(UITapGestureRecognizer *)gesture{
+    CGPoint location = [gesture locationInView:gesture.view];
+    location = [self convertPointFromView:location];
+    SKNode *node = [self nodeAtPoint:location];
+    if([node isEqual:self.pauseButton]){
+        [self handlePauseButtonTap];
+    }else if([node isEqual:self.menuButton]){
+        [self handleMenuButtonTap];
+    }else if([node isEqual:self.restartButton]){
+        [self handleRestartButtonTap];
+    }else if([node isEqual:self.playerShootButton]){
+        [self handlePlayerShootButtonTap];
+    }
+}
+
 /*
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if(self.gameState == GAMEOVER){
-        [self goMenu];
         return;
+    }
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    if([node isEqual:self.pauseButton]){
+        [self handlePauseButtonTap];
+    }else if([node isEqual:self.menuButton]){
+        [self handleMenuButtonTap];
+    }else if([node isEqual:self.restartButton]){
+        [self handleRestartButtonTap];
+    }else if([node isEqual:self.playerShootButton]){
+        [self handlePlayerShootButtonTap];
     }
 }
  */
@@ -472,15 +514,17 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 }
 
 -(void)gameOver{
-    self.pauseButton.text = @"restart";
-    self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10, self.pauseButton.position.y);
-    
     self.gameState = GAMEOVER;
-    self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-    self.gameOverDisplay.text = @"GAME OVER";
-    self.gameOverDisplay.fontSize = 38;
-    self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
+    
+    if(!self.gameOverDisplay){
+        self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.gameOverDisplay.text = @"GAME OVER";
+        self.gameOverDisplay.fontSize = 38;
+        self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        [self addChild:self.gameOverDisplay];
+    }else{
+        self.gameOverDisplay.hidden = NO;
+    }
     for(MCHInvader *invader in self.invaders){
         [invader gameOver];
     }
@@ -488,9 +532,21 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         [missle gameOver];
     }
     [self.player gameOver];
-    
-    [self addChild:self.gameOverDisplay];
-    
+
+    if(!self.restartButtonLabel){
+        self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.restartButtonLabel.text = @"touch here to replay";
+        self.restartButtonLabel.fontSize = 24;
+        self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
+        [self addChild:self.restartButtonLabel];
+        
+        self.restartButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.restartButtonLabel.frame.size.width*1.2, self.restartButtonLabel.frame.size.height*1.2)];
+        self.restartButton.position = CGPointMake(self.restartButtonLabel.position.x, self.restartButtonLabel.position.y+(self.restartButtonLabel.frame.size.height*1.2-self.restartButtonLabel.frame.size.height));
+        [self addChild:self.restartButton];
+    }else{
+        self.restartButtonLabel.hidden = NO;
+        self.restartButton.hidden = NO;
+    }
 }
 
 -(void)stopAllInvadersExcept:(MCHInvader *)invader{
