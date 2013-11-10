@@ -107,8 +107,9 @@ BOOL respawning = NO;
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         
-        self.invaders = [NSMutableArray arrayWithCapacity:6*13];
+        self.invaders = [[NSMutableArray alloc] init];
         self.activeMissles = [[NSMutableArray alloc] init];
+        self.shields = [[NSMutableArray alloc] init];
         
         numInvaderAcross = 6;
         numInvaderRows = 5;
@@ -239,12 +240,45 @@ BOOL respawning = NO;
     touchLocation = [self convertPointFromView:touchLocation];
     SKNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
     if(touchedNode == self.pauseButton){
-        [self pauseGame:gesture];
+        if([self.pauseButton.text isEqualToString:@"restart"]){
+            [self restartGame];
+        }else{
+            [self pauseGame:gesture];
+        }
     }else if(touchedNode == self.menuButton){
         [self goMenu];
     }else{
         [self.player fireMissle];
     }
+}
+
+-(void)restartGame{
+    level = 1;
+    score = 0;
+    numPlayers = 3;
+    [self.player removeFromParent];
+    for(MCHInvader *invader in self.invaders){
+        [invader removeFromParent];
+    }
+    [self.invaders removeAllObjects];
+    for(MCHMissle *missle in self.activeMissles){
+        [missle removeFromParent];
+    }
+    [self.activeMissles removeAllObjects];
+    for(MCHShield *shield in self.shields){
+        [shield removeFromParent];
+    }
+    [self.shields removeAllObjects];
+
+    [self.gameOverDisplay removeFromParent];
+    
+    self.pauseButton.text = @"pause";
+    self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10, self.pauseButton.position.y);
+    
+    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+    [self spawnPlayer:atlas];
+    [self spawnInvaders:atlas];
+    [self buildShields:3];
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
@@ -436,11 +470,14 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 }
 
 -(void)gameOver{
+    self.pauseButton.text = @"restart";
+    self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width+10, self.pauseButton.position.y);
+    
     self.gameState = GAMEOVER;
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-    myLabel.text = @"GAME OVER";
-    myLabel.fontSize = 38;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+    self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+    self.gameOverDisplay.text = @"GAME OVER";
+    self.gameOverDisplay.fontSize = 38;
+    self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),
                                    CGRectGetMidY(self.frame));
     for(MCHInvader *invader in self.invaders){
         [invader gameOver];
@@ -450,7 +487,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     }
     [self.player gameOver];
     
-    [self addChild:myLabel];
+    [self addChild:self.gameOverDisplay];
     
 }
 

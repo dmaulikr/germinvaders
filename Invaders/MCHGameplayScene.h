@@ -16,11 +16,13 @@
 @interface MCHGameplayScene : SKScene <SKPhysicsContactDelegate, UIGestureRecognizerDelegate>
 @property (strong,atomic) NSMutableArray *invaders;
 @property (strong,atomic) NSMutableArray *activeMissles;
+@property (strong,atomic) NSMutableArray *shields;
 @property (strong,atomic) MCHPlayer *player;
 @property (strong,atomic) SKSpriteNode *playerControl;
 @property (strong,atomic) SKLabelNode *scoreDisplay;
 @property (strong,atomic) SKLabelNode *pauseButton;
 @property (strong,atomic) SKLabelNode *menuButton;
+@property (strong,atomic) SKLabelNode *gameOverDisplay;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;
