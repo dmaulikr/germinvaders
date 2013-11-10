@@ -256,6 +256,7 @@ BOOL respawning = NO;
     level = 1;
     score = 0;
     numPlayers = 3;
+    [self updateScoreDisplay];
     [self.player removeFromParent];
     for(MCHInvader *invader in self.invaders){
         [invader removeFromParent];
@@ -279,6 +280,7 @@ BOOL respawning = NO;
     [self spawnPlayer:atlas];
     [self spawnInvaders:atlas];
     [self buildShields:3];
+    self.gameState = GAMEON;
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
