@@ -31,18 +31,18 @@
         if(self.speed > self.maxSpeed){
             self.speed = self.maxSpeed;
         }
-        if(self.position.y < self.size.height*2 +40){//we use height *2 because we move the alien down one for the attack, 40 is player space from bottom
-            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
-            if(!gameScene.anInvaderChasingPlayer){
-                gameScene.anInvaderChasingPlayer = YES;
-                [gameScene stopAllInvadersExcept:self];
+        if(self.position.y < self.size.height*3 + self.parentScene.player.size.height + 40){//we use height *2 because we move the alien down one for the attack, 40 is player space from bottom
+//            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+//            if(!gameScene.anInvaderChasingPlayer){
+//                gameScene.anInvaderChasingPlayer = YES;
+//                [gameScene stopAllInvadersExcept:self];
                 int downValue = -self.size.height;
                 SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
                 [self runAction:moveDown completion:^{
                     //the player may have moved away so keep chasing.
                     [self moveToPlayer];
                 }];
-            }
+//            }
         }else{
             [self moveLeftRight];
         }
