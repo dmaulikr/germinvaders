@@ -470,6 +470,9 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     SKScene *introScene = [[MCHMyScene alloc] initWithSize:self.size];
     SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
     [self.view presentScene:introScene transition:doors];
+    level = 1;
+    score = 0;
+    numPlayers = 3;
 }
 
 @end
