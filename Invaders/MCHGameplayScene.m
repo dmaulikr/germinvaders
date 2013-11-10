@@ -19,7 +19,6 @@
 int numInvaderAcross;
 int numInvaderRows;
 int numInvadersPerBoard;
-int numInvadersHit;
 int numInvadersFiring;
 int level;
 int fireFrequencyCounter;
@@ -42,7 +41,53 @@ BOOL respawning = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"SCORE %d  PIPES %d",score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"LEVEL %d  SCORE %d  PIPES %d",level,score,numPlayers];
+}
+
+- (void)spawnInvaders:(SKTextureAtlas *)atlas {
+    
+    [self.invaders removeAllObjects];
+    
+    int startY = self.size.height-70;
+    CGSize invaderSize = CGSizeMake(30, 30);
+    int invaderSpacing = 10;
+    int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
+    int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
+    int invaderRange = self.size.width-4-invaderGroupFinishX;
+    
+    NSArray *invaderRowIndexMap = @[@(0),@(1),@(1),@(3),@(3)];
+    
+    for (int i=0; i<numInvaderRows; i++) {
+        int startX = invaderGroupStartX;
+        NSLog(@"startX:%d",startX);
+        
+        int imageIndexValue = [(NSNumber *)[invaderRowIndexMap objectAtIndex:i] intValue];
+        NSLog(@"imageIndexValue:%d",imageIndexValue);
+        SKTexture *rowInvader0 = [atlas textureNamed:[NSString stringWithFormat:@"invader0-row%d.png",imageIndexValue]];
+        SKTexture *rowInvader1 = [atlas textureNamed:[NSString stringWithFormat:@"invader1-row%d.png",imageIndexValue]];
+        NSArray *nextInvaderRowArray = @[rowInvader0,rowInvader1];
+        
+        for (int j=0; j<numInvaderAcross; j++) {
+            MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
+            invader.parentScene = self;
+            invader.direction = 0;
+            invader.speed = 6;
+            invader.textureArray = nextInvaderRowArray;
+            invader.position = CGPointMake(startX, startY);
+            invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
+            invader.physicsBody.categoryBitMask = invadeCategory;
+            invader.physicsBody.collisionBitMask = playerCategory;
+            invader.physicsBody.contactTestBitMask = playerCategory;
+            invader.range = invaderRange;
+            invader.value = 10 * (numInvaderRows-(i+1));
+            [self.invaders addObject:invader];
+            [self addChild:invader];
+            startX = startX + invaderSize.width + invaderSpacing;
+            [invader runMoveAnimation];
+            [invader moveLeftRight];
+        }
+        startY = startY - invaderSize.height - invaderSpacing;
+    }
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -57,57 +102,16 @@ BOOL respawning = NO;
         self.gameState = GAMEON;
         
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         
         self.invaders = [NSMutableArray arrayWithCapacity:6*13];
         self.activeMissles = [[NSMutableArray alloc] init];
         
-        CGSize invaderSize = CGSizeMake(30, 30);
-        int invaderSpacing = 10;
         numInvaderAcross = 6;
-        
-        int startY = self.size.height-70;
-        int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
-        int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
-        int invaderRange = self.size.width-4-invaderGroupFinishX;
         numInvaderRows = 5;
-        numInvadersHit = 0;
-        
         numInvadersPerBoard = numInvaderAcross * numInvaderRows;
-        
-        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        NSArray *invaderRowIndexMap = @[@(0),@(1),@(1),@(3),@(3)];
-        
-        for (int i=0; i<numInvaderRows; i++) {
-            int startX = invaderGroupStartX;
-            NSLog(@"startX:%d",startX);
-            
-            int imageIndexValue = [(NSNumber *)[invaderRowIndexMap objectAtIndex:i] intValue];
-            NSLog(@"imageIndexValue:%d",imageIndexValue);
-            SKTexture *rowInvader0 = [atlas textureNamed:[NSString stringWithFormat:@"invader0-row%d.png",imageIndexValue]];
-            SKTexture *rowInvader1 = [atlas textureNamed:[NSString stringWithFormat:@"invader1-row%d.png",imageIndexValue]];
-            NSArray *nextInvaderRowArray = @[rowInvader0,rowInvader1];
 
-            for (int j=0; j<numInvaderAcross; j++) {
-                MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
-                invader.parentScene = self;
-                invader.direction = 0;
-                invader.speed = 6;
-                invader.textureArray = nextInvaderRowArray;
-                invader.position = CGPointMake(startX, startY);
-                invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
-                invader.physicsBody.categoryBitMask = invadeCategory;
-                invader.physicsBody.collisionBitMask = playerCategory;
-                invader.physicsBody.contactTestBitMask = playerCategory;
-                invader.range = invaderRange;
-                invader.value = 10 * (numInvaderRows-(i+1));
-                [self.invaders addObject:invader];
-                [self addChild:invader];
-                startX = startX + invaderSize.width + invaderSpacing;
-                [invader runMoveAnimation];
-                [invader moveLeftRight];
-            }
-            startY = startY - invaderSize.height - invaderSpacing;
-        }
+        [self spawnInvaders:atlas];
         [self spawnPlayer:atlas];
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
@@ -153,15 +157,30 @@ BOOL respawning = NO;
     }
 }
 
-- (void)respawnPlayer{
-    
+- (void)respawnLevel{
     respawning = YES;
-    
+    [self removeAllActiveMissles];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        level++;
+        [self spawnInvaders:[SKTextureAtlas atlasNamed:@"invader"]];
+        [self updateScoreDisplay];
+        respawning = NO;
+    });
+}
+
+- (void)removeAllActiveMissles {
     //remove all active missles when the player is killed
     for(MCHMissle *nextMissle in self.activeMissles){
         [nextMissle removeFromParent];
     }
     [self.activeMissles removeAllObjects];
+}
+
+- (void)respawnPlayer{
+    
+    [self removeAllActiveMissles];
     //pause the movement of all the invaders (resume their movements when the player is actually respawned
     for(MCHInvader *nextInvader in self.invaders){
         [nextInvader setPaused:YES];
@@ -325,12 +344,11 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         missle.explodedInvader = YES;
         [self.activeMissles removeObject:missle];
         score += invader.value;
+        [self.invaders removeObject:invader];
         [self updateScoreDisplay];
         //MCH - for now this is cheesy but it gets the job done - it's a game over condition detector
-        numInvadersHit++;
-        if (numInvadersHit == numInvadersPerBoard) {
-            //actually want to level up here
-            [self gameOver];
+        if ([self.invaders count] < 1) {
+            [self respawnLevel];
         }
         if(playerHit){
             [self respawnPlayer];
