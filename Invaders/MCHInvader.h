@@ -11,7 +11,8 @@
 
 @interface MCHInvader : SKSpriteNode
 
-@property float speed;
+@property (nonatomic) float speed;
+@property float maxSpeed;
 @property int direction;
 @property int range;
 @property int value;

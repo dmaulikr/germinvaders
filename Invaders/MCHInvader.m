@@ -16,10 +16,21 @@
     if(self){
         self.readyToFire = YES;
         self.fireRate = 2.5;
+        self.maxSpeed = 10;
         //Update this method so that maybe we pass in values to fully initialize the invader - or if not using delete.
     }
     return self;
 }
+
+/*
+- (void)setSpeed:(float)invaderSpeed {
+    if(invaderSpeed > self.maxSpeed){
+        self.speed = self.maxSpeed;
+    }else{
+        self.speed = invaderSpeed;
+    }
+}
+ */
 
 -(void)moveDown{
     int moveValue = -self.size.height;
@@ -27,6 +38,9 @@
     SKAction *moveAlien = [SKAction moveByX:0.0 y:moveValue duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
         self.speed = self.speed + 0.2;
+        if(self.speed > self.maxSpeed){
+            self.speed = self.maxSpeed;
+        }
         if(self.position.y < self.size.height*2 +40){//we use height *2 because we move the alien down one for the attack, 40 is player space from bottom
             MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
             if(!gameScene.anInvaderChasingPlayer){

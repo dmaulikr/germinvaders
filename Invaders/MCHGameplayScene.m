@@ -71,7 +71,10 @@ BOOL respawning = NO;
             MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
             invader.parentScene = self;
             invader.direction = 0;
-            invader.speed = 6;
+            invader.speed = 4.5+(level/5);
+            if(invader.speed > invader.maxSpeed){
+                invader.speed = invader.maxSpeed;
+            }
             invader.textureArray = nextInvaderRowArray;
             invader.position = CGPointMake(startX, startY);
             invader.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:invader.size];
