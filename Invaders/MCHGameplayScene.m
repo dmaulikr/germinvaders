@@ -567,6 +567,26 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         self.restartButtonLabel.hidden = NO;
         self.restartButton.hidden = NO;
     }
+
+    if (false) { //this is where we'll prompt user for name for high score save
+        if(!self.highScoreInput){
+            self.highScoreInput = [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
+            self.highScoreInput.center = self.view.center;
+            self.highScoreInput.borderStyle = UITextBorderStyleRoundedRect;
+            self.highScoreInput.textColor = [UIColor blackColor];
+            self.highScoreInput.font = [UIFont systemFontOfSize:17.0];
+            self.highScoreInput.placeholder = @"enter your name";
+            self.highScoreInput.backgroundColor = [UIColor whiteColor];
+            self.highScoreInput.autocorrectionType = UITextAutocorrectionTypeYes;
+            self.highScoreInput.keyboardType = UIKeyboardAppearanceAlert;
+            self.highScoreInput.clearButtonMode = UITextFieldViewModeWhileEditing;
+            //    textField.delegate = self.delegate;
+            [self.view addSubview:self.highScoreInput];
+        }
+        self.highScoreInput.hidden = NO;
+
+    }
+
 }
 
 -(void)stopAllInvadersExcept:(MCHInvader *)invader{

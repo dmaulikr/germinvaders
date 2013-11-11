@@ -29,6 +29,7 @@
 @property (strong,atomic) SKLabelNode *restartButtonLabel;
 @property (strong,atomic) SKSpriteNode *playerShootButton;
 @property (strong,atomic) SKSpriteNode *endGameBoss;
+@property (strong,atomic) UITextField *highScoreInput;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;

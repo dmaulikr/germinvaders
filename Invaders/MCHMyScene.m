@@ -40,7 +40,7 @@
         self.playButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.playButton.text = @"NEW GAME";
         self.playButton.fontSize = 28;
-        self.playButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        self.playButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
 
         self.leaderboardButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.leaderboardButton.text = @"LEADERBOARD";
@@ -52,7 +52,7 @@
         [self addChild:self.fordHead];
         [self addChild:self.fordHead2];
         [self addChild:self.playButton];
-        [self addChild:self.leaderboardButton];
+//        [self addChild:self.leaderboardButton];
         
     }
     return self;
