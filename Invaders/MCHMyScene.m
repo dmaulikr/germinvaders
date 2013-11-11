@@ -19,7 +19,7 @@
         
         self.title = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.title.text = @"INVADERS";
-        self.title.fontSize = 66;
+        self.title.fontSize = 70;
         self.title.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.title.frame.size.height * 2);
 
         self.subtitle = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];

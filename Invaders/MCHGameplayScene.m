@@ -481,10 +481,13 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
 -(void)handleShieldMissleHitWithNode:(SKNode *)node andNodeB:(SKNode *)nodeb{
     MCHMissle *missle;
+    MCHShield *shield;
     if([nodeb isKindOfClass:[MCHMissle class]]){
         missle = (MCHMissle *)nodeb;
+        shield = (MCHShield *)node;
     }else if([node isKindOfClass:[MCHMissle class]]){
         missle = (MCHMissle *)node;
+        shield = (MCHShield *)nodeb;
     }
     if (missle) {
         if(missle.explodedInvader){
@@ -492,10 +495,24 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
             //we don't want a single missle to take out 2 invaders
             return;
         }
-        [node removeFromParent];
-        [nodeb removeFromParent];
         missle.explodedInvader = YES;
         [self.activeMissles removeObject:missle];
+        [missle gameOver];
+    }
+    if(shield){
+        SKEmitterNode *explosion = [self newExplosionEmitter];
+        explosion.position = shield.position;
+        [self addChild:explosion];
+        [explosion runAction:[SKAction sequence:@[
+                                                  [SKAction waitForDuration:0.25],
+                                                  [SKAction runBlock:^{
+            explosion.particleBirthRate = 0;
+        }],
+                                                  [SKAction waitForDuration:explosion.particleLifetime + explosion.particleLifetimeRange],
+                                                  [SKAction removeFromParent],
+                                                  ]]];
+        [self.shields removeObject:shield];
+        [shield gameOver];
     }
 }
 
