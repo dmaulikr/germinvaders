@@ -10,4 +10,11 @@
 
 @interface MCHMyScene : SKScene
 
+@property (strong,atomic)SKLabelNode *playButton;
+@property (strong,atomic)SKLabelNode *leaderboardButton;
+@property (strong,atomic)SKLabelNode *title;
+@property (strong,atomic)SKLabelNode *subtitle;
+@property (strong,atomic)SKSpriteNode *fordHead;
+@property (strong,atomic)SKSpriteNode *fordHead2;
+
 @end
