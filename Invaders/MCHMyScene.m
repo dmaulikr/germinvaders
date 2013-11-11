@@ -30,11 +30,11 @@
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         SKTexture *fordHeadTexture = [atlas textureNamed:@"invader0-row0.png"];
-        self.fordHead = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 30)];
+        self.fordHead = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
         self.fordHead.position = CGPointMake(self.subtitle.position.x-105, self.subtitle.position.y+10);
 
         fordHeadTexture = [atlas textureNamed:@"invader0-row1.png"];
-        self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 30)];
+        self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
         self.fordHead2.position = CGPointMake(self.subtitle.position.x-22, self.subtitle.position.y+10);
 
         self.playButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];

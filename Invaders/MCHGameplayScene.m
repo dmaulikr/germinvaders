@@ -49,7 +49,7 @@ BOOL respawning = NO;
     [self.invaders removeAllObjects];
     
     int startY = self.size.height-85;
-    CGSize invaderSize = CGSizeMake(30, 30);
+    CGSize invaderSize = CGSizeMake(30, 44);
     int invaderSpacing = 10;
     int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
     int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
