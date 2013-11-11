@@ -72,7 +72,11 @@
     SKAction *moveInvader = [SKAction moveByX:moveValue y:0.0 duration:fabs(moveValue)/self.speed];
     [self runAction:moveInvader completion:^{
 //        /*
-        if(self.position.y < self.parentScene.player.position.y + self.parentScene.player.frame.size.height*2){
+//        if(self.position.y < self.parentScene.player.position.y + self.parentScene.player.frame.size.height*2){
+        MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+        float shieldTop = SHIELD_START_Y_POS;
+        shieldTop += ((SKSpriteNode *)[gameScene.shields firstObject]).frame.size.height * 2;
+        if(self.position.y < shieldTop){
             [self moveLeftRight];
         }else{
             [self moveDown];
