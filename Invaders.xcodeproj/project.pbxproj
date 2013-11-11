@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836634A18306F8E0010365C /* MCHLeaderboardScene.m */; };
 		2848221717B72F0400326AFA /* MCHShield.m in Sources */ = {isa = PBXBuildFile; fileRef = 2848221617B72F0400326AFA /* MCHShield.m */; };
 		2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF1177D29B300BB44FF /* MCHInvader.m */; };
 		2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF4177D4C5000BB44FF /* MCHPlayer.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2836634918306F8E0010365C /* MCHLeaderboardScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHLeaderboardScene.h; sourceTree = "<group>"; };
+		2836634A18306F8E0010365C /* MCHLeaderboardScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHLeaderboardScene.m; sourceTree = "<group>"; };
 		2848221517B72F0400326AFA /* MCHShield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHShield.h; sourceTree = "<group>"; };
 		2848221617B72F0400326AFA /* MCHShield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHShield.m; sourceTree = "<group>"; };
 		2868FFF0177D29B300BB44FF /* MCHInvader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvader.h; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 				28F74685177BDA4E00015916 /* MCHMyScene.m */,
 				28F746A6177BE65F00015916 /* MCHGameplayScene.h */,
 				28F746A7177BE65F00015916 /* MCHGameplayScene.m */,
+				2836634918306F8E0010365C /* MCHLeaderboardScene.h */,
+				2836634A18306F8E0010365C /* MCHLeaderboardScene.m */,
 				2868FFF0177D29B300BB44FF /* MCHInvader.h */,
 				2868FFF1177D29B300BB44FF /* MCHInvader.m */,
 				2868FFF3177D4C5000BB44FF /* MCHPlayer.h */,
@@ -318,6 +323,7 @@
 				28F74683177BDA4E00015916 /* MCHViewController.m in Sources */,
 				28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */,
 				2848221717B72F0400326AFA /* MCHShield.m in Sources */,
+				2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

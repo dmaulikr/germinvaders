@@ -8,6 +8,7 @@
 
 #import "MCHMyScene.h"
 #import "MCHGameplayScene.h"
+#import "MCHLeaderboardScene.h"
 
 @implementation MCHMyScene
 
@@ -67,7 +68,9 @@
         SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
         [self.view presentScene:gameScene transition:doors];
     }else if([node isEqual:self.leaderboardButton]){
-        //transition to gameplay scene
+        SKScene *leaderboardScene = [[MCHLeaderboardScene alloc] initWithSize:self.size];
+        SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
+        [self.view presentScene:leaderboardScene transition:doors];
     }
 }
 
