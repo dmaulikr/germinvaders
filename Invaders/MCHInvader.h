@@ -19,6 +19,7 @@
 @property (strong,atomic) NSArray *textureArray;
 @property float fireRate;
 @property BOOL readyToFire;
+@property BOOL amChasingPlayer;
 @property (strong,atomic) MCHGameplayScene *parentScene;
 
 - (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;

@@ -25,5 +25,8 @@ typedef enum : uint8_t {
 #define GAMEON 0
 #define GAMEOVER 1
 
+#pragma mark - Game Layout Positions
+#define SHIELD_START_Y_POS 110;
+
 
 #endif

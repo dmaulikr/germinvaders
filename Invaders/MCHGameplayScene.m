@@ -50,12 +50,13 @@ BOOL respawning = NO;
     
     int startY = self.size.height-85;
     CGSize invaderSize = CGSizeMake(30, 44);
-    int invaderSpacing = 10;
+    int invaderSpacing = 6;
     int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
     int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
     int invaderRange = self.size.width-4-invaderGroupFinishX;
     
-    NSArray *invaderRowIndexMap = @[@(0),@(1),@(1),@(3),@(3)];
+    NSArray *invaderRowIndexMap = @[@(0),@(1),@(3),@(4)];
+    NSArray *invaderHeightForRowMap = @[@44.0,@44.0,@44.0,@40.0];
     
     for (int i=0; i<numInvaderRows; i++) {
         int startX = invaderGroupStartX;
@@ -66,6 +67,8 @@ BOOL respawning = NO;
         SKTexture *rowInvader0 = [atlas textureNamed:[NSString stringWithFormat:@"invader0-row%d.png",imageIndexValue]];
         SKTexture *rowInvader1 = [atlas textureNamed:[NSString stringWithFormat:@"invader1-row%d.png",imageIndexValue]];
         NSArray *nextInvaderRowArray = @[rowInvader0,rowInvader1];
+        float rowHeight = [(NSNumber *)[invaderHeightForRowMap objectAtIndex:i] floatValue];
+        invaderSize = CGSizeMake(invaderSize.width, rowHeight);
         
         for (int j=0; j<numInvaderAcross; j++) {
             MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
@@ -112,7 +115,7 @@ BOOL respawning = NO;
         self.shields = [[NSMutableArray alloc] init];
         
         numInvaderAcross = 6;
-        numInvaderRows = 5;
+        numInvaderRows = 4;
         numInvadersPerBoard = numInvaderAcross * numInvaderRows;
 
         [self spawnInvaders:atlas];
@@ -168,7 +171,7 @@ BOOL respawning = NO;
         int shieldStartX = shieldOrigX;
         //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
         for(int x=0;x<6;x++){
-            int shieldStartY = 110;
+            int shieldStartY = SHIELD_START_Y_POS;
             for(int y=0;y<2;y++){
                 MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(10,26)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
@@ -423,6 +426,11 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
             //we don't want a single missle to take out 2 invaders
             return;
         }
+        
+        if(invader.amChasingPlayer){
+            self.anInvaderChasingPlayer = NO;
+        }
+        
         SKEmitterNode *explosion = [self newExplosionEmitter];
         explosion.position = node.position;
         [self addChild:explosion];

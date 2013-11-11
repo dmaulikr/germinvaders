@@ -33,21 +33,26 @@
         }
 //        [self moveLeftRight];
 //        /*
-        if(self.position.y < self.parentScene.player.position.y + self.parentScene.player.frame.size.height + self.frame.size.height){
+        MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+        float shieldTop = SHIELD_START_Y_POS;
+        shieldTop += ((SKSpriteNode *)[gameScene.shields firstObject]).frame.size.height * 2;
+        if(self.position.y < shieldTop){
 //        if(self.position.y < self.size.height*3 + self.parentScene.player.size.height + 40){//we use height *2 because we move the alien down one for the attack, 40 is player space from bottom
-            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
-//            if(!gameScene.anInvaderChasingPlayer){
-//                gameScene.anInvaderChasingPlayer = YES;
+//            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
+            if(!gameScene.anInvaderChasingPlayer){
+                gameScene.anInvaderChasingPlayer = YES;
+                self.amChasingPlayer = YES;
 //                [gameScene stopAllInvadersExcept:self];
-                int downValue = -self.size.height;
+//                int downValue = -self.size.height;
+                int downValue = -30;
                 SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
                 [self runAction:moveDown completion:^{
                     //the player may have moved away so keep chasing.
                     [self moveToPlayer];
                 }];
-//            }else{
-//                [self moveLeftRight];
-//            }
+            }else{
+                [self moveLeftRight];
+            }
         }else{
             [self moveLeftRight];
         }
