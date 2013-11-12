@@ -564,7 +564,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
     if(!self.restartButtonLabel){
         self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.restartButtonLabel.text = @"touch here to replay";
+        self.restartButtonLabel.text = @"touch to replay";
         self.restartButtonLabel.fontSize = 24;
         self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
         [self addChild:self.restartButtonLabel];

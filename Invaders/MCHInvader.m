@@ -31,20 +31,15 @@
         if(self.speed > self.maxSpeed){
             self.speed = self.maxSpeed;
         }
-//        [self moveLeftRight];
-//        /*
         MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
         float shieldTop = SHIELD_START_Y_POS;
         shieldTop += ((SKSpriteNode *)[gameScene.shields firstObject]).frame.size.height * 2;
         if(self.position.y < shieldTop){
-//        if(self.position.y < self.size.height*3 + self.parentScene.player.size.height + 40){//we use height *2 because we move the alien down one for the attack, 40 is player space from bottom
-//            MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
             if(!gameScene.anInvaderChasingPlayer){
                 gameScene.anInvaderChasingPlayer = YES;
                 self.amChasingPlayer = YES;
 //                [gameScene stopAllInvadersExcept:self];
-//                int downValue = -self.size.height;
-                int downValue = -30;
+                int downValue = gameScene.player.position.y - self.position.y;
                 SKAction *moveDown = [SKAction moveByX:0.0 y:downValue duration:fabs(downValue)/self.speed];
                 [self runAction:moveDown completion:^{
                     //the player may have moved away so keep chasing.
@@ -56,7 +51,6 @@
         }else{
             [self moveLeftRight];
         }
-//         */
     }];
 }
 
@@ -71,18 +65,12 @@
     }
     SKAction *moveInvader = [SKAction moveByX:moveValue y:0.0 duration:fabs(moveValue)/self.speed];
     [self runAction:moveInvader completion:^{
-//        /*
-//        if(self.position.y < self.parentScene.player.position.y + self.parentScene.player.frame.size.height*2){
-        MCHGameplayScene *gameScene = (MCHGameplayScene *)self.parent;
         float shieldTop = SHIELD_START_Y_POS;
-        shieldTop += ((SKSpriteNode *)[gameScene.shields firstObject]).frame.size.height * 2;
         if(self.position.y < shieldTop){
             [self moveLeftRight];
         }else{
             [self moveDown];
         }
-//         */
-//        [self moveDown];
     }];
 }
 
@@ -115,7 +103,6 @@
 }
 
 -(void)fireMissle{
-    NSLog(@"firing missle...");
     if(!self.readyToFire){
         NSLog(@"not firing because we have a fire rate.");
         return;
