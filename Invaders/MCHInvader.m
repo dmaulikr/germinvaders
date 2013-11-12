@@ -94,7 +94,7 @@
     }
     float moveDuration = distance / self.speed;
     
-    SKAction *moveToPlayer = [SKAction moveToX:playerPos.x duration:moveDuration];
+    SKAction *moveToPlayer = [SKAction moveTo:gameScene.player.position duration:moveDuration];
     [self runAction:moveToPlayer completion:^{
         //the player may have moved away so keep chasing.
         [self moveToPlayer];

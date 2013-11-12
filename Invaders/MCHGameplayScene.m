@@ -25,6 +25,7 @@ int fireFrequencyCounter;
 int numPlayers;
 int score;
 BOOL respawning = NO;
+BOOL restartingGame = NO;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
@@ -249,20 +250,22 @@ BOOL respawning = NO;
 }
 
 -(void)restartGame{
+    self.gameOverDisplay.hidden = YES;
+    self.restartButtonLabel.hidden = YES;
+    self.restartButton.hidden = YES;
+    self.endGameBoss.hidden = YES;
+
     level = 1;
     score = 0;
     numPlayers = 3;
     [self updateScoreDisplay];
 
-    self.gameOverDisplay.hidden = YES;
-    self.restartButtonLabel.hidden = YES;
-    self.restartButton.hidden = YES;
-    self.endGameBoss.hidden = YES;
-    
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     [self spawnPlayer:atlas];
     [self spawnInvaders:atlas];
     [self buildShields:3];
+
+    restartingGame = NO;
     self.gameState = GAMEON;
 }
 
@@ -322,7 +325,8 @@ BOOL respawning = NO;
 }
 
 -(void)handleRestartButtonTap{
-    if(self.gameState == GAMEOVER){
+    if(self.gameState == GAMEOVER && !restartingGame){
+        restartingGame = YES;
         SKEmitterNode *explosion = [self newExplosionEmitter];
         explosion.position = self.endGameBoss.position;
         [self addChild:explosion];
@@ -336,7 +340,6 @@ BOOL respawning = NO;
                                                   ]] completion:^{
             [self restartGame];
         }];
-        self.endGameBoss.hidden = YES;
     }
 }
 
