@@ -7,7 +7,7 @@
 //
 
 #import "MCHLeaderboardScene.h"
-#import "MCHMyScene.h"
+#import "MCHMenuScene.h"
 #import "MCHAppDelegate.h"
 #import "MCHDataManager.h"
 
@@ -73,7 +73,7 @@
 }
 
 -(void)goMenu{
-    SKScene *introScene = [[MCHMyScene alloc] initWithSize:self.size];
+    SKScene *introScene = [[MCHMenuScene alloc] initWithSize:self.size];
     SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
     [self.view presentScene:introScene transition:doors];
 }

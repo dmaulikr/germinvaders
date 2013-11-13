@@ -7,7 +7,7 @@
 //
 
 #import "MCHGameplayScene.h"
-#import "MCHMyScene.h"
+#import "MCHMenuScene.h"
 #import "MCHInvader.h"
 #import "MCHPlayer.h"
 #import "MCHMissle.h"
@@ -623,7 +623,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 }
 
 -(void)goMenu{
-    SKScene *introScene = [[MCHMyScene alloc] initWithSize:self.size];
+    SKScene *introScene = [[MCHMenuScene alloc] initWithSize:self.size];
     SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
     [self.view presentScene:introScene transition:doors];
     level = 1;

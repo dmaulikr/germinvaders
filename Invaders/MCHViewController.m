@@ -7,7 +7,7 @@
 //
 
 #import "MCHViewController.h"
-#import "MCHMyScene.h"
+#import "MCHMenuScene.h"
 
 @implementation MCHViewController
 
@@ -21,7 +21,7 @@
 //    skView.showsNodeCount = YES;
     
     // Create and configure the scene.
-    SKScene * scene = [MCHMyScene sceneWithSize:skView.bounds.size];
+    SKScene * scene = [MCHMenuScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.

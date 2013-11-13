@@ -12,6 +12,7 @@
 		2836635F183346B50010365C /* MCHSortableScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836635E183346B50010365C /* MCHSortableScore.m */; };
 		283663621833E20C0010365C /* loading-iphone4.png in Resources */ = {isa = PBXBuildFile; fileRef = 283663601833E20C0010365C /* loading-iphone4.png */; };
 		283663631833E20C0010365C /* loading-iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = 283663611833E20C0010365C /* loading-iphone5.png */; };
+		283663661833E4380010365C /* MCHGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 283663651833E4380010365C /* MCHGameOverScene.m */; };
 		2848221717B72F0400326AFA /* MCHShield.m in Sources */ = {isa = PBXBuildFile; fileRef = 2848221617B72F0400326AFA /* MCHShield.m */; };
 		2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF1177D29B300BB44FF /* MCHInvader.m */; };
 		2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF4177D4C5000BB44FF /* MCHPlayer.m */; };
@@ -29,7 +30,7 @@
 		28F7467D177BDA4E00015916 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28F7467B177BDA4E00015916 /* Main_iPhone.storyboard */; };
 		28F74680177BDA4E00015916 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28F7467E177BDA4E00015916 /* Main_iPad.storyboard */; };
 		28F74683177BDA4E00015916 /* MCHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F74682177BDA4E00015916 /* MCHViewController.m */; };
-		28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F74685177BDA4E00015916 /* MCHMyScene.m */; };
+		28F74686177BDA4E00015916 /* MCHMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F74685177BDA4E00015916 /* MCHMenuScene.m */; };
 		28F74688177BDA4E00015916 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F74687177BDA4E00015916 /* Spaceship.png */; };
 		28F7468A177BDA4E00015916 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28F74689177BDA4E00015916 /* Images.xcassets */; };
 		28F74691177BDA4E00015916 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74690177BDA4E00015916 /* XCTest.framework */; };
@@ -59,6 +60,8 @@
 		2836635E183346B50010365C /* MCHSortableScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHSortableScore.m; sourceTree = "<group>"; };
 		283663601833E20C0010365C /* loading-iphone4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-iphone4.png"; sourceTree = "<group>"; };
 		283663611833E20C0010365C /* loading-iphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-iphone5.png"; sourceTree = "<group>"; };
+		283663641833E4380010365C /* MCHGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameOverScene.h; sourceTree = "<group>"; };
+		283663651833E4380010365C /* MCHGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHGameOverScene.m; sourceTree = "<group>"; };
 		2848221517B72F0400326AFA /* MCHShield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHShield.h; sourceTree = "<group>"; };
 		2848221617B72F0400326AFA /* MCHShield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHShield.m; sourceTree = "<group>"; };
 		2868FFF0177D29B300BB44FF /* MCHInvader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvader.h; sourceTree = "<group>"; };
@@ -86,8 +89,8 @@
 		28F7467F177BDA4E00015916 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		28F74681177BDA4E00015916 /* MCHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCHViewController.h; sourceTree = "<group>"; };
 		28F74682177BDA4E00015916 /* MCHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCHViewController.m; sourceTree = "<group>"; };
-		28F74684177BDA4E00015916 /* MCHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCHMyScene.h; sourceTree = "<group>"; };
-		28F74685177BDA4E00015916 /* MCHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCHMyScene.m; sourceTree = "<group>"; };
+		28F74684177BDA4E00015916 /* MCHMenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCHMenuScene.h; sourceTree = "<group>"; };
+		28F74685177BDA4E00015916 /* MCHMenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCHMenuScene.m; sourceTree = "<group>"; };
 		28F74687177BDA4E00015916 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		28F74689177BDA4E00015916 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		28F7468F177BDA4E00015916 /* InvadersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InvadersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,10 +173,12 @@
 				2836635B18331C170010365C /* MCHDataManager.m */,
 				28F74681177BDA4E00015916 /* MCHViewController.h */,
 				28F74682177BDA4E00015916 /* MCHViewController.m */,
-				28F74684177BDA4E00015916 /* MCHMyScene.h */,
-				28F74685177BDA4E00015916 /* MCHMyScene.m */,
+				28F74684177BDA4E00015916 /* MCHMenuScene.h */,
+				28F74685177BDA4E00015916 /* MCHMenuScene.m */,
 				28F746A6177BE65F00015916 /* MCHGameplayScene.h */,
 				28F746A7177BE65F00015916 /* MCHGameplayScene.m */,
+				283663641833E4380010365C /* MCHGameOverScene.h */,
+				283663651833E4380010365C /* MCHGameOverScene.m */,
 				2836634918306F8E0010365C /* MCHLeaderboardScene.h */,
 				2836634A18306F8E0010365C /* MCHLeaderboardScene.m */,
 				2836635D183346B50010365C /* MCHSortableScore.h */,
@@ -333,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2836635C18331C170010365C /* MCHDataManager.m in Sources */,
+				283663661833E4380010365C /* MCHGameOverScene.m in Sources */,
 				28F74676177BDA4E00015916 /* main.m in Sources */,
 				28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */,
 				2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */,
@@ -340,7 +346,7 @@
 				2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */,
 				28F7467A177BDA4E00015916 /* MCHAppDelegate.m in Sources */,
 				28F74683177BDA4E00015916 /* MCHViewController.m in Sources */,
-				28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */,
+				28F74686177BDA4E00015916 /* MCHMenuScene.m in Sources */,
 				2836635F183346B50010365C /* MCHSortableScore.m in Sources */,
 				2848221717B72F0400326AFA /* MCHShield.m in Sources */,
 				2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */,

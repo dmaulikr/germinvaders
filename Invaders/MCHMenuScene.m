@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Marc Henderson. All rights reserved.
 //
 
-#import "MCHMyScene.h"
+#import "MCHMenuScene.h"
 #import "MCHGameplayScene.h"
 #import "MCHLeaderboardScene.h"
 
-@implementation MCHMyScene
+@implementation MCHMenuScene
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
