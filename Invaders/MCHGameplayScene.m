@@ -15,6 +15,7 @@
 #import "math.h"
 #import "MCHDataManager.h"
 #import "MCHAppDelegate.h"
+#import "MCHGameOverScene.h"
 
 @implementation MCHGameplayScene
 
@@ -27,7 +28,6 @@ int fireFrequencyCounter;
 int numPlayers;
 int score;
 BOOL respawning = NO;
-BOOL restartingGame = NO;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
@@ -44,7 +44,7 @@ BOOL restartingGame = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d | level %d | pipes %d",level,score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",level,score,numPlayers];
 }
 
 - (void)spawnInvaders:(SKTextureAtlas *)atlas {
@@ -111,7 +111,6 @@ BOOL restartingGame = NO;
         self.gameState = GAMEON;
         
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
-        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         
         self.invaders = [[NSMutableArray alloc] init];
         self.activeMissles = [[NSMutableArray alloc] init];
@@ -121,9 +120,6 @@ BOOL restartingGame = NO;
         numInvaderRows = 4;
         numInvadersPerBoard = numInvaderAcross * numInvaderRows;
 
-        [self spawnInvaders:atlas];
-        [self spawnPlayer:atlas];
-        
         self.pauseButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.pauseButtonLabel.text = @"pause";
         self.pauseButtonLabel.fontSize = 18;
@@ -144,9 +140,8 @@ BOOL restartingGame = NO;
         self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.pauseButton.position.y);
         [self addChild:self.menuButton];
         
-        self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.player.position.y+self.player.frame.size.height)];
-        self.playerShootButton.position = CGPointMake(CGRectGetMidX(self.frame),self.playerShootButton.frame.size.height/2);
-        [self addChild:self.playerShootButton];
+        self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.size.height/4)];
+        self.playerShootButton.position = CGPointMake(CGRectGetMidX(self.frame),0+(self.size.height/4)/2);
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         [self updateScoreDisplay];
@@ -154,13 +149,8 @@ BOOL restartingGame = NO;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButtonLabel.frame.origin.y - (self.pauseButtonLabel.frame.size.height+5));
         [self addChild:self.scoreDisplay];
         
-        [self buildShields:3];
-        
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
-        self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
-        self.player.physicsBody.categoryBitMask = playerCategory;
-        self.player.physicsBody.collisionBitMask = invadeCategory;
     }
 
     return self;
@@ -249,14 +239,11 @@ BOOL restartingGame = NO;
     UITapGestureRecognizer *playerFireGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePlayerTap:)];
     playerFireGesture.delegate = self;
     [[self view] addGestureRecognizer:playerFireGesture];
+    
+    [self restartGame];
 }
 
 -(void)restartGame{
-    self.gameOverDisplay.hidden = YES;
-    self.restartButtonLabel.hidden = YES;
-    self.restartButton.hidden = YES;
-    self.endGameBoss.hidden = YES;
-
     level = 1;
     score = 0;
     numPlayers = 3;
@@ -266,8 +253,10 @@ BOOL restartingGame = NO;
     [self spawnPlayer:atlas];
     [self spawnInvaders:atlas];
     [self buildShields:3];
+    
+    [self.playerShootButton removeFromParent];
+    [self addChild:self.playerShootButton];
 
-    restartingGame = NO;
     self.gameState = GAMEON;
 }
 
@@ -326,25 +315,6 @@ BOOL restartingGame = NO;
     [self goMenu];
 }
 
--(void)handleRestartButtonTap{
-    if(self.gameState == GAMEOVER && !restartingGame){
-        restartingGame = YES;
-        SKEmitterNode *explosion = [self newExplosionEmitter];
-        explosion.position = self.endGameBoss.position;
-        [self addChild:explosion];
-        [explosion runAction:[SKAction sequence:@[
-                                                  [SKAction waitForDuration:0.25],
-                                                  [SKAction runBlock:^{
-            explosion.particleBirthRate = 0;
-        }],
-                                                  [SKAction waitForDuration:explosion.particleLifetime + explosion.particleLifetimeRange],
-                                                  [SKAction removeFromParent],
-                                                  ]] completion:^{
-            [self restartGame];
-        }];
-    }
-}
-
 -(void)handlePlayerShootButtonTap{
     if(!self.gameState == GAMEOVER && !respawning && !self.paused){
         [self.player fireMissle];
@@ -359,8 +329,6 @@ BOOL restartingGame = NO;
         [self handlePauseButtonTap];
     }else if([node isEqual:self.menuButton]){
         [self handleMenuButtonTap];
-    }else if([node isEqual:self.restartButton]){
-        [self handleRestartButtonTap];
     }else if([node isEqual:self.playerShootButton]){
         [self handlePlayerShootButtonTap];
     }
@@ -552,62 +520,11 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
     [self.shields removeAllObjects];
     [self.player gameOver];
 
-    if(!self.endGameBoss){
-        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        SKTexture *endBossTexture = [atlas textureNamed:@"robfordendgame-sized.png"];
-        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(257/2,300)];
-        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
-        [self addChild:self.endGameBoss];
-    }else{
-        self.endGameBoss.hidden = NO;
-    }
-    
-    if(!self.gameOverDisplay){
-        self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.gameOverDisplay.text = @"GAME OVER";
-        self.gameOverDisplay.fontSize = 38;
-        self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
-        [self addChild:self.gameOverDisplay];
-    }else{
-        self.gameOverDisplay.hidden = NO;
-    }
-
-    if(!self.restartButtonLabel){
-        self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.restartButtonLabel.text = @"replay game";
-        self.restartButtonLabel.fontSize = 24;
-        self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
-        [self addChild:self.restartButtonLabel];
-        
-        self.restartButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.restartButtonLabel.frame.size.width*1.2, self.restartButtonLabel.frame.size.height*1.2 + self.gameOverDisplay.frame.size.height + 60)];
-        self.restartButton.position = CGPointMake(self.restartButtonLabel.position.x, self.gameOverDisplay.position.y);
-        [self addChild:self.restartButton];
-    }else{
-        self.restartButtonLabel.hidden = NO;
-        self.restartButton.hidden = NO;
-    }
-
-    /*
-    if (false) { //this is where we'll prompt user for name for high score save
-        if(!self.highScoreInput){
-            self.highScoreInput = [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
-            self.highScoreInput.center = self.view.center;
-            self.highScoreInput.borderStyle = UITextBorderStyleRoundedRect;
-            self.highScoreInput.textColor = [UIColor blackColor];
-            self.highScoreInput.font = [UIFont systemFontOfSize:17.0];
-            self.highScoreInput.placeholder = @"enter your name";
-            self.highScoreInput.backgroundColor = [UIColor whiteColor];
-            self.highScoreInput.autocorrectionType = UITextAutocorrectionTypeYes;
-            self.highScoreInput.keyboardType = UIKeyboardAppearanceAlert;
-            self.highScoreInput.clearButtonMode = UITextFieldViewModeWhileEditing;
-            //    textField.delegate = self.delegate;
-            [self.view addSubview:self.highScoreInput];
-        }
-        self.highScoreInput.hidden = NO;
-
-    }
-     */
-
+    MCHGameOverScene *gameOverScene = [[MCHGameOverScene alloc] initWithSize:self.size];
+    gameOverScene.score = score;
+    gameOverScene.level = level;
+    SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
+    [self.view presentScene:gameOverScene transition:doors];
 }
 
 -(void)stopAllInvadersExcept:(MCHInvader *)invader{
