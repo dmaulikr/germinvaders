@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCHDataManager.h"
 
 @interface MCHAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, atomic) MCHDataManager *dataManager;
 
 @end

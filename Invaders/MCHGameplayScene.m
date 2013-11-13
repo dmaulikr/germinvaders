@@ -13,6 +13,8 @@
 #import "MCHMissle.h"
 #import "MCHShield.h"
 #import "math.h"
+#import "MCHDataManager.h"
+#import "MCHAppDelegate.h"
 
 @implementation MCHGameplayScene
 
@@ -42,7 +44,7 @@ BOOL restartingGame = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"level %d  score %d  pipes %d",level,score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d | level %d | pipes %d",level,score,numPlayers];
 }
 
 - (void)spawnInvaders:(SKTextureAtlas *)atlas {
@@ -86,7 +88,7 @@ BOOL restartingGame = NO;
             invader.physicsBody.collisionBitMask = playerCategory && invadeCategory;
             invader.physicsBody.contactTestBitMask = playerCategory;
             invader.range = invaderRange;
-            invader.value = 10 * (numInvaderRows-(i+1));
+            invader.value = 10 * (numInvaderRows-(i+0));
             [self.invaders addObject:invader];
             [self addChild:invader];
             startX = startX + invaderSize.width + invaderSpacing;
@@ -531,6 +533,11 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 -(void)gameOver{
     self.gameState = GAMEOVER;
     
+    if(score > 0){
+        MCHAppDelegate *appdelegate = (MCHAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appdelegate.dataManager addNewHighScore:score atLevel:level];
+    }
+    
     for(MCHInvader *invader in self.invaders){
         [invader gameOver];
     }
@@ -567,7 +574,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
 
     if(!self.restartButtonLabel){
         self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.restartButtonLabel.text = @"touch to replay";
+        self.restartButtonLabel.text = @"replay game";
         self.restartButtonLabel.fontSize = 24;
         self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
         [self addChild:self.restartButtonLabel];
@@ -580,6 +587,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         self.restartButton.hidden = NO;
     }
 
+    /*
     if (false) { //this is where we'll prompt user for name for high score save
         if(!self.highScoreInput){
             self.highScoreInput = [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
@@ -598,6 +606,7 @@ CGFloat APADistanceBetweenPoints(CGPoint first, CGPoint second) {
         self.highScoreInput.hidden = NO;
 
     }
+     */
 
 }
 

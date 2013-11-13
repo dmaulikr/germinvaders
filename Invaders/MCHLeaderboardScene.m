@@ -8,6 +8,8 @@
 
 #import "MCHLeaderboardScene.h"
 #import "MCHMyScene.h"
+#import "MCHAppDelegate.h"
+#import "MCHDataManager.h"
 
 @implementation MCHLeaderboardScene
 
@@ -17,7 +19,7 @@
         SKLabelNode *boardEntry = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         boardEntry.text = [NSString stringWithFormat:@"%@",labelString];
         boardEntry.fontSize = 20;
-        boardEntry.position = CGPointMake(23 + boardEntry.frame.size.width/2,startY);
+        boardEntry.position = CGPointMake(CGRectGetMidX(self.frame),startY);
         [self addChild:boardEntry];
         [self.leaderboardEntries addObject:boardEntry];
         startY -= boardEntry.frame.size.height*2.35;
@@ -29,10 +31,16 @@
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
 
-        self.leaderboardData = @[@"2100 Marc Henderson",@"2000 MCH",@"1700 marc",@"1400 FUNYMAN!!!",@"700 abc",@"640",@"300 MCH",@"200 MCH",@"140 MCH",@"100 timmy"];
+        
+        MCHAppDelegate *appdelegate = (MCHAppDelegate *)[[UIApplication sharedApplication] delegate];
+                
+        self.leaderboardData = [appdelegate.dataManager gethighscoreList];
+        if([self.leaderboardData count] < 1){
+            self.leaderboardData = @[@"play the game and set a high score"];
+        }
         
         self.leaderboardTitle = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.leaderboardTitle.text = @"LEADERBOARD";
+        self.leaderboardTitle.text = @"HIGH SCORES";
         self.leaderboardTitle.fontSize = 42;
         self.leaderboardTitle.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.leaderboardTitle.frame.size.height * 3);
         [self addChild:self.leaderboardTitle];

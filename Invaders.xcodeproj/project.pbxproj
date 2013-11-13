@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836634A18306F8E0010365C /* MCHLeaderboardScene.m */; };
+		2836635C18331C170010365C /* MCHDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836635B18331C170010365C /* MCHDataManager.m */; };
+		2836635F183346B50010365C /* MCHSortableScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836635E183346B50010365C /* MCHSortableScore.m */; };
 		2848221717B72F0400326AFA /* MCHShield.m in Sources */ = {isa = PBXBuildFile; fileRef = 2848221617B72F0400326AFA /* MCHShield.m */; };
 		2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF1177D29B300BB44FF /* MCHInvader.m */; };
 		2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF4177D4C5000BB44FF /* MCHPlayer.m */; };
@@ -49,6 +51,10 @@
 /* Begin PBXFileReference section */
 		2836634918306F8E0010365C /* MCHLeaderboardScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHLeaderboardScene.h; sourceTree = "<group>"; };
 		2836634A18306F8E0010365C /* MCHLeaderboardScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHLeaderboardScene.m; sourceTree = "<group>"; };
+		2836635A18331C170010365C /* MCHDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHDataManager.h; sourceTree = "<group>"; };
+		2836635B18331C170010365C /* MCHDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHDataManager.m; sourceTree = "<group>"; };
+		2836635D183346B50010365C /* MCHSortableScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHSortableScore.h; sourceTree = "<group>"; };
+		2836635E183346B50010365C /* MCHSortableScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHSortableScore.m; sourceTree = "<group>"; };
 		2848221517B72F0400326AFA /* MCHShield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHShield.h; sourceTree = "<group>"; };
 		2848221617B72F0400326AFA /* MCHShield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHShield.m; sourceTree = "<group>"; };
 		2868FFF0177D29B300BB44FF /* MCHInvader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvader.h; sourceTree = "<group>"; };
@@ -156,6 +162,8 @@
 				28E7E9011825691600D148E8 /* MCHInvadersConstants.h */,
 				28F7467B177BDA4E00015916 /* Main_iPhone.storyboard */,
 				28F7467E177BDA4E00015916 /* Main_iPad.storyboard */,
+				2836635A18331C170010365C /* MCHDataManager.h */,
+				2836635B18331C170010365C /* MCHDataManager.m */,
 				28F74681177BDA4E00015916 /* MCHViewController.h */,
 				28F74682177BDA4E00015916 /* MCHViewController.m */,
 				28F74684177BDA4E00015916 /* MCHMyScene.h */,
@@ -164,6 +172,8 @@
 				28F746A7177BE65F00015916 /* MCHGameplayScene.m */,
 				2836634918306F8E0010365C /* MCHLeaderboardScene.h */,
 				2836634A18306F8E0010365C /* MCHLeaderboardScene.m */,
+				2836635D183346B50010365C /* MCHSortableScore.h */,
+				2836635E183346B50010365C /* MCHSortableScore.m */,
 				2868FFF0177D29B300BB44FF /* MCHInvader.h */,
 				2868FFF1177D29B300BB44FF /* MCHInvader.m */,
 				2868FFF3177D4C5000BB44FF /* MCHPlayer.h */,
@@ -314,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2836635C18331C170010365C /* MCHDataManager.m in Sources */,
 				28F74676177BDA4E00015916 /* main.m in Sources */,
 				28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */,
 				2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */,
@@ -322,6 +333,7 @@
 				28F7467A177BDA4E00015916 /* MCHAppDelegate.m in Sources */,
 				28F74683177BDA4E00015916 /* MCHViewController.m in Sources */,
 				28F74686177BDA4E00015916 /* MCHMyScene.m in Sources */,
+				2836635F183346B50010365C /* MCHSortableScore.m in Sources */,
 				2848221717B72F0400326AFA /* MCHShield.m in Sources */,
 				2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */,
 			);

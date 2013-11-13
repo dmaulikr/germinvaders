@@ -12,6 +12,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.dataManager = [[MCHDataManager alloc] init];
     // Override point for customization after application launch.
     return YES;
 }
