@@ -25,6 +25,7 @@
 @property (strong,atomic) SKLabelNode *menuButtonLabel;
 @property (strong,atomic) SKSpriteNode *menuButton;
 @property (strong,atomic) SKSpriteNode *playerShootButton;
+@property (strong,atomic) SKLabelNode *levelDisplay;
 @property int gameState;
 @property BOOL anInvaderChasingPlayer;
 @property BOOL movePlayer;

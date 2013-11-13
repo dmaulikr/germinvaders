@@ -30,6 +30,8 @@ int score;
 BOOL respawning = NO;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
+    [self.player gameOver];
+    
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
     self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(40,24)];
     self.player.parentScene = self;
@@ -40,16 +42,33 @@ BOOL respawning = NO;
     self.player.physicsBody.categoryBitMask = playerCategory;
     self.player.physicsBody.collisionBitMask = invadeCategory;
     self.player.physicsBody.contactTestBitMask = invadeCategory;
-    [self addChild:self.player];
+     [self addChild:self.player];
 }
 
 - (void)updateScoreDisplay {
     self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",level,score,numPlayers];
 }
 
-- (void)spawnInvaders:(SKTextureAtlas *)atlas {
-    
+- (void)updateLevelDisplay {
+    self.levelDisplay.text = [NSString stringWithFormat:@"LEVEL %d",level];
+}
+
+- (void)removeInvaders{
+    for(MCHInvader *invader in self.invaders){
+        [invader gameOver];
+    }
     [self.invaders removeAllObjects];
+}
+
+- (void)removeShields{
+    for(MCHShield *shield in self.shields){
+        [shield gameOver];
+    }
+    [self.shields removeAllObjects];
+}
+
+- (void)spawnInvaders:(SKTextureAtlas *)atlas {
+    [self removeInvaders];
     
     int startY = self.size.height-85;
     CGSize invaderSize = CGSizeMake(30, 44);
@@ -108,7 +127,7 @@ BOOL respawning = NO;
         fireFrequencyCounter = 0;
         level = 1;
         numInvadersFiring = level * 1;
-        self.gameState = GAMEON;
+        self.gameState = GAMEOVER;
         
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
         
@@ -142,12 +161,20 @@ BOOL respawning = NO;
         
         self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.size.height/4)];
         self.playerShootButton.position = CGPointMake(CGRectGetMidX(self.frame),0+(self.size.height/4)/2);
+        [self addChild:self.playerShootButton];
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         [self updateScoreDisplay];
         self.scoreDisplay.fontSize = 18;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButtonLabel.frame.origin.y - (self.pauseButtonLabel.frame.size.height+5));
         [self addChild:self.scoreDisplay];
+        
+        self.levelDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.levelDisplay.text = @"LEVEL %d";
+        self.levelDisplay.fontSize = 28;
+        self.levelDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        self.levelDisplay.hidden = YES;
+        [self addChild:self.levelDisplay];
         
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
@@ -157,6 +184,8 @@ BOOL respawning = NO;
 }
 
 -(void)buildShields:(int)numShields{
+    [self removeShields];
+
     int shieldOrigX = 30;
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     SKTexture *shieldTexture = [atlas textureNamed:@"shield-bottle.png"];
@@ -185,13 +214,25 @@ BOOL respawning = NO;
 
 - (void)respawnLevel{
     respawning = YES;
+    level++;
+    [self updateLevelDisplay];
+    self.levelDisplay.hidden = NO;
+    
+    [self.player gameOver];
+    
+    
     [self removeAllActiveMissles];
+    
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        level++;
         [self spawnInvaders:[SKTextureAtlas atlasNamed:@"invader"]];
         [self updateScoreDisplay];
+        self.levelDisplay.hidden = YES;
+        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+        [self spawnPlayer:atlas];
+        [self spawnInvaders:atlas];
+        [self buildShields:3];
         respawning = NO;
     });
 }
@@ -248,16 +289,20 @@ BOOL respawning = NO;
     score = 0;
     numPlayers = 3;
     [self updateScoreDisplay];
+    [self updateLevelDisplay];
+    self.levelDisplay.hidden = NO;
 
-    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-    [self spawnPlayer:atlas];
-    [self spawnInvaders:atlas];
-    [self buildShields:3];
-    
-    [self.playerShootButton removeFromParent];
-    [self addChild:self.playerShootButton];
-
-    self.gameState = GAMEON;
+    double delayInSeconds = 1.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+        [self spawnPlayer:atlas];
+        [self spawnInvaders:atlas];
+        [self buildShields:3];
+        
+        self.levelDisplay.hidden = YES;
+        self.gameState = GAMEON;
+    });
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
