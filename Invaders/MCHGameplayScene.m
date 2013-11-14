@@ -27,6 +27,9 @@ int level;
 int fireFrequencyCounter;
 int numPlayers;
 int score;
+int shieldBonus;
+int shieldMultiplier = 25;
+int shieldCount;
 BOOL respawning = NO;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
@@ -47,6 +50,10 @@ BOOL respawning = NO;
 
 - (void)updateScoreDisplay {
     self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",level,score,numPlayers];
+}
+
+- (void)updateShieldBonus {
+    self.shieldBonus.text = [NSString stringWithFormat:@"shield bonus %d x %d = %d",shieldCount,shieldMultiplier,shieldBonus];
 }
 
 - (void)updateLevelDisplay {
@@ -128,6 +135,8 @@ BOOL respawning = NO;
         /* Setup your scene here */
         numPlayers = 3;
         
+        shieldBonus = 0;
+        shieldCount = 0;
         self.invaderFireFrequency = 60;
         fireFrequencyCounter = 0;
         level = 1;
@@ -181,6 +190,13 @@ BOOL respawning = NO;
         self.levelDisplay.hidden = YES;
         [self addChild:self.levelDisplay];
         
+        self.shieldBonus = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.shieldBonus.text = [NSString stringWithFormat:@"shield bonus %d x %d = %d",shieldCount,shieldMultiplier,shieldBonus];
+        self.shieldBonus.fontSize = 18;
+        self.shieldBonus.position = CGPointMake(CGRectGetMidX(self.frame),self.levelDisplay.position.y - self.levelDisplay.frame.size.height + 5);
+        self.shieldBonus.hidden = YES;
+        [self addChild:self.shieldBonus];
+        
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
     }
@@ -224,9 +240,17 @@ BOOL respawning = NO;
 - (void)respawnLevel{
     respawning = YES;
     level++;
+    
     [self updateScoreDisplay];
     [self updateLevelDisplay];
+
+    shieldCount = [self.shields count];
+    shieldBonus = shieldMultiplier * shieldCount;
+    score += shieldBonus;
+    
+    [self updateShieldBonus];
     self.levelDisplay.hidden = NO;
+    self.shieldBonus.hidden = NO;
 
     [self.player gameOver];
     [self removeAllActiveMissles];
@@ -242,7 +266,9 @@ BOOL respawning = NO;
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self updateScoreDisplay];
         self.levelDisplay.hidden = YES;
+        self.shieldBonus.hidden = YES;
         respawning = NO;
         [self startInvaderMovements];
     });
