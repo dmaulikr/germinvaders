@@ -14,20 +14,15 @@
 
 @implementation MCHGameOverScene
 
+- (void)updateScoreDisplay {
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.level,self.score];
+}
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
-        
-        /*
-        SKLabelNode *tempLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        tempLabel.text = @"tap to dismiss";
-        tempLabel.fontSize = 38;
-        tempLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
-        
-        [self addChild:tempLabel];
-        */
         
         self.menuButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.menuButtonLabel.text = @"menu";
@@ -100,6 +95,7 @@
 
 - (void)didMoveToView:(SKView *)view{
     self.endGameBoss.hidden = NO;
+    [self updateScoreDisplay];
 }
 
 - (SKEmitterNode*) newExplosionEmitter{

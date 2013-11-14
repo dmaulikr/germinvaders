@@ -103,7 +103,6 @@
 }
 
 -(void)fireMissle{
-    return;
     if(!self.readyToFire){
         NSLog(@"not firing because we have a fire rate.");
         return;

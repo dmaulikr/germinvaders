@@ -67,6 +67,13 @@ BOOL respawning = NO;
     [self.shields removeAllObjects];
 }
 
+- (void)startInvaderMovements{
+    for(MCHInvader *invader in self.invaders){
+        [invader runMoveAnimation];
+        [invader moveLeftRight];
+    }
+}
+
 - (void)spawnInvaders:(SKTextureAtlas *)atlas {
     [self removeInvaders];
     
@@ -111,8 +118,6 @@ BOOL respawning = NO;
             [self.invaders addObject:invader];
             [self addChild:invader];
             startX = startX + invaderSize.width + invaderSpacing;
-            [invader runMoveAnimation];
-            [invader moveLeftRight];
         }
         startY = startY - invaderSize.height - invaderSpacing;
     }
@@ -186,13 +191,17 @@ BOOL respawning = NO;
 -(void)buildShields:(int)numShields{
     [self removeShields];
 
-    int shieldOrigX = 30;
+    int numShieldsPerGroup = 7 - level;
+    int shieldGroupWidth = (numShieldsPerGroup * numShields * 10) + ((numShieldsPerGroup -1)*3) + ((20 + 13) * (numShields-1));
+    
+    int shieldOrigX = CGRectGetMidX(self.frame) - shieldGroupWidth/2;
+    
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     SKTexture *shieldTexture = [atlas textureNamed:@"shield-bottle.png"];
     for (int i=0; i<numShields; i++){
         int shieldStartX = shieldOrigX;
         //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
-        for(int x=0;x<6;x++){
+        for(int x=0;x<numShieldsPerGroup;x++){
             int shieldStartY = SHIELD_START_Y_POS;
             for(int y=0;y<2;y++){
                 MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(10,26)];
@@ -208,32 +217,34 @@ BOOL respawning = NO;
             }
             shieldStartX += (10+3);
         }
-        shieldOrigX += 100;
+        shieldOrigX = shieldStartX += 20;
     }
 }
 
 - (void)respawnLevel{
     respawning = YES;
     level++;
+    [self updateScoreDisplay];
     [self updateLevelDisplay];
     self.levelDisplay.hidden = NO;
-    
+
     [self.player gameOver];
-    
-    
     [self removeAllActiveMissles];
+
+    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+    [self spawnPlayer:atlas];
+    [self spawnInvaders:atlas];
+    [self buildShields:3];
+    
+    [self.playerShootButton removeFromParent];
+    [self addChild:self.playerShootButton];
     
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self spawnInvaders:[SKTextureAtlas atlasNamed:@"invader"]];
-        [self updateScoreDisplay];
         self.levelDisplay.hidden = YES;
-        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        [self spawnPlayer:atlas];
-        [self spawnInvaders:atlas];
-        [self buildShields:3];
         respawning = NO;
+        [self startInvaderMovements];
     });
 }
 
@@ -260,6 +271,8 @@ BOOL respawning = NO;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self spawnPlayer:[SKTextureAtlas atlasNamed:@"invader"]];
+            [self.playerShootButton removeFromParent];
+            [self addChild:self.playerShootButton];
             //pause the movement of all the invaders (resume their movements when the player is actually respawned
             for(MCHInvader *nextInvader in self.invaders){
                 [nextInvader setPaused:NO];
@@ -285,6 +298,7 @@ BOOL respawning = NO;
 }
 
 -(void)restartGame{
+    self.gameState = GAMEOVER;
     level = 1;
     score = 0;
     numPlayers = 3;
@@ -292,16 +306,20 @@ BOOL respawning = NO;
     [self updateLevelDisplay];
     self.levelDisplay.hidden = NO;
 
-    double delayInSeconds = 1.5;
+    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
+    [self spawnPlayer:atlas];
+    [self spawnInvaders:atlas];
+    [self buildShields:3];
+
+    [self.playerShootButton removeFromParent];
+    [self addChild:self.playerShootButton];
+    
+    double delayInSeconds = 1.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        [self spawnPlayer:atlas];
-        [self spawnInvaders:atlas];
-        [self buildShields:3];
-        
         self.levelDisplay.hidden = YES;
         self.gameState = GAMEON;
+        [self startInvaderMovements];
     });
 }
 
