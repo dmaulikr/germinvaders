@@ -213,6 +213,13 @@ int maxfiring = 6;
         self.shieldBonus.hidden = YES;
         [self addChild:self.shieldBonus];
         
+        self.bonusPipeLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.bonusPipeLabel.text = [NSString stringWithFormat:@"new pipe"];
+        self.bonusPipeLabel.fontSize = 18;
+        self.bonusPipeLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.shieldBonus.position.y - self.shieldBonus.frame.size.height + 5);
+        self.bonusPipeLabel.hidden = YES;
+        [self addChild:self.bonusPipeLabel];
+        
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         self.physicsWorld.contactDelegate = self;
     }
@@ -260,6 +267,11 @@ int maxfiring = 6;
     respawning = YES;
     level++;
     
+    if ((level % 3) == 0) {
+        self.bonusPipeLabel.hidden = NO;
+        numPlayers++;
+    }
+    
     numInvadersFiring = level <= maxfiring ? level : maxfiring;
     int levelBasedFrequency = (200 - (level * 6));
     self.invaderFireFrequency = levelBasedFrequency >= MIN_FIRE_RATE ? levelBasedFrequency : MIN_FIRE_RATE;
@@ -293,6 +305,7 @@ int maxfiring = 6;
         [self updateScoreDisplay];
         self.levelDisplay.hidden = YES;
         self.shieldBonus.hidden = YES;
+        self.bonusPipeLabel.hidden = YES;
         respawning = NO;
         [self startInvaderMovements];
     });
