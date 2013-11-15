@@ -27,7 +27,7 @@ typedef enum : uint8_t {
 
 #pragma mark - Game Layout Positions
 #define SHIELD_START_Y_POS 110;
-#define MIN_FIRE_RATE 90
+#define MIN_FIRE_RATE 20
 
 #pragma mark - High Scores
 #define HIGH_SCORE_KEY @"invaders-high-scores"

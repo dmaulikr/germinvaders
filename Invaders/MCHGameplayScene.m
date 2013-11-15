@@ -31,7 +31,7 @@ int shieldBonus;
 int shieldMultiplier = 25;
 int shieldCount;
 BOOL respawning = NO;
-int maxfiring = 6;
+int maxfiring = 1;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
     [self.player gameOver];
@@ -273,7 +273,7 @@ int maxfiring = 6;
     }
     
     numInvadersFiring = level <= maxfiring ? level : maxfiring;
-    int levelBasedFrequency = (200 - (level * 6));
+    int levelBasedFrequency = (120 - (level * 10));
     self.invaderFireFrequency = levelBasedFrequency >= MIN_FIRE_RATE ? levelBasedFrequency : MIN_FIRE_RATE;
     fireFrequencyCounter = 0;
     
@@ -369,7 +369,7 @@ int maxfiring = 6;
     [self updateLevelDisplay];
     self.levelDisplay.hidden = NO;
 
-    int levelBasedFrequency = (200 - (level * 6));
+    int levelBasedFrequency = (160 - (level * 10));
     self.invaderFireFrequency = levelBasedFrequency >= MIN_FIRE_RATE ? levelBasedFrequency : MIN_FIRE_RATE;
     fireFrequencyCounter = 0;
     

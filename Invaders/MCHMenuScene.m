@@ -37,7 +37,7 @@
 
         fordHeadTexture = [atlas textureNamed:@"invader0-row1.png"];
         self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead2.position = CGPointMake(CGRectGetMidX(self.frame)-45, self.fordHead.position.y);
+        self.fordHead2.position = CGPointMake(CGRectGetMidX(self.frame)- 5, self.fordHead.position.y);
         
         fordHeadTexture = [atlas textureNamed:@"invader0-row3.png"];
         self.fordHead3 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
