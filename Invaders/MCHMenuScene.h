@@ -16,5 +16,7 @@
 @property (strong,atomic)SKLabelNode *subtitle;
 @property (strong,atomic)SKSpriteNode *fordHead;
 @property (strong,atomic)SKSpriteNode *fordHead2;
+@property (strong,atomic)SKSpriteNode *fordHead3;
+@property (strong,atomic)SKSpriteNode *fordHead4;
 
 @end

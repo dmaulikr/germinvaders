@@ -23,19 +23,29 @@
         self.title.fontSize = 70;
         self.title.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.title.frame.size.height * 2);
 
+        /*
         self.subtitle = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.subtitle.text = @"(r o b f o rd edition)";
         self.subtitle.fontSize = 38;
         self.subtitle.position = CGPointMake(CGRectGetMidX(self.frame),self.title.position.y - self.title.frame.size.height);
+         */
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         SKTexture *fordHeadTexture = [atlas textureNamed:@"invader0-row0.png"];
         self.fordHead = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead.position = CGPointMake(self.subtitle.position.x-105, self.subtitle.position.y+10);
+        self.fordHead.position = CGPointMake(CGRectGetMidX(self.frame)-100, self.title.position.y - self.title.frame.size.height - 30);
 
         fordHeadTexture = [atlas textureNamed:@"invader0-row1.png"];
         self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead2.position = CGPointMake(self.subtitle.position.x-22, self.subtitle.position.y+10);
+        self.fordHead2.position = CGPointMake(CGRectGetMidX(self.frame)-45, self.fordHead.position.y);
+        
+        fordHeadTexture = [atlas textureNamed:@"invader0-row3.png"];
+        self.fordHead3 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
+        self.fordHead3.position = CGPointMake(CGRectGetMidX(self.frame)+45, self.fordHead.position.y);
+        
+        fordHeadTexture = [atlas textureNamed:@"invader0-row4.png"];
+        self.fordHead4 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
+        self.fordHead4.position = CGPointMake(CGRectGetMidX(self.frame)+100, self.fordHead.position.y);
 
         SKLabelNode *playButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         playButtonLabel.text = @"NEW GAME";
@@ -56,9 +66,11 @@
         self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y+highScoreButtonLabel.frame.size.height/2);
         
         [self addChild:self.title];
-        [self addChild:self.subtitle];
+//        [self addChild:self.subtitle];
         [self addChild:self.fordHead];
         [self addChild:self.fordHead2];
+        [self addChild:self.fordHead3];
+        [self addChild:self.fordHead4];
         [self addChild:self.playButton];
         [self addChild:self.leaderboardButton];
         
