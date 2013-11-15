@@ -31,7 +31,7 @@ typedef enum : uint8_t {
 
 #pragma mark - High Scores
 #define HIGH_SCORE_KEY @"invaders-high-scores"
-#define MAX_NUM_HIGH_SCORES 8
+#define MAX_NUM_HIGH_SCORES 10
 
 
 #endif

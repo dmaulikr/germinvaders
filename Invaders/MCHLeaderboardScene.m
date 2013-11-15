@@ -14,7 +14,7 @@
 @implementation MCHLeaderboardScene
 
 - (void)renderLeaderboardEntries {
-    float startY = self.leaderboardTitle.position.y - self.leaderboardTitle.frame.size.height*1.5;
+    float startY = self.leaderboardTitle.position.y - self.leaderboardTitle.frame.size.height*1.5 - 5;
     for(NSString *labelString in self.leaderboardData){
         SKLabelNode *boardEntry = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         boardEntry.text = [NSString stringWithFormat:@"%@",labelString];
