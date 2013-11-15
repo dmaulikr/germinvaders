@@ -55,7 +55,7 @@
         self.clearButtonLabel.position = CGPointMake(self.frame.size.width - self.clearButtonLabel.frame.size.width+10,self.size.height-40);
         [self addChild:self.clearButtonLabel];
         
-        self.clearButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.clearButtonLabel.frame.size.width+20, self.clearButtonLabel.frame.size.height+50)];
+        self.clearButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.clearButtonLabel.frame.size.width+40, self.clearButtonLabel.frame.size.height+70)];
         self.clearButton.position = CGPointMake(self.frame.size.width - self.clearButton.frame.size.width/2,self.size.height-self.clearButton.frame.size.height/2);
         [self addChild:self.clearButton];
         
@@ -65,8 +65,8 @@
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.clearButtonLabel.position.y);
         [self addChild:self.menuButtonLabel];
         
-        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+20, self.menuButtonLabel.frame.size.height+50)];
-        self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.clearButton.position.y);
+        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
+        self.menuButton.position = CGPointMake(0+self.menuButton.frame.size.width/2,self.clearButton.position.y);
         [self addChild:self.menuButton];
     }
     return self;

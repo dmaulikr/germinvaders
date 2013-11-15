@@ -30,8 +30,8 @@
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.size.height-40);
         [self addChild:self.menuButtonLabel];
         
-        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+20, self.menuButtonLabel.frame.size.height+50)];
-        self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.size.height-self.menuButton.frame.size.height/2);
+        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
+        self.menuButton.position = CGPointMake(0+self.menuButton.frame.size.width/2,self.size.height-self.menuButton.frame.size.height/2);
         [self addChild:self.menuButton];
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];

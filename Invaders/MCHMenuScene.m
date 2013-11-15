@@ -37,16 +37,24 @@
         self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
         self.fordHead2.position = CGPointMake(self.subtitle.position.x-22, self.subtitle.position.y+10);
 
-        self.playButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.playButton.text = @"NEW GAME";
-        self.playButton.fontSize = 28;
-        self.playButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
+        SKLabelNode *playButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        playButtonLabel.text = @"NEW GAME";
+        playButtonLabel.fontSize = 28;
+        playButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
+        [self addChild:playButtonLabel];
+        
+        self.playButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, playButtonLabel.frame.size.height+60)];
+        self.playButton.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y+playButtonLabel.frame.size.height/2);
 
-        self.leaderboardButton = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.leaderboardButton.text = @"HIGH SCORES";
-        self.leaderboardButton.fontSize = 28;
-        self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),self.playButton.position.y - self.playButton.frame.size.height*3);
-
+        SKLabelNode *highScoreButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        highScoreButtonLabel.text = @"HIGH SCORES";
+        highScoreButtonLabel.fontSize = 28;
+        highScoreButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y - playButtonLabel.frame.size.height*4);
+        [self addChild:highScoreButtonLabel];
+        
+        self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
+        self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y+highScoreButtonLabel.frame.size.height/2);
+        
         [self addChild:self.title];
         [self addChild:self.subtitle];
         [self addChild:self.fordHead];

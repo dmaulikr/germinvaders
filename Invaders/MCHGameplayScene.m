@@ -175,7 +175,7 @@ int maxfiring = 6;
         self.pauseButtonLabel.position = CGPointMake(self.frame.size.width - self.pauseButtonLabel.frame.size.width+10,self.size.height-40);
         [self addChild:self.pauseButtonLabel];
 
-        self.pauseButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.pauseButtonLabel.frame.size.width+20, self.pauseButtonLabel.frame.size.height+50)];
+        self.pauseButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.pauseButtonLabel.frame.size.width+40, self.pauseButtonLabel.frame.size.height+70)];
         self.pauseButton.position = CGPointMake(self.frame.size.width - self.pauseButton.frame.size.width/2,self.size.height-self.pauseButton.frame.size.height/2);
         [self addChild:self.pauseButton];
 
@@ -185,8 +185,8 @@ int maxfiring = 6;
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.pauseButtonLabel.position.y);
         [self addChild:self.menuButtonLabel];
 
-        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+20, self.menuButtonLabel.frame.size.height+50)];
-        self.menuButton.position = CGPointMake(self.menuButtonLabel.frame.size.width/2,self.pauseButton.position.y);
+        self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
+        self.menuButton.position = CGPointMake(0+self.menuButton.frame.size.width/2,self.pauseButton.position.y);
         [self addChild:self.menuButton];
         
         self.playerShootButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width,self.size.height/4)];
