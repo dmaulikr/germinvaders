@@ -16,7 +16,7 @@
     if(self){
         self.readyToFire = YES;
         self.fireRate = 2.5;
-        self.maxSpeed = 10;
+        self.maxSpeed = 6.5;
         //Update this method so that maybe we pass in values to fully initialize the invader - or if not using delete.
     }
     return self;

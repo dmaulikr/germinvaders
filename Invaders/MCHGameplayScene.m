@@ -31,6 +31,7 @@ int shieldBonus;
 int shieldMultiplier = 25;
 int shieldCount;
 BOOL respawning = NO;
+int maxfiring = 6;
 
 - (void)spawnPlayer:(SKTextureAtlas *)atlas {
     [self.player gameOver];
@@ -126,7 +127,7 @@ BOOL respawning = NO;
             MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
             invader.parentScene = self;
             invader.direction = 0;
-            invader.speed = 4.5+(level/5);
+            invader.speed = 4.5+(level/6);
             if(invader.speed > invader.maxSpeed){
                 invader.speed = invader.maxSpeed;
             }
@@ -153,10 +154,9 @@ BOOL respawning = NO;
         
         shieldBonus = 0;
         shieldCount = 0;
-        self.invaderFireFrequency = 60;
         fireFrequencyCounter = 0;
         level = 1;
-        numInvadersFiring = level * 1;
+        numInvadersFiring = level <= maxfiring ? level : maxfiring;
         self.gameState = GAMEOVER;
         
         self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
@@ -224,6 +224,9 @@ BOOL respawning = NO;
     [self removeShields];
 
     int numShieldsPerGroup = 7 - level;
+    if (numShieldsPerGroup < 2) {
+        numShieldsPerGroup = 2;
+    }
     int shieldGroupWidth = (numShieldsPerGroup * numShields * 10) + ((numShieldsPerGroup -1)*3) + ((20 + 13) * (numShields-1));
     
     int shieldOrigX = CGRectGetMidX(self.frame) - shieldGroupWidth/2;
@@ -256,6 +259,11 @@ BOOL respawning = NO;
 - (void)respawnLevel{
     respawning = YES;
     level++;
+    
+    numInvadersFiring = level <= maxfiring ? level : maxfiring;
+    int levelBasedFrequency = (200 - (level * 6));
+    self.invaderFireFrequency = levelBasedFrequency >= MIN_FIRE_RATE ? levelBasedFrequency : MIN_FIRE_RATE;
+    fireFrequencyCounter = 0;
     
     [self updateScoreDisplay];
     [self updateLevelDisplay];
@@ -348,6 +356,10 @@ BOOL respawning = NO;
     [self updateLevelDisplay];
     self.levelDisplay.hidden = NO;
 
+    int levelBasedFrequency = (200 - (level * 6));
+    self.invaderFireFrequency = levelBasedFrequency >= MIN_FIRE_RATE ? levelBasedFrequency : MIN_FIRE_RATE;
+    fireFrequencyCounter = 0;
+    
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
     [self spawnPlayer:atlas];
     [self spawnInvaders:atlas];
