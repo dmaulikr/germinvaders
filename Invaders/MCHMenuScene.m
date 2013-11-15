@@ -65,8 +65,15 @@
         self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
         self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y+highScoreButtonLabel.frame.size.height/2);
         
+        NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+        NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
+        self.versionDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        self.versionDisplay.text = [NSString stringWithFormat:@"version %@",version];
+        self.versionDisplay.fontSize = 12;
+        self.versionDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.versionDisplay.frame.size.height + 5);
+        [self addChild:self.versionDisplay];
+        
         [self addChild:self.title];
-//        [self addChild:self.subtitle];
         [self addChild:self.fordHead];
         [self addChild:self.fordHead2];
         [self addChild:self.fordHead3];

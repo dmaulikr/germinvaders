@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F74663177BDA4E00015916"
                BuildableName = "Invaders.app"
-               BlueprintName = "Invaders"
-               ReferencedContainer = "container:Invaders.xcodeproj">
+               BlueprintName = "Invaders (RF)"
+               ReferencedContainer = "container:Invaders (RF).xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F7468E177BDA4E00015916"
                BuildableName = "InvadersTests.xctest"
-               BlueprintName = "InvadersTests"
-               ReferencedContainer = "container:Invaders.xcodeproj">
+               BlueprintName = "Invaders (RF)Tests"
+               ReferencedContainer = "container:Invaders (RF).xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
             BuildableName = "Invaders.app"
-            BlueprintName = "Invaders"
-            ReferencedContainer = "container:Invaders.xcodeproj">
+            BlueprintName = "Invaders (RF)"
+            ReferencedContainer = "container:Invaders (RF).xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
             BuildableName = "Invaders.app"
-            BlueprintName = "Invaders"
-            ReferencedContainer = "container:Invaders.xcodeproj">
+            BlueprintName = "Invaders (RF)"
+            ReferencedContainer = "container:Invaders (RF).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
             BuildableName = "Invaders.app"
-            BlueprintName = "Invaders"
-            ReferencedContainer = "container:Invaders.xcodeproj">
+            BlueprintName = "Invaders (RF)"
+            ReferencedContainer = "container:Invaders (RF).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
