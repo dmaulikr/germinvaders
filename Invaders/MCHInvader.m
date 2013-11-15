@@ -24,7 +24,7 @@
 
 -(void)moveDown{
 //    int moveValue = -self.size.height;
-    int moveValue = -self.size.height/2;
+    int moveValue = -self.size.height/3;
     
     SKAction *moveAlien = [SKAction moveByX:0.0 y:moveValue duration:fabs(moveValue)/self.speed];
     [self runAction:moveAlien completion:^{
