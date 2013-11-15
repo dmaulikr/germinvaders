@@ -81,18 +81,34 @@ BOOL respawning = NO;
     }
 }
 
+- (BOOL)hasFourInchDisplay {
+    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0);
+}
+
 - (void)spawnInvaders:(SKTextureAtlas *)atlas {
     [self removeInvaders];
     
-    int startY = self.size.height-85;
-    CGSize invaderSize = CGSizeMake(30, 44);
+    int startY = self.size.height-95;
+    CGSize invaderSize;
+    if([self hasFourInchDisplay]){
+        invaderSize = CGSizeMake(30, 44);
+    }else{
+        invaderSize = CGSizeMake(30*.85, 44*.85);
+    }
     int invaderSpacing = 6;
     int invaderGroupStartX = ((self.size.width-((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing)))/2)+invaderSize.width/2;
     int invaderGroupFinishX = invaderGroupStartX + ((numInvaderAcross*invaderSize.width)+((numInvaderAcross-1)*invaderSpacing));
     int invaderRange = self.size.width-4-invaderGroupFinishX;
     
     NSArray *invaderRowIndexMap = @[@(0),@(1),@(3),@(4)];
-    NSArray *invaderHeightForRowMap = @[@44.0,@44.0,@44.0,@40.0];
+    NSNumber *size1 = @44.0;
+    NSNumber *size2 = @40.0;
+    
+    if(![self hasFourInchDisplay]){
+        size1 = [NSNumber numberWithFloat:44*.85];
+        size2 = [NSNumber numberWithFloat:40*.85];
+    }
+    NSArray *invaderHeightForRowMap = @[size1,size1,size1,size2];
     
     for (int i=0; i<numInvaderRows; i++) {
         int startX = invaderGroupStartX;
@@ -186,7 +202,7 @@ BOOL respawning = NO;
         self.levelDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.levelDisplay.text = @"LEVEL %d";
         self.levelDisplay.fontSize = 28;
-        self.levelDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        self.levelDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame)-30);
         self.levelDisplay.hidden = YES;
         [self addChild:self.levelDisplay];
         
