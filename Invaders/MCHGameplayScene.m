@@ -49,11 +49,11 @@ BOOL respawning = NO;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",level,score,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",score,level,numPlayers];
 }
 
 - (void)updateShieldBonus {
-    self.shieldBonus.text = [NSString stringWithFormat:@"shield bonus %d x %d = %d",shieldCount,shieldMultiplier,shieldBonus];
+    self.shieldBonus.text = [NSString stringWithFormat:@"(pop bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
 }
 
 - (void)updateLevelDisplay {
@@ -191,7 +191,7 @@ BOOL respawning = NO;
         [self addChild:self.levelDisplay];
         
         self.shieldBonus = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.shieldBonus.text = [NSString stringWithFormat:@"shield bonus %d x %d = %d",shieldCount,shieldMultiplier,shieldBonus];
+        self.shieldBonus.text = [NSString stringWithFormat:@"(pop bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
         self.shieldBonus.fontSize = 18;
         self.shieldBonus.position = CGPointMake(CGRectGetMidX(self.frame),self.levelDisplay.position.y - self.levelDisplay.frame.size.height + 5);
         self.shieldBonus.hidden = YES;
