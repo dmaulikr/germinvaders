@@ -76,15 +76,15 @@
 		2868FFFB177FBC2600BB44FF /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Invaders/spark.png; sourceTree = "<group>"; };
 		28E7E9011825691600D148E8 /* MCHInvadersConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvadersConstants.h; sourceTree = "<group>"; };
 		28EA66AA1783A9650017E129 /* invader.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = invader.atlas; sourceTree = "<group>"; };
-		28F74664177BDA4E00015916 /* InvadersRF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvadersRF.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F74664177BDA4E00015916 /* CatsvsBaby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatsvsBaby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F74667177BDA4E00015916 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		28F74669177BDA4E00015916 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28F7466B177BDA4E00015916 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28F7466D177BDA4E00015916 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
-		28F74671177BDA4E00015916 /* InvadersRF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InvadersRF-Info.plist"; sourceTree = "<group>"; };
+		28F74671177BDA4E00015916 /* CatsvsBaby-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CatsvsBaby-Info.plist"; sourceTree = "<group>"; };
 		28F74673177BDA4E00015916 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28F74675177BDA4E00015916 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		28F74677177BDA4E00015916 /* InvadersRF-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InvadersRF-Prefix.pch"; sourceTree = "<group>"; };
+		28F74677177BDA4E00015916 /* CatsvsBaby-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CatsvsBaby-Prefix.pch"; sourceTree = "<group>"; };
 		28F74678177BDA4E00015916 /* MCHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCHAppDelegate.h; sourceTree = "<group>"; };
 		28F74679177BDA4E00015916 /* MCHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCHAppDelegate.m; sourceTree = "<group>"; };
 		28F7467C177BDA4E00015916 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
@@ -95,9 +95,9 @@
 		28F74685177BDA4E00015916 /* MCHMenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCHMenuScene.m; sourceTree = "<group>"; };
 		28F74687177BDA4E00015916 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		28F74689177BDA4E00015916 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		28F7468F177BDA4E00015916 /* InvadersRFTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InvadersRFTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F7468F177BDA4E00015916 /* CatsvsBabyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsvsBabyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F74690177BDA4E00015916 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		28F74698177BDA4E00015916 /* InvadersRFTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InvadersRFTests-Info.plist"; sourceTree = "<group>"; };
+		28F74698177BDA4E00015916 /* CatsvsBabyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CatsvsBabyTests-Info.plist"; sourceTree = "<group>"; };
 		28F7469A177BDA4E00015916 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28F7469C177BDA4E00015916 /* InvadersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvadersTests.m; sourceTree = "<group>"; };
 		28F746A6177BE65F00015916 /* MCHGameplayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameplayScene.h; sourceTree = "<group>"; };
@@ -145,8 +145,8 @@
 		28F74665177BDA4E00015916 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				28F74664177BDA4E00015916 /* InvadersRF.app */,
-				28F7468F177BDA4E00015916 /* InvadersRFTests.xctest */,
+				28F74664177BDA4E00015916 /* CatsvsBaby.app */,
+				28F7468F177BDA4E00015916 /* CatsvsBabyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -206,10 +206,10 @@
 				283663671833F65B0010365C /* invaders-appicon-device.png */,
 				283663601833E20C0010365C /* loading-iphone4.png */,
 				283663611833E20C0010365C /* loading-iphone5.png */,
-				28F74671177BDA4E00015916 /* InvadersRF-Info.plist */,
+				28F74671177BDA4E00015916 /* CatsvsBaby-Info.plist */,
 				28F74672177BDA4E00015916 /* InfoPlist.strings */,
 				28F74675177BDA4E00015916 /* main.m */,
-				28F74677177BDA4E00015916 /* InvadersRF-Prefix.pch */,
+				28F74677177BDA4E00015916 /* CatsvsBaby-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -226,7 +226,7 @@
 		28F74697177BDA4E00015916 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				28F74698177BDA4E00015916 /* InvadersRFTests-Info.plist */,
+				28F74698177BDA4E00015916 /* CatsvsBabyTests-Info.plist */,
 				28F74699177BDA4E00015916 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -235,9 +235,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		28F74663177BDA4E00015916 /* InvadersRF */ = {
+		28F74663177BDA4E00015916 /* CatsvsBaby */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28F746A0177BDA4E00015916 /* Build configuration list for PBXNativeTarget "InvadersRF" */;
+			buildConfigurationList = 28F746A0177BDA4E00015916 /* Build configuration list for PBXNativeTarget "CatsvsBaby" */;
 			buildPhases = (
 				28F74660177BDA4E00015916 /* Sources */,
 				28F74661177BDA4E00015916 /* Frameworks */,
@@ -247,14 +247,14 @@
 			);
 			dependencies = (
 			);
-			name = InvadersRF;
+			name = CatsvsBaby;
 			productName = Invaders;
-			productReference = 28F74664177BDA4E00015916 /* InvadersRF.app */;
+			productReference = 28F74664177BDA4E00015916 /* CatsvsBaby.app */;
 			productType = "com.apple.product-type.application";
 		};
-		28F7468E177BDA4E00015916 /* InvadersRFTests */ = {
+		28F7468E177BDA4E00015916 /* CatsvsBabyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28F746A3177BDA4E00015916 /* Build configuration list for PBXNativeTarget "InvadersRFTests" */;
+			buildConfigurationList = 28F746A3177BDA4E00015916 /* Build configuration list for PBXNativeTarget "CatsvsBabyTests" */;
 			buildPhases = (
 				28F7468B177BDA4E00015916 /* Sources */,
 				28F7468C177BDA4E00015916 /* Frameworks */,
@@ -265,9 +265,9 @@
 			dependencies = (
 				28F74695177BDA4E00015916 /* PBXTargetDependency */,
 			);
-			name = InvadersRFTests;
+			name = CatsvsBabyTests;
 			productName = InvadersTests;
-			productReference = 28F7468F177BDA4E00015916 /* InvadersRFTests.xctest */;
+			productReference = 28F7468F177BDA4E00015916 /* CatsvsBabyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -288,7 +288,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 28F7465F177BDA4E00015916 /* Build configuration list for PBXProject "InvadersRF" */;
+			buildConfigurationList = 28F7465F177BDA4E00015916 /* Build configuration list for PBXProject "CatsvsBaby" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -301,8 +301,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				28F74663177BDA4E00015916 /* InvadersRF */,
-				28F7468E177BDA4E00015916 /* InvadersRFTests */,
+				28F74663177BDA4E00015916 /* CatsvsBaby */,
+				28F7468E177BDA4E00015916 /* CatsvsBabyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -370,7 +370,7 @@
 /* Begin PBXTargetDependency section */
 		28F74695177BDA4E00015916 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 28F74663177BDA4E00015916 /* InvadersRF */;
+			target = 28F74663177BDA4E00015916 /* CatsvsBaby */;
 			targetProxy = 28F74694177BDA4E00015916 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -489,9 +489,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Invaders/InvadersRF-Prefix.pch";
-				INFOPLIST_FILE = "Invaders/InvadersRF-Info.plist";
-				PRODUCT_NAME = InvadersRF;
+				GCC_PREFIX_HEADER = "Invaders/CatsvsBaby-Prefix.pch";
+				INFOPLIST_FILE = "Invaders/CatsvsBaby-Info.plist";
+				PRODUCT_NAME = CatsvsBaby;
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -507,9 +507,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Marc Henderson (4N68VNR6A4)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Invaders/InvadersRF-Prefix.pch";
-				INFOPLIST_FILE = "Invaders/InvadersRF-Info.plist";
-				PRODUCT_NAME = InvadersRF;
+				GCC_PREFIX_HEADER = "Invaders/CatsvsBaby-Prefix.pch";
+				INFOPLIST_FILE = "Invaders/CatsvsBaby-Info.plist";
+				PRODUCT_NAME = CatsvsBaby;
 				PROVISIONING_PROFILE = "F8E61179-CD86-4932-B289-AB1ABD762C4C";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -532,8 +532,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "InvadersTests/InvadersRFTests-Info.plist";
-				PRODUCT_NAME = InvadersRFTests;
+				INFOPLIST_FILE = "InvadersTests/CatsvsBabyTests-Info.plist";
+				PRODUCT_NAME = CatsvsBabyTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -550,8 +550,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Invaders/Invaders-Prefix.pch";
-				INFOPLIST_FILE = "InvadersTests/InvadersRFTests-Info.plist";
-				PRODUCT_NAME = InvadersRFTests;
+				INFOPLIST_FILE = "InvadersTests/CatsvsBabyTests-Info.plist";
+				PRODUCT_NAME = CatsvsBabyTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -560,7 +560,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		28F7465F177BDA4E00015916 /* Build configuration list for PBXProject "InvadersRF" */ = {
+		28F7465F177BDA4E00015916 /* Build configuration list for PBXProject "CatsvsBaby" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F7469E177BDA4E00015916 /* Debug */,
@@ -569,7 +569,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28F746A0177BDA4E00015916 /* Build configuration list for PBXNativeTarget "InvadersRF" */ = {
+		28F746A0177BDA4E00015916 /* Build configuration list for PBXNativeTarget "CatsvsBaby" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F746A1177BDA4E00015916 /* Debug */,
@@ -578,7 +578,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28F746A3177BDA4E00015916 /* Build configuration list for PBXNativeTarget "InvadersRFTests" */ = {
+		28F746A3177BDA4E00015916 /* Build configuration list for PBXNativeTarget "CatsvsBabyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F746A4177BDA4E00015916 /* Debug */,

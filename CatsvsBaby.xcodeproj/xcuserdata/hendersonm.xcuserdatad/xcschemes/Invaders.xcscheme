@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F74663177BDA4E00015916"
-               BuildableName = "Invaders RF.app"
-               BlueprintName = "InvadersRF"
-               ReferencedContainer = "container:InvadersRF.xcodeproj">
+               BuildableName = "InvadersRF.app"
+               BlueprintName = "CatsvsBaby"
+               ReferencedContainer = "container:CatsvsBaby.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F7468E177BDA4E00015916"
-               BuildableName = "Invaders RFTests.xctest"
-               BlueprintName = "InvadersRFTests"
-               ReferencedContainer = "container:InvadersRF.xcodeproj">
+               BuildableName = "InvadersRFTests.xctest"
+               BlueprintName = "CatsvsBabyTests"
+               ReferencedContainer = "container:CatsvsBaby.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "Invaders RF.app"
-            BlueprintName = "InvadersRF"
-            ReferencedContainer = "container:InvadersRF.xcodeproj">
+            BuildableName = "InvadersRF.app"
+            BlueprintName = "CatsvsBaby"
+            ReferencedContainer = "container:CatsvsBaby.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "Invaders RF.app"
-            BlueprintName = "InvadersRF"
-            ReferencedContainer = "container:InvadersRF.xcodeproj">
+            BuildableName = "InvadersRF.app"
+            BlueprintName = "CatsvsBaby"
+            ReferencedContainer = "container:CatsvsBaby.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "Invaders RF.app"
-            BlueprintName = "InvadersRF"
-            ReferencedContainer = "container:InvadersRF.xcodeproj">
+            BuildableName = "InvadersRF.app"
+            BlueprintName = "CatsvsBaby"
+            ReferencedContainer = "container:CatsvsBaby.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
