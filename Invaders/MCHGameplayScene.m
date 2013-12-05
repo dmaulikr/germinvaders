@@ -408,7 +408,7 @@ int maxfiring = 1;
         NSLog(@"detecting pan");
         CGPoint touchLocation = [gesture locationInView:gesture.view];
         touchLocation = [self convertPointFromView:touchLocation];
-        if (touchLocation.y < self.player.position.y) {
+        if (touchLocation.y < self.player.position.y + 40) {
             self.movePlayer = YES;
         }
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
