@@ -16,11 +16,16 @@
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+//        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"scene-background"];
+        [background setName:@"background"];
+        [background setAnchorPoint:CGPointZero];
+        [self addChild:background];
         
         self.title = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.title.text = @"INVADERS";
-        self.title.fontSize = 70;
+        self.title.text = @"CATS VS BABY";
+        self.title.fontSize = 48;
+        self.title.fontColor = [UIColor blackColor];
         self.title.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.title.frame.size.height * 2);
 
         /*
@@ -51,6 +56,7 @@
         playButtonLabel.text = @"NEW GAME";
         playButtonLabel.fontSize = 28;
         playButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
+        playButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:playButtonLabel];
         
         self.playButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, playButtonLabel.frame.size.height+60)];
@@ -60,6 +66,7 @@
         highScoreButtonLabel.text = @"HIGH SCORES";
         highScoreButtonLabel.fontSize = 28;
         highScoreButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y - playButtonLabel.frame.size.height*4);
+        highScoreButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:highScoreButtonLabel];
         
         self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
@@ -71,6 +78,7 @@
         self.versionDisplay.text = [NSString stringWithFormat:@"version %@",version];
         self.versionDisplay.fontSize = 12;
         self.versionDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.versionDisplay.frame.size.height + 5);
+        self.versionDisplay.fontColor = [UIColor blackColor];
         [self addChild:self.versionDisplay];
         
         [self addChild:self.title];

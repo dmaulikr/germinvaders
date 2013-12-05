@@ -50,11 +50,11 @@ int maxfiring = 1;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pipes %d",score,level,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d babies %d",score,level,numPlayers];
 }
 
 - (void)updateShieldBonus {
-    self.shieldBonus.text = [NSString stringWithFormat:@"(pop bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
+    self.shieldBonus.text = [NSString stringWithFormat:@"(bottle bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
 }
 
 - (void)updateLevelDisplay {
@@ -159,7 +159,11 @@ int maxfiring = 1;
         numInvadersFiring = level <= maxfiring ? level : maxfiring;
         self.gameState = GAMEOVER;
         
-        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+//        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"scene-background"];
+        [background setName:@"background"];
+        [background setAnchorPoint:CGPointZero];
+        [self addChild:background];
         
         self.invaders = [[NSMutableArray alloc] init];
         self.activeMissles = [[NSMutableArray alloc] init];
@@ -173,6 +177,7 @@ int maxfiring = 1;
         self.pauseButtonLabel.text = @"pause";
         self.pauseButtonLabel.fontSize = 18;
         self.pauseButtonLabel.position = CGPointMake(self.frame.size.width - self.pauseButtonLabel.frame.size.width+10,self.size.height-40);
+        self.pauseButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.pauseButtonLabel];
 
         self.pauseButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.pauseButtonLabel.frame.size.width+40, self.pauseButtonLabel.frame.size.height+70)];
@@ -183,6 +188,7 @@ int maxfiring = 1;
         self.menuButtonLabel.text = @"menu";
         self.menuButtonLabel.fontSize = 18;
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.pauseButtonLabel.position.y);
+        self.menuButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.menuButtonLabel];
 
         self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
@@ -197,6 +203,7 @@ int maxfiring = 1;
         [self updateScoreDisplay];
         self.scoreDisplay.fontSize = 18;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.pauseButtonLabel.frame.origin.y - (self.pauseButtonLabel.frame.size.height+5));
+        self.scoreDisplay.fontColor = [UIColor blackColor];
         [self addChild:self.scoreDisplay];
         
         self.levelDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
@@ -204,20 +211,23 @@ int maxfiring = 1;
         self.levelDisplay.fontSize = 28;
         self.levelDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame)-30);
         self.levelDisplay.hidden = YES;
+        self.levelDisplay.fontColor = [UIColor blackColor];
         [self addChild:self.levelDisplay];
         
         self.shieldBonus = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.shieldBonus.text = [NSString stringWithFormat:@"(pop bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
+        self.shieldBonus.text = [NSString stringWithFormat:@"(bottle bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
         self.shieldBonus.fontSize = 18;
         self.shieldBonus.position = CGPointMake(CGRectGetMidX(self.frame),self.levelDisplay.position.y - self.levelDisplay.frame.size.height + 5);
         self.shieldBonus.hidden = YES;
+        self.shieldBonus.fontColor = [UIColor blackColor];
         [self addChild:self.shieldBonus];
         
         self.bonusPipeLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.bonusPipeLabel.text = [NSString stringWithFormat:@"new pipe"];
+        self.bonusPipeLabel.text = [NSString stringWithFormat:@"new baby"];
         self.bonusPipeLabel.fontSize = 18;
         self.bonusPipeLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.shieldBonus.position.y - self.shieldBonus.frame.size.height + 5);
         self.bonusPipeLabel.hidden = YES;
+        self.bonusPipeLabel.fontColor = [UIColor blackColor];
         [self addChild:self.bonusPipeLabel];
         
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
