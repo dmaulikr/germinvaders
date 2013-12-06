@@ -37,25 +37,25 @@
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         SKTexture *fordHeadTexture = [atlas textureNamed:@"invader0-row0.png"];
-        self.fordHead = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead.position = CGPointMake(CGRectGetMidX(self.frame)-100, self.title.position.y - self.title.frame.size.height - 30);
+        self.fordHead = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(60, 56)];
+        self.fordHead.position = CGPointMake(CGRectGetMidX(self.frame)-120, self.title.position.y - self.title.frame.size.height-80);
 
         fordHeadTexture = [atlas textureNamed:@"invader0-row1.png"];
-        self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead2.position = CGPointMake(CGRectGetMidX(self.frame)- 5, self.fordHead.position.y);
+        self.fordHead2 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(60, 56)];
+        self.fordHead2.position = CGPointMake(CGRectGetMidX(self.frame)-42, self.fordHead.position.y);
         
         fordHeadTexture = [atlas textureNamed:@"invader0-row3.png"];
-        self.fordHead3 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead3.position = CGPointMake(CGRectGetMidX(self.frame)+45, self.fordHead.position.y);
+        self.fordHead3 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(60, 56)];
+        self.fordHead3.position = CGPointMake(CGRectGetMidX(self.frame)+30, self.fordHead.position.y);
         
         fordHeadTexture = [atlas textureNamed:@"invader0-row4.png"];
-        self.fordHead4 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(30, 44)];
-        self.fordHead4.position = CGPointMake(CGRectGetMidX(self.frame)+100, self.fordHead.position.y);
+        self.fordHead4 = [[SKSpriteNode alloc] initWithTexture:fordHeadTexture color:[UIColor whiteColor] size:CGSizeMake(60, 56)];
+        self.fordHead4.position = CGPointMake(CGRectGetMidX(self.frame)+110, self.fordHead.position.y);
 
         SKLabelNode *playButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         playButtonLabel.text = @"NEW GAME";
         playButtonLabel.fontSize = 28;
-        playButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
+        playButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 30);
         playButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:playButtonLabel];
         
