@@ -15,19 +15,24 @@
 @implementation MCHGameOverScene
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.level,self.score];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.score,self.level];
 }
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+//        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"scene-background"];
+        [background setName:@"background"];
+        [background setAnchorPoint:CGPointZero];
+        [self addChild:background];
         
         self.menuButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.menuButtonLabel.text = @"menu";
         self.menuButtonLabel.fontSize = 18;
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.size.height-40);
+        self.menuButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.menuButtonLabel];
         
         self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
@@ -35,9 +40,10 @@
         [self addChild:self.menuButton];
         
         self.scoreDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.level,self.score];
+        self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.score,self.level];
         self.scoreDisplay.fontSize = 18;
         self.scoreDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.menuButtonLabel.frame.origin.y - (self.menuButtonLabel.frame.size.height+5));
+        self.scoreDisplay.fontColor = [UIColor blackColor];
         [self addChild:self.scoreDisplay];
         
         if(self.score > 0){
@@ -46,21 +52,23 @@
         }
         
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        SKTexture *endBossTexture = [atlas textureNamed:@"robfordendgame-sized.png"];
-        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(257/2,300)];
-        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        SKTexture *endBossTexture = [atlas textureNamed:@"game-over-cat.png"];
+        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(734/4,1136/4)];
+        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),self.endGameBoss.frame.size.height/2);
         [self addChild:self.endGameBoss];
         
         self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.gameOverDisplay.text = @"GAME OVER";
         self.gameOverDisplay.fontSize = 38;
-        self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+        self.gameOverDisplay.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame)+self.endGameBoss.frame.size.height/4);
+        self.gameOverDisplay.fontColor = [UIColor blackColor];
         [self addChild:self.gameOverDisplay];
         
         self.restartButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         self.restartButtonLabel.text = @"replay game";
         self.restartButtonLabel.fontSize = 24;
         self.restartButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.gameOverDisplay.position.y - self.gameOverDisplay.frame.size.height - 20);
+        self.restartButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.restartButtonLabel];
         
         self.restartButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.restartButtonLabel.frame.size.width*1.2, self.restartButtonLabel.frame.size.height*1.2 + self.gameOverDisplay.frame.size.height + 60)];

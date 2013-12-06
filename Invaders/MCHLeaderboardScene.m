@@ -20,6 +20,7 @@
         boardEntry.text = [NSString stringWithFormat:@"%@",labelString];
         boardEntry.fontSize = 20;
         boardEntry.position = CGPointMake(CGRectGetMidX(self.frame),startY);
+        boardEntry.fontColor = [UIColor blackColor];
         [self addChild:boardEntry];
         [self.leaderboardEntries addObject:boardEntry];
         startY -= boardEntry.frame.size.height*2.35;
@@ -29,8 +30,11 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
-
+//        self.backgroundColor = [SKColor colorWithRed:83.0/255 green:135.0/255 blue:170.0/255 alpha:1.0];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"scene-background"];
+        [background setName:@"background"];
+        [background setAnchorPoint:CGPointZero];
+        [self addChild:background];
         
         MCHAppDelegate *appdelegate = (MCHAppDelegate *)[[UIApplication sharedApplication] delegate];
                 
@@ -43,6 +47,7 @@
         self.leaderboardTitle.text = @"HIGH SCORES";
         self.leaderboardTitle.fontSize = 42;
         self.leaderboardTitle.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.leaderboardTitle.frame.size.height * 3);
+        self.leaderboardTitle.fontColor = [UIColor blackColor];
         [self addChild:self.leaderboardTitle];
         
         self.leaderboardEntries = [[NSMutableArray alloc] init];
@@ -53,6 +58,7 @@
         self.clearButtonLabel.text = @"clear";
         self.clearButtonLabel.fontSize = 18;
         self.clearButtonLabel.position = CGPointMake(self.frame.size.width - self.clearButtonLabel.frame.size.width+10,self.size.height-40);
+        self.clearButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.clearButtonLabel];
         
         self.clearButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.clearButtonLabel.frame.size.width+40, self.clearButtonLabel.frame.size.height+70)];
@@ -63,6 +69,7 @@
         self.menuButtonLabel.text = @"menu";
         self.menuButtonLabel.fontSize = 18;
         self.menuButtonLabel.position = CGPointMake(0+10+(self.menuButtonLabel.frame.size.width/2),self.clearButtonLabel.position.y);
+        self.menuButtonLabel.fontColor = [UIColor blackColor];
         [self addChild:self.menuButtonLabel];
         
         self.menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.menuButtonLabel.frame.size.width+40, self.menuButtonLabel.frame.size.height+70)];
