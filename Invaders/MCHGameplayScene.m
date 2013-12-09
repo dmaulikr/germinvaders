@@ -418,11 +418,11 @@ int maxfiring = 1;
             CGPoint trans = [gesture translationInView:self.view];
             BOOL applyMove = YES;
             if (trans.x < 0) {
-                if((self.player.position.x - self.player.size.width) + trans.x < 0){
+                if(((self.player.position.x - self.player.size.width/2) + trans.x) < 0){
                     applyMove = NO;
                 }
             }else{
-                if((self.player.position.x + self.player.size.width) + trans.x > self.size.width){
+                if(((self.player.position.x + self.player.size.width/2) + trans.x) > self.size.width){
                     applyMove = NO;
                 }
             }
