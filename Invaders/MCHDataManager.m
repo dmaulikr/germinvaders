@@ -66,4 +66,9 @@
     [[NSUserDefaults standardUserDefaults] setObject:_highscoreList forKey:HIGH_SCORE_KEY];
 }
 
+- (void)clearHighScoreList{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:HIGH_SCORE_KEY];
+    _highscoreList = nil;
+}
+
 @end

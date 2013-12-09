@@ -93,6 +93,11 @@
     self.leaderboardData = nil;
     self.leaderboardEntries = nil;
     [self renderLeaderboardEntries];
+    
+    //and remove the leaderboard entries from the cache
+    MCHAppDelegate *appdelegate = (MCHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appdelegate.dataManager clearHighScoreList];
+    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

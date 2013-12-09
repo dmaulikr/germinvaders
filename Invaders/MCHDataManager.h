@@ -14,5 +14,6 @@
 
 - (NSArray *)gethighscoreList;
 - (void)addNewHighScore:(int)score atLevel:(int)level;
+- (void)clearHighScoreList;
 
 @end
