@@ -18,6 +18,10 @@
     self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d",self.score,self.level];
 }
 
+- (BOOL)hasFourInchDisplay {
+    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0);
+}
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
@@ -51,9 +55,10 @@
             [appdelegate.dataManager addNewHighScore:self.score atLevel:self.level];
         }
         
+        int gameOverSizeFactor = [self hasFourInchDisplay] ? 4 : 5;
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
         SKTexture *endBossTexture = [atlas textureNamed:@"game-over-cat.png"];
-        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(734/4,1136/4)];
+        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(734/gameOverSizeFactor,1136/gameOverSizeFactor)];
         self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),self.endGameBoss.frame.size.height/2);
         [self addChild:self.endGameBoss];
         
