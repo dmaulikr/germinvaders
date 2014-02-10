@@ -23,9 +23,9 @@
         [self addChild:background];
         
         self.title = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.title.text = @"CATS VS BABY";
-        self.title.fontSize = 48;
-        self.title.fontColor = [UIColor blackColor];
+        self.title.text = @"GERM INVADERS";
+        self.title.fontSize = 44;
+        self.title.fontColor = [UIColor whiteColor];
         self.title.position = CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height - self.title.frame.size.height * 2);
 
         /*
@@ -56,7 +56,7 @@
         playButtonLabel.text = @"NEW GAME";
         playButtonLabel.fontSize = 28;
         playButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 30);
-        playButtonLabel.fontColor = [UIColor blackColor];
+        playButtonLabel.fontColor = [UIColor whiteColor];
         [self addChild:playButtonLabel];
         
         self.playButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, playButtonLabel.frame.size.height+60)];
@@ -66,7 +66,7 @@
         highScoreButtonLabel.text = @"HIGH SCORES";
         highScoreButtonLabel.fontSize = 28;
         highScoreButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y - playButtonLabel.frame.size.height*4);
-        highScoreButtonLabel.fontColor = [UIColor blackColor];
+        highScoreButtonLabel.fontColor = [UIColor whiteColor];
         [self addChild:highScoreButtonLabel];
         
         self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
@@ -78,7 +78,7 @@
         self.versionDisplay.text = [NSString stringWithFormat:@"version %@",version];
         self.versionDisplay.fontSize = 12;
         self.versionDisplay.position = CGPointMake(CGRectGetMidX(self.frame),self.versionDisplay.frame.size.height + 5);
-        self.versionDisplay.fontColor = [UIColor blackColor];
+        self.versionDisplay.fontColor = [UIColor whiteColor];
         [self addChild:self.versionDisplay];
         
         [self addChild:self.title];
