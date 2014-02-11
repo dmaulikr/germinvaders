@@ -249,7 +249,7 @@ int maxfiring = 1;
     int shieldOrigX = CGRectGetMidX(self.frame) - shieldGroupWidth/2;
     
     SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-    SKTexture *shieldTexture = [atlas textureNamed:@"shield-bottle.png"];
+    SKTexture *shieldTexture = [atlas textureNamed:@"shield-graphic.png"];
     for (int i=0; i<numShields; i++){
         int shieldStartX = shieldOrigX;
         //I'm going to start with a simple 8 x 8 grid of shield particles that will make up 1 shield
