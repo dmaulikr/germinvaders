@@ -244,7 +244,7 @@ int maxfiring = 1;
     if (numShieldsPerGroup < 2) {
         numShieldsPerGroup = 2;
     }
-    int shieldGroupWidth = (numShieldsPerGroup * numShields * 10) + ((numShieldsPerGroup -1)*3) + ((20 + 13) * (numShields-1));
+    int shieldGroupWidth = (numShieldsPerGroup * numShields * 12) + ((numShieldsPerGroup -1)*3) + ((10 + 15) * (numShields-1));
     
     int shieldOrigX = CGRectGetMidX(self.frame) - shieldGroupWidth/2;
     
@@ -256,7 +256,7 @@ int maxfiring = 1;
         for(int x=0;x<numShieldsPerGroup;x++){
             int shieldStartY = SHIELD_START_Y_POS;
             for(int y=0;y<2;y++){
-                MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(10,26)];
+                MCHShield *shieldPiece = [[MCHShield alloc] initWithTexture:shieldTexture color:[UIColor whiteColor] size:CGSizeMake(12,12)];
                 shieldPiece.position = CGPointMake(shieldStartX, shieldStartY);
                 shieldPiece.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:shieldPiece.size];
                 shieldPiece.physicsBody.categoryBitMask = shieldCategory;
@@ -267,9 +267,9 @@ int maxfiring = 1;
                 [self addChild:shieldPiece];
                 shieldStartY += (shieldPiece.frame.size.height+3);
             }
-            shieldStartX += (10+3);
+            shieldStartX += (12+3);
         }
-        shieldOrigX = shieldStartX += 20;
+        shieldOrigX = shieldStartX += 10;
     }
 }
 
