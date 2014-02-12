@@ -37,7 +37,7 @@ int maxfiring = 1;
     [self.player gameOver];
     
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
-    self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(70,48)];
+    self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(70,26)];
     self.player.parentScene = self;
     self.player.direction = CGPointMake(0, 0);
     self.player.speed = 20;
