@@ -10,10 +10,7 @@
 		2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836634A18306F8E0010365C /* MCHLeaderboardScene.m */; };
 		2836635C18331C170010365C /* MCHDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836635B18331C170010365C /* MCHDataManager.m */; };
 		2836635F183346B50010365C /* MCHSortableScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836635E183346B50010365C /* MCHSortableScore.m */; };
-		283663621833E20C0010365C /* loading-iphone4.png in Resources */ = {isa = PBXBuildFile; fileRef = 283663601833E20C0010365C /* loading-iphone4.png */; };
-		283663631833E20C0010365C /* loading-iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = 283663611833E20C0010365C /* loading-iphone5.png */; };
 		283663661833E4380010365C /* MCHGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 283663651833E4380010365C /* MCHGameOverScene.m */; };
-		283663691833F65B0010365C /* invaders-appicon-device.png in Resources */ = {isa = PBXBuildFile; fileRef = 283663671833F65B0010365C /* invaders-appicon-device.png */; };
 		2848221717B72F0400326AFA /* MCHShield.m in Sources */ = {isa = PBXBuildFile; fileRef = 2848221617B72F0400326AFA /* MCHShield.m */; };
 		2868FFF2177D29B300BB44FF /* MCHInvader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF1177D29B300BB44FF /* MCHInvader.m */; };
 		2868FFF5177D4C5000BB44FF /* MCHPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF4177D4C5000BB44FF /* MCHPlayer.m */; };
@@ -58,11 +55,8 @@
 		2836635B18331C170010365C /* MCHDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHDataManager.m; sourceTree = "<group>"; };
 		2836635D183346B50010365C /* MCHSortableScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHSortableScore.h; sourceTree = "<group>"; };
 		2836635E183346B50010365C /* MCHSortableScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHSortableScore.m; sourceTree = "<group>"; };
-		283663601833E20C0010365C /* loading-iphone4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-iphone4.png"; sourceTree = "<group>"; };
-		283663611833E20C0010365C /* loading-iphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading-iphone5.png"; sourceTree = "<group>"; };
 		283663641833E4380010365C /* MCHGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameOverScene.h; sourceTree = "<group>"; };
 		283663651833E4380010365C /* MCHGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHGameOverScene.m; sourceTree = "<group>"; };
-		283663671833F65B0010365C /* invaders-appicon-device.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invaders-appicon-device.png"; sourceTree = "<group>"; };
 		2848221517B72F0400326AFA /* MCHShield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHShield.h; sourceTree = "<group>"; };
 		2848221617B72F0400326AFA /* MCHShield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHShield.m; sourceTree = "<group>"; };
 		2868FFF0177D29B300BB44FF /* MCHInvader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvader.h; sourceTree = "<group>"; };
@@ -200,9 +194,6 @@
 		28F74670177BDA4E00015916 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				283663671833F65B0010365C /* invaders-appicon-device.png */,
-				283663601833E20C0010365C /* loading-iphone4.png */,
-				283663611833E20C0010365C /* loading-iphone5.png */,
 				28F74671177BDA4E00015916 /* GermInvaders-Info.plist */,
 				28F74672177BDA4E00015916 /* InfoPlist.strings */,
 				28F74675177BDA4E00015916 /* main.m */,
@@ -312,9 +303,6 @@
 				28EA66AB1783A9650017E129 /* invader.atlas in Resources */,
 				28F7468A177BDA4E00015916 /* Images.xcassets in Resources */,
 				28F74680177BDA4E00015916 /* Main_iPad.storyboard in Resources */,
-				283663691833F65B0010365C /* invaders-appicon-device.png in Resources */,
-				283663621833E20C0010365C /* loading-iphone4.png in Resources */,
-				283663631833E20C0010365C /* loading-iphone5.png in Resources */,
 				2868FFFD177FBC2600BB44FF /* spark.png in Resources */,
 				28F7467D177BDA4E00015916 /* Main_iPhone.storyboard in Resources */,
 				28F74674177BDA4E00015916 /* InfoPlist.strings in Resources */,
