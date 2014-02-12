@@ -21,6 +21,7 @@
 @property BOOL readyToFire;
 @property BOOL amChasingPlayer;
 @property (strong,atomic) MCHGameplayScene *parentScene;
+@property UIColor *missleColor;
 
 - (id)initWithTexture:(SKTexture *)texture color:(SKColor *)color size:(CGSize)size;
 

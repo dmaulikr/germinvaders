@@ -17,6 +17,7 @@
         self.readyToFire = YES;
         self.fireRate = 2.5;
         self.maxSpeed = 6.5;
+        self.missleColor = color;
         //Update this method so that maybe we pass in values to fully initialize the invader - or if not using delete.
     }
     return self;
@@ -108,7 +109,7 @@
         NSLog(@"not firing because we have a fire rate.");
         return;
     }
-    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(2,6)];
+    MCHMissle *missle = [MCHMissle spriteNodeWithColor:self.missleColor size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,-1);
     missle.position = self.position; //missleCategory
     missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];

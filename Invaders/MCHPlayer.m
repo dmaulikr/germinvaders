@@ -32,7 +32,7 @@
         NSLog(@"not firing because we have a fire rate.");
         return;
     }
-    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(2,6)];
+    MCHMissle *missle = [MCHMissle spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(2,6)];
     missle.direction = CGPointMake(0,1);
     missle.position = CGPointMake(self.position.x-10, self.position.y);// self.position; //missleCategory
     missle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:missle.size];

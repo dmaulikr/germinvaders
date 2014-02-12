@@ -111,6 +111,7 @@ int maxfiring = 1;
     }
     NSArray *invaderHeightForRowMap = @[size1,size1,size1,size2];
     
+    NSArray *invaderMissleColorByRowArray = @[[UIColor greenColor],[UIColor blueColor],[UIColor yellowColor],[UIColor redColor]];
     for (int i=0; i<numInvaderRows; i++) {
         int startX = invaderGroupStartX;
         NSLog(@"startX:%d",startX);
@@ -124,7 +125,7 @@ int maxfiring = 1;
         invaderSize = CGSizeMake(invaderSize.width, rowHeight);
         
         for (int j=0; j<numInvaderAcross; j++) {
-            MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[UIColor whiteColor] size:invaderSize];
+            MCHInvader *invader = [[MCHInvader alloc] initWithTexture:[nextInvaderRowArray objectAtIndex:0] color:[invaderMissleColorByRowArray objectAtIndex:i] size:invaderSize];
             invader.parentScene = self;
             invader.direction = 0;
             invader.speed = 4.5+(level/6);
