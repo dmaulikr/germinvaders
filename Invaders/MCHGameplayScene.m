@@ -37,11 +37,11 @@ int maxfiring = 1;
     [self.player gameOver];
     
     SKTexture *playerTexture = [atlas textureNamed:@"invader-player.png"];
-    self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(70,26)];
+    self.player = [[MCHPlayer alloc] initWithTexture:playerTexture color:[UIColor whiteColor] size:CGSizeMake(60,22)];
     self.player.parentScene = self;
     self.player.direction = CGPointMake(0, 0);
     self.player.speed = 20;
-    self.player.position = CGPointMake(self.size.width/2,self.player.size.height);
+    self.player.position = CGPointMake(self.size.width/2,self.player.size.height+40);
     self.player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.player.size];
     self.player.physicsBody.categoryBitMask = playerCategory;
     self.player.physicsBody.collisionBitMask = invadeCategory;
@@ -50,11 +50,11 @@ int maxfiring = 1;
 }
 
 - (void)updateScoreDisplay {
-    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d babies %d",score,level,numPlayers];
+    self.scoreDisplay.text = [NSString stringWithFormat:@"score %d level %d pills %d",score,level,numPlayers];
 }
 
 - (void)updateShieldBonus {
-    self.shieldBonus.text = [NSString stringWithFormat:@"(bottle bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
+    self.shieldBonus.text = [NSString stringWithFormat:@"(white blood cells bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
 }
 
 - (void)updateLevelDisplay {
@@ -216,7 +216,7 @@ int maxfiring = 1;
         [self addChild:self.levelDisplay];
         
         self.shieldBonus = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.shieldBonus.text = [NSString stringWithFormat:@"(bottle bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
+        self.shieldBonus.text = [NSString stringWithFormat:@"(white blood cells bonus %d x %d = %d)",shieldCount,shieldMultiplier,shieldBonus];
         self.shieldBonus.fontSize = 18;
         self.shieldBonus.position = CGPointMake(CGRectGetMidX(self.frame),self.levelDisplay.position.y - self.levelDisplay.frame.size.height + 5);
         self.shieldBonus.hidden = YES;
@@ -224,7 +224,7 @@ int maxfiring = 1;
         [self addChild:self.shieldBonus];
         
         self.bonusPipeLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
-        self.bonusPipeLabel.text = [NSString stringWithFormat:@"new baby"];
+        self.bonusPipeLabel.text = [NSString stringWithFormat:@"new pill"];
         self.bonusPipeLabel.fontSize = 18;
         self.bonusPipeLabel.position = CGPointMake(CGRectGetMidX(self.frame),self.shieldBonus.position.y - self.shieldBonus.frame.size.height + 5);
         self.bonusPipeLabel.hidden = YES;

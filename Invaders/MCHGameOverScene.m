@@ -57,9 +57,9 @@
         
         int gameOverSizeFactor = [self hasFourInchDisplay] ? 4 : 5;
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"invader"];
-        SKTexture *endBossTexture = [atlas textureNamed:@"game-over-cat.png"];
-        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(734/gameOverSizeFactor,1136/gameOverSizeFactor)];
-        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),self.endGameBoss.frame.size.height/2);
+        SKTexture *endBossTexture = [atlas textureNamed:@"game-over-graphics.png"];
+        self.endGameBoss = [[SKSpriteNode alloc] initWithTexture:endBossTexture color:[UIColor whiteColor] size:CGSizeMake(739/gameOverSizeFactor,1136/gameOverSizeFactor)];
+        self.endGameBoss.position = CGPointMake(CGRectGetMidX(self.frame),(self.endGameBoss.frame.size.height/2)-20);
         [self addChild:self.endGameBoss];
         
         self.gameOverDisplay = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
