@@ -7,12 +7,15 @@
 //
 
 #import "MCHAppDelegate.h"
+#import "MCHGameCenterManager.h"
 
 @implementation MCHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.dataManager = [[MCHDataManager alloc] init];
+    
+    [[MCHGameCenterManager sharedInstance] authenticateLocalUser];
     // Override point for customization after application launch.
     return YES;
 }

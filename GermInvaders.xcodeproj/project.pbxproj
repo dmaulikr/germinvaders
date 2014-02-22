@@ -36,6 +36,7 @@
 		28F7469B177BDA4E00015916 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F74699177BDA4E00015916 /* InfoPlist.strings */; };
 		28F7469D177BDA4E00015916 /* InvadersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F7469C177BDA4E00015916 /* InvadersTests.m */; };
 		28F746A8177BE65F00015916 /* MCHGameplayScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F746A7177BE65F00015916 /* MCHGameplayScene.m */; };
+		6A62DBC118B9418400782C74 /* MCHGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A62DBC018B9418400782C74 /* MCHGameCenterManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,8 @@
 		28F7469C177BDA4E00015916 /* InvadersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvadersTests.m; sourceTree = "<group>"; };
 		28F746A6177BE65F00015916 /* MCHGameplayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameplayScene.h; sourceTree = "<group>"; };
 		28F746A7177BE65F00015916 /* MCHGameplayScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHGameplayScene.m; sourceTree = "<group>"; };
+		6A62DBBF18B9418400782C74 /* MCHGameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHGameCenterManager.h; sourceTree = "<group>"; };
+		6A62DBC018B9418400782C74 /* MCHGameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHGameCenterManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +188,8 @@
 				2868FFF7177E7BA300BB44FF /* MCHMissle.m */,
 				2848221517B72F0400326AFA /* MCHShield.h */,
 				2848221617B72F0400326AFA /* MCHShield.m */,
+				6A62DBBF18B9418400782C74 /* MCHGameCenterManager.h */,
+				6A62DBC018B9418400782C74 /* MCHGameCenterManager.m */,
 				28F74689177BDA4E00015916 /* Images.xcassets */,
 				28F74670177BDA4E00015916 /* Supporting Files */,
 			);
@@ -338,6 +343,7 @@
 				2836635F183346B50010365C /* MCHSortableScore.m in Sources */,
 				2848221717B72F0400326AFA /* MCHShield.m in Sources */,
 				2836634B18306F8E0010365C /* MCHLeaderboardScene.m in Sources */,
+				6A62DBC118B9418400782C74 /* MCHGameCenterManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
