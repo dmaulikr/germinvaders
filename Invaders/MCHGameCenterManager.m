@@ -51,10 +51,10 @@ static MCHGameCenterManager *sharedHelper = nil;
 - (void)authenticationChanged {
     if ([GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
         NSLog(@"Authentication changed: player authenticated.");
-        userAuthenticated = TRUE;
+        userAuthenticated = YES;
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
         NSLog(@"Authentication changed: player not authenticated");
-        userAuthenticated = FALSE;
+        userAuthenticated = NO;
     }
 }
 
@@ -66,7 +66,19 @@ static MCHGameCenterManager *sharedHelper = nil;
     
     NSLog(@"Authenticating local user...");
     if ([GKLocalPlayer localPlayer].authenticated == NO) {
-        [[GKLocalPlayer localPlayer] authenticateHandler];
+        [[GKLocalPlayer localPlayer] setAuthenticateHandler:^(UIViewController *viewController, NSError *error){
+            if (viewController != nil){
+                NSLog(@"we are supposed to show a view controller.");
+                UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
+                [vc presentViewController: viewController animated: YES completion:nil];
+            }else if ([GKLocalPlayer localPlayer].isAuthenticated){
+                NSLog(@"player is authenticated...");
+                userAuthenticated = YES;
+            }else{
+                NSLog(@"player is not authenticated...");
+                userAuthenticated = NO;
+            }
+        }];
     } else {
         NSLog(@"Already authenticated!");
     }
