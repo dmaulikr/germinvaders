@@ -7,10 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
-@interface MCHMenuScene : SKScene
+@interface MCHMenuScene : SKScene <GKGameCenterControllerDelegate>
 
 @property (strong,atomic)SKSpriteNode *playButton;
+@property (strong,atomic)SKSpriteNode *highscoreButton;
 @property (strong,atomic)SKSpriteNode *leaderboardButton;
 @property (strong,atomic)SKLabelNode *title;
 @property (strong,atomic)SKLabelNode *subtitle;

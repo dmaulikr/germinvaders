@@ -65,12 +65,22 @@
         SKLabelNode *highScoreButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
         highScoreButtonLabel.text = @"HIGH SCORES";
         highScoreButtonLabel.fontSize = 28;
-        highScoreButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y - playButtonLabel.frame.size.height*4);
+        highScoreButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),playButtonLabel.position.y - playButtonLabel.frame.size.height*3);
         highScoreButtonLabel.fontColor = [UIColor whiteColor];
         [self addChild:highScoreButtonLabel];
         
-        self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
-        self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y+highScoreButtonLabel.frame.size.height/2);
+        self.highscoreButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, highScoreButtonLabel.frame.size.height+60)];
+        self.highscoreButton.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y+highScoreButtonLabel.frame.size.height/2);
+        
+        SKLabelNode *leaderboardButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue UltraLight"];
+        leaderboardButtonLabel.text = @"LEADERBOARD";
+        leaderboardButtonLabel.fontSize = 28;
+        leaderboardButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame),highScoreButtonLabel.position.y - highScoreButtonLabel.frame.size.height*3);
+        leaderboardButtonLabel.fontColor = [UIColor whiteColor];
+        [self addChild:leaderboardButtonLabel];
+        
+        self.leaderboardButton = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(self.frame.size.width, leaderboardButtonLabel.frame.size.height+60)];
+        self.leaderboardButton.position = CGPointMake(CGRectGetMidX(self.frame),leaderboardButtonLabel.position.y+leaderboardButtonLabel.frame.size.height/2);
         
         NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
         NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
@@ -87,12 +97,11 @@
         [self addChild:self.fordHead3];
         [self addChild:self.fordHead4];
         [self addChild:self.playButton];
+        [self addChild:self.highscoreButton];
         [self addChild:self.leaderboardButton];
-        
     }
     return self;
 }
-
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
@@ -102,15 +111,30 @@
         SKScene *gameScene = [[MCHGameplayScene alloc] initWithSize:self.size];
         SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
         [self.view presentScene:gameScene transition:doors];
-    }else if([node isEqual:self.leaderboardButton]){
+    }else if([node isEqual:self.highscoreButton]){
         SKScene *leaderboardScene = [[MCHLeaderboardScene alloc] initWithSize:self.size];
         SKTransition *doors = [SKTransition doorsOpenHorizontalWithDuration:0.5];
         [self.view presentScene:leaderboardScene transition:doors];
+    }else if([node isEqual:self.leaderboardButton]){
+        GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+        if (gameCenterController != nil){
+            gameCenterController.gameCenterDelegate = self;
+            gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            UIViewController *vc = self.view.window.rootViewController;
+            [vc presentViewController: gameCenterController animated: YES completion:nil];
+        }
     }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+}
+
+#pragma mark - GKGameCenterControllerDelegate
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController*)gameCenterViewController {
+    UIViewController *vc = self.view.window.rootViewController;
+    [vc dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -84,12 +84,15 @@ static MCHGameCenterManager *sharedHelper = nil;
     }
 }
 
-+ (void) reportScore: (Float64) score forIdentifier: (NSString*) identifier {
++ (void) reportScore: (int) score forIdentifier: (NSString*) identifier {
+    NSLog(@"score being reported:%i",score);
     GKScore* highScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
     highScore.value = score;
     [GKScore reportScores:@[highScore] withCompletionHandler:^(NSError *error) {
         if (error) {
             NSLog(@"Error in reporting scores: %@", error);
+        }else{
+            NSLog(@"Score reported...");
         }
     }];
 }

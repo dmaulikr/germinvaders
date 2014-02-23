@@ -8,6 +8,7 @@
 
 #import "MCHDataManager.h"
 #import "MCHSortableScore.h"
+#import "MCHGameCenterManager.h"
 
 @implementation MCHDataManager
 
@@ -54,6 +55,9 @@
 }
 
 - (void)addNewHighScore:(int)score atLevel:(int)level{
+    //First set the game center leaderboard score
+    [MCHGameCenterManager reportScore:score forIdentifier:LEADERBOARD_ID];
+    //Then set the local high score
     NSArray *currentList = [self gethighscoreList];
     NSMutableArray *editableList = [[NSMutableArray alloc] initWithArray:currentList];
     NSString *entry = [NSString stringWithFormat:@"%d LEVEL %d",score,level];

@@ -30,6 +30,7 @@ typedef enum : uint8_t {
 #define MIN_FIRE_RATE 20
 
 #pragma mark - High Scores
+#define LEADERBOARD_ID @"germ.invader.highscore.01"
 #define HIGH_SCORE_KEY @"invaders-high-scores"
 #define MAX_NUM_HIGH_SCORES 10
 

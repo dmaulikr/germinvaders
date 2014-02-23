@@ -17,7 +17,7 @@
 @property (assign, readonly) BOOL gameCenterAvailable;
 
 + (MCHGameCenterManager *)sharedInstance;
-+ (void) reportScore: (Float64) score forIdentifier: (NSString*) identifier;
-- (void)authenticateLocalUser;
++ (void) reportScore: (int) score forIdentifier: (NSString*) identifier;
+- (void) authenticateLocalUser;
 
 @end
