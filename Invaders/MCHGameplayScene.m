@@ -291,7 +291,7 @@ int maxfiring = 1;
     [self updateScoreDisplay];
     [self updateLevelDisplay];
 
-    shieldCount = [self.shields count];
+    shieldCount = (int)[self.shields count];
     shieldBonus = shieldMultiplier * shieldCount;
     score += shieldBonus;
     
@@ -402,6 +402,7 @@ int maxfiring = 1;
 }
 
 -(void)dragPlayer:(UIPanGestureRecognizer *)gesture{
+    NSLog(@"drag player entered...");
     if(self.gameState == GAMEOVER || respawning || self.paused){
         return;
     }

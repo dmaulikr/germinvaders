@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F74663177BDA4E00015916"
-               BuildableName = "CatsvsBaby.app"
+               BuildableName = "GermInvaders.app"
                BlueprintName = "GermInvaders"
                ReferencedContainer = "container:GermInvaders.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28F7468E177BDA4E00015916"
-               BuildableName = "CatsvsBabyTests.xctest"
+               BuildableName = "GermInvadersTests.xctest"
                BlueprintName = "GermInvadersTests"
                ReferencedContainer = "container:GermInvaders.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "CatsvsBaby.app"
+            BuildableName = "GermInvaders.app"
             BlueprintName = "GermInvaders"
             ReferencedContainer = "container:GermInvaders.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "CatsvsBaby.app"
+            BuildableName = "GermInvaders.app"
             BlueprintName = "GermInvaders"
             ReferencedContainer = "container:GermInvaders.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28F74663177BDA4E00015916"
-            BuildableName = "CatsvsBaby.app"
+            BuildableName = "GermInvaders.app"
             BlueprintName = "GermInvaders"
             ReferencedContainer = "container:GermInvaders.xcodeproj">
          </BuildableReference>

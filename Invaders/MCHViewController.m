@@ -24,6 +24,9 @@
     SKScene * scene = [MCHMenuScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
+    //in order to show ads, let's say we can show ads
+    self.canDisplayBannerAds = YES;
+    
     // Present the scene.
     [skView presentScene:scene];
 }

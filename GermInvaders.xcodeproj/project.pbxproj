@@ -17,6 +17,7 @@
 		2868FFF8177E7BA300BB44FF /* MCHMissle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2868FFF7177E7BA300BB44FF /* MCHMissle.m */; };
 		2868FFFC177FBC2600BB44FF /* InvaderExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */; };
 		2868FFFD177FBC2600BB44FF /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2868FFFB177FBC2600BB44FF /* spark.png */; };
+		288F40951947959F0055AF06 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288F40941947959F0055AF06 /* iAd.framework */; };
 		28EA66AB1783A9650017E129 /* invader.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 28EA66AA1783A9650017E129 /* invader.atlas */; };
 		28F74668177BDA4E00015916 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74667177BDA4E00015916 /* Foundation.framework */; };
 		28F7466A177BDA4E00015916 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F74669177BDA4E00015916 /* CoreGraphics.framework */; };
@@ -68,6 +69,7 @@
 		2868FFF7177E7BA300BB44FF /* MCHMissle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHMissle.m; sourceTree = "<group>"; };
 		2868FFFA177FBC2600BB44FF /* InvaderExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = InvaderExplosion.sks; path = Invaders/InvaderExplosion.sks; sourceTree = "<group>"; };
 		2868FFFB177FBC2600BB44FF /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Invaders/spark.png; sourceTree = "<group>"; };
+		288F40941947959F0055AF06 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		28E7E9011825691600D148E8 /* MCHInvadersConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHInvadersConstants.h; sourceTree = "<group>"; };
 		28EA66AA1783A9650017E129 /* invader.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = invader.atlas; sourceTree = "<group>"; };
 		28F74664177BDA4E00015916 /* GermInvaders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GermInvaders.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				288F40951947959F0055AF06 /* iAd.framework in Frameworks */,
 				28F7466A177BDA4E00015916 /* CoreGraphics.framework in Frameworks */,
 				28F7466C177BDA4E00015916 /* UIKit.framework in Frameworks */,
 				28F7466E177BDA4E00015916 /* SpriteKit.framework in Frameworks */,
@@ -149,6 +152,7 @@
 		28F74666177BDA4E00015916 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				288F40941947959F0055AF06 /* iAd.framework */,
 				28F74667177BDA4E00015916 /* Foundation.framework */,
 				28F74669177BDA4E00015916 /* CoreGraphics.framework */,
 				28F7466B177BDA4E00015916 /* UIKit.framework */,

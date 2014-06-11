@@ -21,21 +21,24 @@
 }
 
 - (void)sortHighScores{
+    
     NSMutableArray *scoresToSort = [[NSMutableArray alloc] init];
     for(NSString *entry in _highscoreList){
         NSArray *entryParts = [entry componentsSeparatedByString:@" "];
         MCHSortableScore *score = [[MCHSortableScore alloc] init];
         NSString *scoreStr = (NSString *)[entryParts objectAtIndex:0];
-        score.score = [scoreStr integerValue];
+        score.score = [scoreStr intValue];
         NSString *levelStr = (NSString *)[entryParts objectAtIndex:2];
-        score.level = [levelStr integerValue];
+        score.level = [levelStr intValue];
         [scoresToSort addObject:score];
     }
-    
-    NSArray *sortedScores = [scoresToSort sortedArrayUsingComparator:^(id score1, id score2){
-        return ((MCHSortableScore *)score1).score <  ((MCHSortableScore *)score2).score;
+
+    NSArray *sortedScores = [scoresToSort sortedArrayUsingComparator:^NSComparisonResult(NSValue *a, NSValue *b) {
+        MCHSortableScore *scoreA = (MCHSortableScore *)a;
+        MCHSortableScore *scoreB = (MCHSortableScore *)b;
+        return scoreA.score < scoreB.score;
     }];
-    
+
     NSMutableArray *formattedSortedScore = [[NSMutableArray alloc] init];
     for(MCHSortableScore *score in sortedScores){
         [formattedSortedScore addObject:[NSString stringWithFormat:@"%d LEVEL %d",score.score,score.level]];
