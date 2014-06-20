@@ -421,17 +421,21 @@ int maxfiring = 1;
             BOOL applyMove = YES;
             if (trans.x < 0) {
                 if(((self.player.position.x - self.player.size.width/2) + trans.x) < 0){
+                    NSLog(@"not moving player a");
                     applyMove = NO;
                 }
             }else{
                 if(((self.player.position.x + self.player.size.width/2) + trans.x) > self.size.width){
+                    NSLog(@"not moving player b");
                     applyMove = NO;
                 }
             }
             if (applyMove) {
-                SKAction *movePlayer =  [SKAction moveByX:trans.x y:0  duration:0];
-                [self.player runAction:movePlayer];
-                [self.playerControl runAction:movePlayer];
+                NSLog(@"apply player move x:%f",trans.x);
+                SKAction *movePlayer =  [SKAction moveByX:trans.x y:0.0  duration:0.0];
+                [self.player runAction:movePlayer completion:^{
+                    NSLog(@"moving player completion block executed...");
+                }];
             }
         }
         [gesture setTranslation:CGPointMake(0, 0) inView:self.view];

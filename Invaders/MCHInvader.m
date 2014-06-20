@@ -81,7 +81,9 @@
                                          [SKAction animateWithTextures:self.textureArray timePerFrame:self.speed/[self.textureArray count]],
                                          [SKAction runBlock:^{
         [self runMoveAnimation];
-    }]]]];
+    }]]] completion:^{
+        NSLog(@"moving & animating invader completion block executed...");
+    }];
 
 }
 
@@ -99,6 +101,7 @@
     SKAction *moveToPlayer = [SKAction moveTo:gameScene.player.position duration:moveDuration];
     [self runAction:moveToPlayer completion:^{
         //the player may have moved away so keep chasing.
+        NSLog(@"moving invader to player completion block executed...");
         [self moveToPlayer];
     }];
     
